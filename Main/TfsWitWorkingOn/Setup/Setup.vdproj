@@ -16,6 +16,12 @@
         "Entry"
         {
         "MsmKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
+        "OwnerKey" = "8:_D10406CEEA9027C5A40846E8AA20EB2C"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -29,12 +35,6 @@
         {
         "MsmKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
         "OwnerKey" = "8:_BFA8367CABAC451F53345B7445E9E520"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
-        "OwnerKey" = "8:_D10406CEEA9027C5A40846E8AA20EB2C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -118,7 +118,7 @@
         "Entry"
         {
         "MsmKey" = "8:_6C5ED8E7303986A6C76A1A3226D8EF3A"
-        "OwnerKey" = "8:_AD5BE31CE4B2D49FC4A2DFC08EFA8E43"
+        "OwnerKey" = "8:_B547A50E6F4C2168B50809529A118EAF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -148,7 +148,7 @@
         "Entry"
         {
         "MsmKey" = "8:_77A3E74BE332101916574DA488062857"
-        "OwnerKey" = "8:_AD5BE31CE4B2D49FC4A2DFC08EFA8E43"
+        "OwnerKey" = "8:_B547A50E6F4C2168B50809529A118EAF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -161,23 +161,11 @@
         {
         "MsmKey" = "8:_77A3E74BE332101916574DA488062857"
         "OwnerKey" = "8:_3C73EDB66334C4757D3C6BD3F102CF94"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7C67DD5FBAA34F9BA8D7D1B748F42B24"
-        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_92D83DF75F50FFB9B44A56643AB3F645"
-        "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_AD5BE31CE4B2D49FC4A2DFC08EFA8E43"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -196,6 +184,12 @@
         "Entry"
         {
         "MsmKey" = "8:_B457E47FED9530E7F53E6AF72FB3A180"
+        "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B547A50E6F4C2168B50809529A118EAF"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -237,6 +231,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_C78073357BA244579F02F53F875A6EFC"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D10406CEEA9027C5A40846E8AA20EB2C"
         "OwnerKey" = "8:_BFA8367CABAC451F53345B7445E9E520"
         "MsmSig" = "8:_UNDEFINED"
@@ -274,19 +274,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
+        "OwnerKey" = "8:_B9B65DF7C9C4C244DC9C89021E6D1BA7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_B547A50E6F4C2168B50809529A118EAF"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_AD5BE31CE4B2D49FC4A2DFC08EFA8E43"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -364,7 +364,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B9B65DF7C9C4C244DC9C89021E6D1BA7"
+        "OwnerKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -375,7 +375,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\TFSWorkingOnSetup.msi"
+        "OutputFilename" = "8:Debug\\TFSWorkingOn_Setup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -392,6 +392,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
+                    {
+                    "Name" = "8:.NET Framework 3.5 SP1"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
         "Release"
@@ -399,7 +412,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\TFSWorkingOnSetup.msi"
+        "OutputFilename" = "8:Release\\TFSWorkingOn_Setup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -416,6 +429,19 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.3.5.SP1"
+                    {
+                    "Name" = "8:.NET Framework 3.5 SP1"
+                    "ProductCode" = "8:Microsoft.Net.Framework.3.5.SP1"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Windows.Installer.3.1"
+                    {
+                    "Name" = "8:Windows Installer 3.1"
+                    "ProductCode" = "8:Microsoft.Windows.Installer.3.1"
+                    }
+                }
             }
         }
     }
@@ -663,26 +689,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7C67DD5FBAA34F9BA8D7D1B748F42B24"
-            {
-            "SourcePath" = "8:..\\Rowan.TfsWitWorkingOn.WinForm\\WorkingOn.ico"
-            "TargetName" = "8:WorkingOn.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_92D83DF75F50FFB9B44A56643AB3F645"
             {
             "AssemblyRegister" = "3:1"
@@ -714,20 +720,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_AD5BE31CE4B2D49FC4A2DFC08EFA8E43"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B457E47FED9530E7F53E6AF72FB3A180"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Rowan.TfsWitWorkingOn, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_AD5BE31CE4B2D49FC4A2DFC08EFA8E43"
+                    "_B457E47FED9530E7F53E6AF72FB3A180"
                     {
-                    "Name" = "8:Rowan.TfsWitWorkingOn.dll"
+                    "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Rowan.TfsWitWorkingOn.dll"
+            "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
@@ -745,20 +751,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B457E47FED9530E7F53E6AF72FB3A180"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B547A50E6F4C2168B50809529A118EAF"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Rowan.TfsWorkingOn, Version=1.1.3174.40886, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_B457E47FED9530E7F53E6AF72FB3A180"
+                    "_B547A50E6F4C2168B50809529A118EAF"
                     {
-                    "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage.dll"
+                    "Name" = "8:Rowan.TfsWorkingOn.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage.dll"
+            "SourcePath" = "8:Rowan.TfsWorkingOn.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
@@ -836,6 +842,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C78073357BA244579F02F53F875A6EFC"
+            {
+            "SourcePath" = "8:..\\WinForm\\WorkingOn.ico"
+            "TargetName" = "8:WorkingOn.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:FALSE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D10406CEEA9027C5A40846E8AA20EB2C"
@@ -987,14 +1013,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TFS Working On"
-        "ProductCode" = "8:{DC61CF4F-E3FE-4B90-A180-4D93F279DE55}"
-        "PackageCode" = "8:{C36AEB47-2F45-48CB-B5EF-1777B9F18B71}"
+        "ProductCode" = "8:{7DBAC3FE-D417-4AB1-9DD8-B423EA3BE1E4}"
+        "PackageCode" = "8:{7680D70F-4DD7-4CDB-BACC-A9CB38D6C0BF}"
         "UpgradeCode" = "8:{EC09BE0B-AF88-4234-BF50-0428CA90F70B}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:1.1.0"
         "Manufacturer" = "8:Rowan"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -1004,7 +1030,7 @@
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:TFS Working On time tracking"
         "ARPURLINFOABOUT" = "8:"
-        "ARPPRODUCTICON" = "8:_7C67DD5FBAA34F9BA8D7D1B748F42B24"
+        "ARPPRODUCTICON" = "8:_C78073357BA244579F02F53F875A6EFC"
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
@@ -1107,7 +1133,7 @@
         }
         "Shortcut"
         {
-            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_C1FCA56F24954A02880A60984169EDD1"
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_886650263A4E4A189C7C0746C45EB351"
             {
             "Name" = "8:TFS Working On"
             "Arguments" = "8:"
@@ -1118,7 +1144,7 @@
             "Target" = "8:_C5FA5F18F04240A68B4352E95FC23193"
             "Folder" = "8:_3D8420A3A4F04FA4BB4BF04B8212DBBC"
             "WorkingFolder" = "8:_7CC46D791A8348929F12DBE201E533B3"
-            "Icon" = "8:_7C67DD5FBAA34F9BA8D7D1B748F42B24"
+            "Icon" = "8:_C78073357BA244579F02F53F875A6EFC"
             "Feature" = "8:"
             }
         }
@@ -1522,7 +1548,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C5FA5F18F04240A68B4352E95FC23193"
             {
-            "SourcePath" = "8:..\\Rowan.TfsWitWorkingOn.WinForm\\obj\\Debug\\TFSWorkingOn.exe"
+            "SourcePath" = "8:..\\WinForm\\obj\\Release\\TFSWorkingOn.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
