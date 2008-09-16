@@ -17,7 +17,7 @@ namespace Rowan.TfsWorkingOn.WinForm
         {
             workingItemConfigurationBindingSource.DataSource = workingItemConfiguration;
             TfsWorkingOn.Properties.Settings.Default.ConfigurationsPath = Settings.Default.ConfigurationsPath;
-            workingItemConfiguration.Server = Settings.Default.TFSServer;
+            workingItemConfiguration.Server = Settings.Default.TfsServer;
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -26,7 +26,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             try
             {
                 workingItemConfiguration.Connect();
-                Settings.Default.TFSServer = workingItemConfiguration.Server;
+                Settings.Default.TfsServer = workingItemConfiguration.Server;
                 Settings.Default.Save();
             }
             catch (Exception ex)

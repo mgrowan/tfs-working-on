@@ -5,7 +5,7 @@
     <Setting Name="ConfigurationsPath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="TFSServer" Type="System.String" Scope="User">
+    <Setting Name="TfsServer" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
     <Setting Name="Port" Type="System.Int32" Scope="User">
@@ -16,6 +16,12 @@
     </Setting>
     <Setting Name="SelectedProjectName" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="UserActivityIdleTimeoutSeconds" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">600</Value>
+    </Setting>
+    <Setting Name="MonitorUserActivity" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
     </Setting>
   </Settings>
 </SettingsFile>

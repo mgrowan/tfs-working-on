@@ -106,6 +106,51 @@ namespace Rowan.TfsWorkingOn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The user activity monitor monitors the idle time on the computer. When the computer has been idle for a set period of time the user activity monitor is triggered..
+        /// </summary>
+        internal static string UserActivityMonitorDetails {
+            get {
+                return ResourceManager.GetString("UserActivityMonitorDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user activity monitor was manually started..
+        /// </summary>
+        internal static string UserActivityMonitorStartedEventReason {
+            get {
+                return ResourceManager.GetString("UserActivityMonitorStartedEventReason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user activity monitor was manually stopped..
+        /// </summary>
+        internal static string UserActivityMonitorStoppedEventReason {
+            get {
+                return ResourceManager.GetString("UserActivityMonitorStoppedEventReason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user has resumed activity..
+        /// </summary>
+        internal static string UserActivityMonitorTriggeredEventActiveReason {
+            get {
+                return ResourceManager.GetString("UserActivityMonitorTriggeredEventActiveReason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The user has been inactive for over {0} seconds..
+        /// </summary>
+        internal static string UserActivityMonitorTriggeredEventIdleReason {
+            get {
+                return ResourceManager.GetString("UserActivityMonitorTriggeredEventIdleReason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Working On Update:&lt;br/&gt;.
         /// </summary>
         internal static string WorkingOnUpdate {

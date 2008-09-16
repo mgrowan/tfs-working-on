@@ -38,12 +38,12 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string TFSServer {
+        public string TfsServer {
             get {
-                return ((string)(this["TFSServer"]));
+                return ((string)(this["TfsServer"]));
             }
             set {
-                this["TFSServer"] = value;
+                this["TfsServer"] = value;
             }
         }
         
@@ -80,6 +80,42 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
             }
             set {
                 this["SelectedProjectName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("600")]
+        public int UserActivityIdleTimeoutSeconds {
+            get {
+                return ((int)(this["UserActivityIdleTimeoutSeconds"]));
+            }
+            set {
+                this["UserActivityIdleTimeoutSeconds"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool MonitorUserActivity {
+            get {
+                return ((bool)(this["MonitorUserActivity"]));
+            }
+            set {
+                this["MonitorUserActivity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public int BalloonTipTimeoutSeconds {
+            get {
+                return ((int)(this["BalloonTipTimeoutSeconds"]));
+            }
+            set {
+                this["BalloonTipTimeoutSeconds"] = value;
             }
         }
     }

@@ -132,6 +132,21 @@
   <data name="ServerRequired" xml:space="preserve">
     <value>Server must be specified before connecting.</value>
   </data>
+  <data name="UserActivityMonitorDetails" xml:space="preserve">
+    <value>The user activity monitor monitors the idle time on the computer. When the computer has been idle for a set period of time the user activity monitor is triggered.</value>
+  </data>
+  <data name="UserActivityMonitorStartedEventReason" xml:space="preserve">
+    <value>The user activity monitor was manually started.</value>
+  </data>
+  <data name="UserActivityMonitorStoppedEventReason" xml:space="preserve">
+    <value>The user activity monitor was manually stopped.</value>
+  </data>
+  <data name="UserActivityMonitorTriggeredEventActiveReason" xml:space="preserve">
+    <value>The user has resumed activity.</value>
+  </data>
+  <data name="UserActivityMonitorTriggeredEventIdleReason" xml:space="preserve">
+    <value>The user has been inactive for over {0} seconds.</value>
+  </data>
   <data name="WorkingOnUpdate" xml:space="preserve">
     <value>Working On Update:&lt;br/&gt;</value>
   </data>

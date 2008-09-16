@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
+using Rowan.TfsWorkingOn.Monitor;
 using Rowan.TfsWorkingOn.WinForm.Properties;
 
 namespace Rowan.TfsWorkingOn.WinForm
@@ -11,7 +12,6 @@ namespace Rowan.TfsWorkingOn.WinForm
         private Connection _connection = new Connection();
         private WorkingItem _workingItem;
 
-        private bool _started;
         private bool _exiting;
         private static string NotifyIconText = Resources.NotifyIconText;
 
@@ -22,7 +22,7 @@ namespace Rowan.TfsWorkingOn.WinForm
 
             connectionBindingSource.DataSource = _connection;
 
-            _connection.Server = Settings.Default.TFSServer;
+            _connection.Server = Settings.Default.TfsServer;
             _connection.Port = Settings.Default.Port;
             try
             {
@@ -56,7 +56,7 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void ShowSearchForm()
         {
-            if (_started)
+            if (_workingItem != null && _workingItem.Started)
             {
                 if (MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Resources.StopWorkingOnWorkItem, _workingItem.WorkItem.Title), Resources.StopCurrentWorkItem, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
@@ -87,22 +87,42 @@ namespace Rowan.TfsWorkingOn.WinForm
                 return;
             }
 
-            if (_started)
+            if (_workingItem.Started)
             {
-                _workingItem.StopTime = DateTime.Now;
                 startToolStripMenuItem.Text = Resources.Start;
                 notifyIcon.Text = NotifyIconText;
                 notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.StoppedWorkingOn, _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture));
             }
             else
             {
-                _workingItem.StartTime = DateTime.Now;
                 startToolStripMenuItem.Text = Resources.Stop;
                 notifyIcon.Text = NotifyIconText + _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture);
                 notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.StartedWorkingOn, _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture));
             }
-            notifyIcon.ShowBalloonTip(3000);
-            _started = !_started;
+            _workingItem.StartStop();
+            notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
+        }
+
+        // Pause Resume on User Activity Monitor
+        private void _userActivity_MonitorTriggeredEvent(object sender, MonitorEventArgs e)
+        {
+            UserActivity userActivity = sender as UserActivity;
+            if (userActivity == null) return;
+
+            if (userActivity.UserActiveState == UserActivityState.Inactive)
+            {
+                _workingItem.Pause(e.Reason);
+                notifyIcon.Text = string.Format(CultureInfo.CurrentCulture, "{0} {1}{2}", Resources.Paused, NotifyIconText, _workingItem.WorkItem.Id);
+                notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.PausedWorkingOn, _workingItem.WorkItem.Id);
+                notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
+            }
+            else if (userActivity.UserActiveState == UserActivityState.Active)
+            {
+                _workingItem.Resume();
+                notifyIcon.Text = string.Format(CultureInfo.CurrentCulture, "{0} {1}{2}", Resources.Resumed, NotifyIconText, _workingItem.WorkItem.Id);
+                notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.ResumedWorkingOn, _workingItem.WorkItem.Id);
+            }
+            notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
         }
 
         #region Events
@@ -121,7 +141,7 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            Settings.Default.TFSServer = _connection.Server;
+            Settings.Default.TfsServer = _connection.Server;
             Settings.Default.Port = _connection.Port;
             Settings.Default.SelectedProjectId = _connection.SelectedProjectId;
             Settings.Default.SelectedProjectName = _connection.SelectedProjectName;
@@ -145,6 +165,7 @@ namespace Rowan.TfsWorkingOn.WinForm
                 if (_workingItem != null)
                 {
                     _workingItem.Connection = _connection;
+                    _workingItem.UserActivityMonitor.MonitorTriggeredEvent += new EventHandler<MonitorEventArgs>(_userActivity_MonitorTriggeredEvent);
                     selectedToolStripMenuItem.Text = string.Format(CultureInfo.CurrentCulture, Resources.Selected, _workingItem.WorkItem.Id);
                     selectedToolStripMenuItem.Enabled = true;
                     StartStop();

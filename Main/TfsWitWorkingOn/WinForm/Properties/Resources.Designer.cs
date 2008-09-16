@@ -124,6 +124,42 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paused.
+        /// </summary>
+        internal static string Paused {
+            get {
+                return ResourceManager.GetString("Paused", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paused Working On.
+        /// </summary>
+        internal static string PausedWorkingOn {
+            get {
+                return ResourceManager.GetString("PausedWorkingOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resumed.
+        /// </summary>
+        internal static string Resumed {
+            get {
+                return ResourceManager.GetString("Resumed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resumed Working On.
+        /// </summary>
+        internal static string ResumedWorkingOn {
+            get {
+                return ResourceManager.GetString("ResumedWorkingOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save Changes.
         /// </summary>
         internal static string SaveChanges {

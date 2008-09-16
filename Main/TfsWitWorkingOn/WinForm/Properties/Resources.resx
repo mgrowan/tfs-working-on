@@ -168,4 +168,16 @@
   <data name="ConnectionFailedTitle" xml:space="preserve">
     <value>Connection Failed</value>
   </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
+  <data name="PausedWorkingOn" xml:space="preserve">
+    <value>Paused Working On</value>
+  </data>
+  <data name="Resumed" xml:space="preserve">
+    <value>Resumed</value>
+  </data>
+  <data name="ResumedWorkingOn" xml:space="preserve">
+    <value>Resumed Working On</value>
+  </data>
 </root>

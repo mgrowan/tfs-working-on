@@ -3,11 +3,12 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
+using Rowan.TfsWorkingOn.Monitor;
 using Rowan.TfsWorkingOn.Properties;
 
 namespace Rowan.TfsWorkingOn
 {
-    public class WorkingItem : INotifyPropertyChanged
+    public class WorkingItem : INotifyPropertyChanged, IDisposable
     {
         public Connection Connection { get; set; }
 
@@ -24,7 +25,7 @@ namespace Rowan.TfsWorkingOn
         }
 
         public const string StartTimePropertyName = "StartTime";
-        private DateTime _startTime;    
+        private DateTime _startTime;
         public DateTime StartTime
         {
             get { return _startTime; }
@@ -43,7 +44,6 @@ namespace Rowan.TfsWorkingOn
             set
             {
                 _stopTime = value;
-                UpdateEstimates();
                 OnPropertyChanged(new PropertyChangedEventArgs(StopTimePropertyName));
             }
         }
@@ -75,6 +75,33 @@ namespace Rowan.TfsWorkingOn
             }
         }
 
+        public const string StartedPropertyName = "Started";
+        private bool _started;
+        public bool Started
+        {
+            get { return _started; }
+            set
+            {
+                _started = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(StartedPropertyName));
+            }
+        }
+
+        public const string PausedPropertyName = "Paused";
+        private bool _paused;
+        public bool Paused
+        {
+            get { return _paused; }
+            set
+            {
+                _paused = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(PausedPropertyName));
+            }
+        }
+
+        private UserActivity _userActivity = new UserActivity();
+        public UserActivity UserActivityMonitor { get { return _userActivity; } }
+
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -91,12 +118,18 @@ namespace Rowan.TfsWorkingOn
 
         public void UpdateEstimates()
         {
+            UpdateEstimates(string.Empty);
+        }
+
+        public void UpdateEstimates(string reason)
+        {
             TimeSpan interval = StopTime.Subtract(StartTime);
             Estimates.ElapsedTime += interval.TotalHours;
             Estimates.RemainingTime -= interval.TotalHours;
             if (Estimates.RemainingTime < 0) Estimates.RemainingTime = 0d;
 
             WorkItem.History = Resources.WorkingOnUpdate;
+            if (!string.IsNullOrEmpty(reason)) WorkItem.History += reason + "<br/>";
             WorkItem.History += string.Format(CultureInfo.CurrentCulture, Resources.WorkingOnUpdateInterval, interval.Hours, interval.Minutes);
             WorkItem.History += string.Format(CultureInfo.CurrentCulture, Resources.WorkingOnUpdateStatus, Estimates.RemainingTime, Estimates.ElapsedTime, Estimates.Duration);
 
@@ -152,5 +185,49 @@ namespace Rowan.TfsWorkingOn
                     _estimates.RemainingTime = (double)WorkItem.Fields[workingItemConfiguration.RemainingField].Value;
             }
         }
+
+        public void StartStop()
+        {
+            if (Started) // Stop
+            {
+                StopTime = DateTime.Now;
+                UserActivityMonitor.Stop();
+                UpdateEstimates();
+            }
+            else // Start
+            {
+                StartTime = DateTime.Now;
+                UserActivityMonitor.Start();
+            }
+            Started = !Started;
+        }
+
+        public void Pause(string reason)
+        {
+            Paused = true;
+            StopTime = DateTime.Now;
+            UpdateEstimates(reason);
+        }
+
+        public void Resume()
+        {
+            Paused = false;
+            StartTime = DateTime.Now;
+        }
+
+        #region IDisposable Members
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing && (_userActivity != null))
+            {
+                _userActivity.Dispose();
+            }
+        }
+        #endregion
     }
 }

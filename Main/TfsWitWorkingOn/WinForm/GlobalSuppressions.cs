@@ -11,5 +11,6 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Tfs", Scope = "namespace", Target = "Rowan.TfsWorkingOn.WinForm")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "FormWork", Scope = "type", Target = "Rowan.TfsWorkingOn.WinForm.FormWorkItem")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1702:CompoundWordsShouldBeCasedCorrectly", MessageId = "FormWork", Scope = "type", Target = "Rowan.TfsWorkingOn.WinForm.FormWorkItemConfiguration")]
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "TFS")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1804:RemoveUnusedLocals", MessageId = "formSetConnection", Scope = "member", Target = "Rowan.TfsWorkingOn.WinForm.Program.#Main()")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1806:DoNotIgnoreMethodResults", MessageId = "Rowan.TfsWorkingOn.WinForm.FormSetConnection", Scope = "member", Target = "Rowan.TfsWorkingOn.WinForm.Program.#Main()")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Tfs")]
