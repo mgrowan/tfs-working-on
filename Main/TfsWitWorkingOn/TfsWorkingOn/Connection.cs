@@ -125,7 +125,7 @@ namespace Rowan.TfsWorkingOn
 
             try
             {
-                _tfsServer = TeamFoundationServerFactory.GetServer(string.Format(CultureInfo.InvariantCulture, "http://{0}:{1}", Server, Port.ToString(CultureInfo.InvariantCulture)), new UICredentialsProvider());
+                _tfsServer = TeamFoundationServerFactory.GetServer(Server, new UICredentialsProvider());
                 _tfsServer.EnsureAuthenticated();
 
                 _workItemStore = _tfsServer.GetService(typeof(WorkItemStore)) as WorkItemStore;

@@ -16,12 +16,6 @@
         "Entry"
         {
         "MsmKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
-        "OwnerKey" = "8:_D10406CEEA9027C5A40846E8AA20EB2C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -35,6 +29,12 @@
         {
         "MsmKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
         "OwnerKey" = "8:_BFA8367CABAC451F53345B7445E9E520"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
+        "OwnerKey" = "8:_D10406CEEA9027C5A40846E8AA20EB2C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -274,7 +274,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B9B65DF7C9C4C244DC9C89021E6D1BA7"
+        "OwnerKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -364,7 +364,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
+        "OwnerKey" = "8:_B9B65DF7C9C4C244DC9C89021E6D1BA7"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -375,7 +375,7 @@
         "DisplayName" = "8:Debug"
         "IsDebugOnly" = "11:TRUE"
         "IsReleaseOnly" = "11:FALSE"
-        "OutputFilename" = "8:Debug\\TFSWorkingOn_Setup.msi"
+        "OutputFilename" = "8:Debug\\TfsWorkingOn_Setup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -412,7 +412,7 @@
         "DisplayName" = "8:Release"
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
-        "OutputFilename" = "8:Release\\TFSWorkingOn_Setup.msi"
+        "OutputFilename" = "8:Release\\TfsWorkingOn_Setup.msi"
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
@@ -755,7 +755,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Rowan.TfsWorkingOn, Version=1.1.3174.40886, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Rowan.TfsWorkingOn, Version=1.1.3182.185, Culture=neutral, PublicKeyToken=0794166e0f23b3e6, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_B547A50E6F4C2168B50809529A118EAF"
@@ -1014,7 +1014,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TFS Working On"
         "ProductCode" = "8:{7DBAC3FE-D417-4AB1-9DD8-B423EA3BE1E4}"
-        "PackageCode" = "8:{7680D70F-4DD7-4CDB-BACC-A9CB38D6C0BF}"
+        "PackageCode" = "8:{1511D3BA-3FF3-48A0-B4C3-81158E5C9870}"
         "UpgradeCode" = "8:{EC09BE0B-AF88-4234-BF50-0428CA90F70B}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -1548,7 +1548,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C5FA5F18F04240A68B4352E95FC23193"
             {
-            "SourcePath" = "8:..\\WinForm\\obj\\Release\\TFSWorkingOn.exe"
+            "SourcePath" = "8:..\\WinForm\\obj\\Release\\TfsWorkingOn.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"

@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
+using Microsoft.TeamFoundation.Client;
 using Rowan.TfsWorkingOn.Monitor;
 using Rowan.TfsWorkingOn.WinForm.Properties;
 
@@ -21,9 +22,9 @@ namespace Rowan.TfsWorkingOn.WinForm
             InitializeComponent();
 
             connectionBindingSource.DataSource = _connection;
+            comboBoxTfsServers.Items.AddRange(RegisteredServers.GetServerNames());
 
             _connection.Server = Settings.Default.TfsServer;
-            _connection.Port = Settings.Default.Port;
             try
             {
                 if (!string.IsNullOrEmpty(_connection.Server))
@@ -142,7 +143,6 @@ namespace Rowan.TfsWorkingOn.WinForm
         private void buttonOK_Click(object sender, EventArgs e)
         {
             Settings.Default.TfsServer = _connection.Server;
-            Settings.Default.Port = _connection.Port;
             Settings.Default.SelectedProjectId = _connection.SelectedProjectId;
             Settings.Default.SelectedProjectName = _connection.SelectedProjectName;
             Settings.Default.Save();
@@ -189,6 +189,7 @@ namespace Rowan.TfsWorkingOn.WinForm
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _exiting = true;
+            notifyIcon.Dispose();
             Application.Exit();
         }
 

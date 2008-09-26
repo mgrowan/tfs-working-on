@@ -36,7 +36,6 @@
             this.comboBoxProjects = new System.Windows.Forms.ComboBox();
             this.connectionBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.projectsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.textBoxTfsServer = new System.Windows.Forms.TextBox();
             this.buttonOK = new System.Windows.Forms.Button();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.notifyMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -51,6 +50,7 @@
             this.configureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.comboBoxTfsServers = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.connectionBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.projectsBindingSource)).BeginInit();
             this.notifyMenu.SuspendLayout();
@@ -109,16 +109,6 @@
             this.projectsBindingSource.DataMember = "Projects";
             this.projectsBindingSource.DataSource = this.connectionBindingSource;
             // 
-            // textBoxTfsServer
-            // 
-            this.textBoxTfsServer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxTfsServer.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.connectionBindingSource, "Server", true));
-            this.textBoxTfsServer.Location = new System.Drawing.Point(63, 14);
-            this.textBoxTfsServer.Name = "textBoxTfsServer";
-            this.textBoxTfsServer.Size = new System.Drawing.Size(229, 20);
-            this.textBoxTfsServer.TabIndex = 6;
-            // 
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -154,7 +144,7 @@
             this.toolStripMenuItem3,
             this.exitToolStripMenuItem});
             this.notifyMenu.Name = "notifyMenu";
-            this.notifyMenu.Size = new System.Drawing.Size(173, 176);
+            this.notifyMenu.Size = new System.Drawing.Size(173, 154);
             // 
             // startToolStripMenuItem
             // 
@@ -189,14 +179,14 @@
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.viewToolStripMenuItem.Text = "&View";
             this.viewToolStripMenuItem.Click += new System.EventHandler(this.viewToolStripMenuItem_Click);
             // 
             // modifyEstimatesToolStripMenuItem
             // 
             this.modifyEstimatesToolStripMenuItem.Name = "modifyEstimatesToolStripMenuItem";
-            this.modifyEstimatesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.modifyEstimatesToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.modifyEstimatesToolStripMenuItem.Text = "&Estimates";
             this.modifyEstimatesToolStripMenuItem.Click += new System.EventHandler(this.modifyEstimatesToolStripMenuItem_Click);
             // 
@@ -231,6 +221,15 @@
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // comboBoxTfsServers
+            // 
+            this.comboBoxTfsServers.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.connectionBindingSource, "Server", true));
+            this.comboBoxTfsServers.FormattingEnabled = true;
+            this.comboBoxTfsServers.Location = new System.Drawing.Point(63, 14);
+            this.comboBoxTfsServers.Name = "comboBoxTfsServers";
+            this.comboBoxTfsServers.Size = new System.Drawing.Size(229, 21);
+            this.comboBoxTfsServers.TabIndex = 11;
+            // 
             // FormSetConnection
             // 
             this.AcceptButton = this.buttonOK;
@@ -238,11 +237,11 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(384, 75);
             this.Controls.Add(this.buttonOK);
+            this.Controls.Add(this.comboBoxTfsServers);
             this.Controls.Add(this.labelProject);
             this.Controls.Add(this.labelServer);
             this.Controls.Add(this.buttonConnect);
             this.Controls.Add(this.comboBoxProjects);
-            this.Controls.Add(this.textBoxTfsServer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -264,7 +263,6 @@
         private System.Windows.Forms.Label labelServer;
         private System.Windows.Forms.Button buttonConnect;
         private System.Windows.Forms.ComboBox comboBoxProjects;
-        private System.Windows.Forms.TextBox textBoxTfsServer;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.BindingSource connectionBindingSource;
         private System.Windows.Forms.BindingSource projectsBindingSource;
@@ -281,6 +279,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripConnect;
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modifyEstimatesToolStripMenuItem;
+        private System.Windows.Forms.ComboBox comboBoxTfsServers;
 
     }
 }
