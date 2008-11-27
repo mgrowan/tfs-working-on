@@ -62,9 +62,7 @@ namespace Rowan.TfsWorkingOn
                     {
                         _estimates.Load(filePath);
                     }
-                    LoadWorkItemConfiguration();
                     UpdateWorkingOnEstimates();
-
                 }
                 return _estimates;
             }
@@ -128,12 +126,12 @@ namespace Rowan.TfsWorkingOn
             Estimates.RemainingTime -= interval.TotalHours;
             if (Estimates.RemainingTime < 0) Estimates.RemainingTime = 0d;
 
+            UpdateWorkItem(false);
             WorkItem.History = Resources.WorkingOnUpdate;
             if (!string.IsNullOrEmpty(reason)) WorkItem.History += reason + "<br/>";
             WorkItem.History += string.Format(CultureInfo.CurrentCulture, Resources.WorkingOnUpdateInterval, interval.Hours, interval.Minutes);
             WorkItem.History += string.Format(CultureInfo.CurrentCulture, Resources.WorkingOnUpdateStatus, Estimates.RemainingTime, Estimates.ElapsedTime, Estimates.Duration);
 
-            UpdateWorkItem();
             WorkItem.Save();
             Estimates.Save(Estimates.GetFilePath(WorkItem.Store.TeamFoundationServer.Uri.Host, WorkItem.Id));
         }
@@ -148,10 +146,11 @@ namespace Rowan.TfsWorkingOn
             return workingItemConfiguration;
         }
 
-        public void UpdateWorkItem()
+        public void UpdateWorkItem(bool save)
         {
+            WorkItem.SyncToLatest();
+
             WorkingItemConfiguration workingItemConfiguration = LoadWorkItemConfiguration();
-            WorkItem.Open();
             if (!string.IsNullOrEmpty(workingItemConfiguration.DurationField))
             {
                 WorkItem.Fields[workingItemConfiguration.DurationField].Value = _estimates.Duration;
@@ -164,10 +163,14 @@ namespace Rowan.TfsWorkingOn
             {
                 WorkItem.Fields[workingItemConfiguration.RemainingField].Value = _estimates.RemainingTime;
             }
+
+            if (save && WorkItem.IsDirty) WorkItem.Save();
         }
 
-        private void UpdateWorkingOnEstimates()
+        public void UpdateWorkingOnEstimates()
         {
+            WorkItem.SyncToLatest();
+
             WorkingItemConfiguration workingItemConfiguration = LoadWorkItemConfiguration();
             if (!string.IsNullOrEmpty(workingItemConfiguration.DurationField))
             {

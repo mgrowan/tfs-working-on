@@ -18,10 +18,12 @@ namespace Rowan.TfsWorkingOn.WinForm
             InitializeComponent();
         }
 
-        public FormWorkItem(WorkItem workItem) : this()
+        public FormWorkItem(WorkItem workItem)
+            : this()
         {
             if (workItem != null)
             {
+                workItem.SyncToLatest();
                 Text = string.Format(CultureInfo.CurrentCulture, Resources.WorkItemTitle, workItem.Id, workItem.Title);
                 witControl.Item = workItem;
             }
@@ -47,14 +49,27 @@ namespace Rowan.TfsWorkingOn.WinForm
                 }
                 return false;
             }
-            if (witControl.Item.IsDirty) witControl.Item.Save();
+            if (witControl.Item.IsDirty)
+            {
+                try
+                {
+                    witControl.Item.Save();
+                }
+                catch (ItemAlreadyUpdatedOnServerException ex)
+                {
+                    if (MessageBox.Show(string.Format(CultureInfo.CurrentCulture, "{0}\n\n{1}", ex.Message, Resources.RefreshWorkItem), Resources.ItemAlreadyUpdated, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
+                    {
+                        witControl.Item.SyncToLatest();
+                        return false;
+                    }
+                }
+            }
             return true;
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Save();
-            Close();
+            if (Save()) Close();
         }
 
         private void btnCancel_Click(object sender, EventArgs e)

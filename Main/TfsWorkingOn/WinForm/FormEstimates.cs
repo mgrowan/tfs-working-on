@@ -12,6 +12,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             InitializeComponent();
 
             _workingItem = workingItem;
+            workingItem.UpdateWorkingOnEstimates();
             estimatesBindingSource.DataSource = workingItem.Estimates;
         }
 
@@ -23,7 +24,7 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            _workingItem.UpdateWorkItem();
+            _workingItem.UpdateWorkItem(true);
             Close();
         }
 

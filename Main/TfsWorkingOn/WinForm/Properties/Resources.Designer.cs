@@ -106,6 +106,15 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Work Item already updated.
+        /// </summary>
+        internal static string ItemAlreadyUpdated {
+            get {
+                return ResourceManager.GetString("ItemAlreadyUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TFS Working On....
         /// </summary>
         internal static string NotifyIconText {
@@ -138,6 +147,15 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         internal static string PausedWorkingOn {
             get {
                 return ResourceManager.GetString("PausedWorkingOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Do you wish to discard your changes and refresh the work item?.
+        /// </summary>
+        internal static string RefreshWorkItem {
+            get {
+                return ResourceManager.GetString("RefreshWorkItem", resourceCulture);
             }
         }
         

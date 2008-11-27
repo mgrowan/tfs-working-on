@@ -17,13 +17,13 @@ namespace Rowan.TfsWorkingOn.WinForm
             InitializeComponent();
 
             WorkingItem = new WorkingItem();
-                        
+
             pickWorkItemsControl = new PickWorkItemsControl(workItemStore, false);
             pickWorkItemsControl.Dock = DockStyle.Fill;
             pickWorkItemsControl.PortfolioDisplayName = projectName;
             pickWorkItemsControl.SelectListViewLabel = Resources.DoubleClickToSelect;
             pickWorkItemsControl.PickWorkItemsListViewDoubleClicked += new PickWorkItemsListViewDoubleClickedEventHandler(pickWorkItemsControl_PickWorkItemsListViewDoubleClicked);
-            
+
             Controls.Add(pickWorkItemsControl);
             SetClientSizeCore(pickWorkItemsControl.PreferredSize.Width, pickWorkItemsControl.PreferredSize.Height);
             Text = string.Format(CultureInfo.CurrentCulture, Resources.SearchForWorkItemsIn, projectName);
@@ -33,6 +33,7 @@ namespace Rowan.TfsWorkingOn.WinForm
         {
             // TODO: Check if assigned to user
             WorkingItem.WorkItem = (pickWorkItemsControl.SelectedWorkItems()[0] as WorkItem);
+            WorkingItem.WorkItem.Open();
             Close();
         }
     }

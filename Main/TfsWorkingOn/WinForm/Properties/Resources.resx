@@ -180,4 +180,10 @@
   <data name="ResumedWorkingOn" xml:space="preserve">
     <value>Resumed Working On</value>
   </data>
+  <data name="ItemAlreadyUpdated" xml:space="preserve">
+    <value>Work Item already updated</value>
+  </data>
+  <data name="RefreshWorkItem" xml:space="preserve">
+    <value>Do you wish to discard your changes and refresh the work item?</value>
+  </data>
 </root>
