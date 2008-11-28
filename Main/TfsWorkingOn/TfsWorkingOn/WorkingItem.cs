@@ -139,8 +139,8 @@ namespace Rowan.TfsWorkingOn
         private WorkingItemConfiguration LoadWorkItemConfiguration()
         {
             WorkingItemConfiguration workingItemConfiguration = new WorkingItemConfiguration();
-            workingItemConfiguration.Server = Connection.Server;
-            workingItemConfiguration.SelectedProject = WorkItem.Project;
+            workingItemConfiguration.Connection.Server = Connection.Server;
+            workingItemConfiguration.Connection.SelectedProject = WorkItem.Project;
             workingItemConfiguration.SelectedWorkItemType = WorkItem.Type;
             workingItemConfiguration.Load();
             return workingItemConfiguration;

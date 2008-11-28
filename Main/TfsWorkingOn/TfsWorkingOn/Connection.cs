@@ -26,19 +26,7 @@ namespace Rowan.TfsWorkingOn
                 OnPropertyChanged(new PropertyChangedEventArgs(ServerPropertyName));
             }
         }
-        
-        public const string PortPropertyName = "Port";
-        private int _port = 8080;
-        public int Port
-        {
-            get { return _port; }
-            set
-            {
-                _port = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(PortPropertyName));
-            }
-        }
-        
+
         public const string IsConnectedPropertyName = "IsConnected";
         private bool _isConnected;
         [XmlIgnore]
@@ -79,7 +67,7 @@ namespace Rowan.TfsWorkingOn
         public ProjectCollection Projects
         {
             get { return _projects; }
-            private set
+            internal set
             {
                 _projects = value;
                 OnPropertyChanged(new PropertyChangedEventArgs(ProjectsPropertyName));
@@ -97,10 +85,13 @@ namespace Rowan.TfsWorkingOn
             get { return _selectedProject == null ? _workItemStore.Projects[SelectedProjectName] : _selectedProject; }
             set
             {
-                _selectedProject = value;
-                SelectedProjectName = value.Name;
-                SelectedProjectId = value.Id;
-                OnPropertyChanged(new PropertyChangedEventArgs(SelectedProjectPropertyName));
+                if (_selectedProject != value)
+                {
+                    _selectedProject = value;
+                    SelectedProjectName = value.Name;
+                    SelectedProjectId = value.Id;
+                    OnPropertyChanged(new PropertyChangedEventArgs(SelectedProjectPropertyName));
+                }
             }
         }
 
@@ -147,7 +138,7 @@ namespace Rowan.TfsWorkingOn
             IsConnected = false;
         }
         #endregion Public Methods
-        
+
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -12,77 +12,19 @@ namespace Rowan.TfsWorkingOn
     public class WorkingItemConfiguration : INotifyPropertyChanged
     {
         #region Members
-        private TeamFoundationServer _tfsServer;
-        private WorkItemStore _workItemStore;
         private string _filename = string.Empty;
         #endregion
 
         #region Properties
-        public const string ServerPropertyName = "Server";
-        private string _server;
-        public string Server
+        public const string ConnectionPropertyName = "Connection";
+        private Connection _connection = new Connection();
+        public Connection Connection
         {
-            get { return _server; }
+            get { return _connection; }
             set
             {
-                _server = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(ServerPropertyName));
-            }
-        }
-
-        public const string PortPropertyName = "Port";
-        private int _port = 8080;
-        public int Port
-        {
-            get { return _port; }
-            set
-            {
-                _port = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(PortPropertyName));
-            }
-        }
-
-        public const string IsConnectedPropertyName = "IsConnected";
-        private bool _isConnected;
-        [XmlIgnore]
-        public bool IsConnected
-        {
-            get { return _isConnected; }
-            set
-            {
-                _isConnected = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(IsConnectedPropertyName));
-            }
-        }
-
-        public const string ProjectsPropertyName = "Projects";
-        private ProjectCollection _projects;
-        [XmlIgnore]
-        public ProjectCollection Projects
-        {
-            get { return _projects; }
-            private set
-            {
-                _projects = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(ProjectsPropertyName));
-                SelectedProject = value[0];
-            }
-        }
-
-        public const string SelectedProjectPropertyName = "SelectedProject";
-        public int SelectedProjectId { get; set; }
-        public string SelectedProjectName { get; set; }
-        private Project _selectedProject;
-        [XmlIgnore]     
-        public Project SelectedProject
-        {
-            get { return _selectedProject; }
-            set
-            {
-                _selectedProject = value;
-                SelectedProjectName = value.Name;
-                SelectedProjectId = value.Id;
-                OnPropertyChanged(new PropertyChangedEventArgs(SelectedProjectPropertyName));
+                _connection = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(ConnectionPropertyName));
             }
         }
 
@@ -95,10 +37,13 @@ namespace Rowan.TfsWorkingOn
             get { return _selectedWorkItemType; }
             set
             {
-                _selectedWorkItemType = value;
-                SelectedWorkItemTypeName = value.Name;
-                Load();
-                OnPropertyChanged(new PropertyChangedEventArgs(SelectedWorkItemTypePropertyName));
+                if (_selectedWorkItemType != value)
+                {
+                    _selectedWorkItemType = value;
+                    SelectedWorkItemTypeName = value.Name;
+                    Load();
+                    OnPropertyChanged(new PropertyChangedEventArgs(SelectedWorkItemTypePropertyName));
+                }
             }
         }
 
@@ -141,8 +86,19 @@ namespace Rowan.TfsWorkingOn
                 OnPropertyChanged(new PropertyChangedEventArgs(ElapsedFieldPropertyName));
             }
         }
-        
+
         #endregion
+
+        public WorkingItemConfiguration()
+        {
+            this.Connection.PropertyChanged += new PropertyChangedEventHandler(Connection_PropertyChanged);
+        }
+
+        void Connection_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == Connection.SelectedProjectPropertyName) SelectedWorkItemType = Connection.SelectedProject.WorkItemTypes[0];
+            OnPropertyChanged(e);
+        }
 
         #region INotifyPropertyChanged Members
 
@@ -160,42 +116,6 @@ namespace Rowan.TfsWorkingOn
         #endregion
 
         #region Public Methods
-        /// <summary>
-        /// Connects to Server and populates to Project list
-        /// </summary>
-        public void Connect()
-        {
-            #region Parameter Check
-            if (string.IsNullOrEmpty(Server))
-            {
-                throw new ArgumentNullException(Resources.Server, Resources.ServerRequired);
-            }
-            #endregion
-
-            try
-            {
-                _tfsServer = TeamFoundationServerFactory.GetServer(string.Format(CultureInfo.InvariantCulture, "http://{0}:{1}", Server, Port.ToString(CultureInfo.InvariantCulture)), new UICredentialsProvider());
-                _tfsServer.EnsureAuthenticated();
-                
-                _workItemStore = _tfsServer.GetService(typeof(WorkItemStore)) as WorkItemStore;
-                Projects = _workItemStore.Projects;
-
-                IsConnected = true;
-            }
-            catch (Exception)
-            {
-                IsConnected = false;
-                if (Projects != null) Projects = null;
-                throw;
-            }
-        }
-
-        public void Disconnect()
-        {
-            Server = string.Empty;
-            IsConnected = false;
-        }
-        
         public void Save()
         {
             if (HasNoFileContents()) return;
@@ -206,13 +126,13 @@ namespace Rowan.TfsWorkingOn
                 xs.Serialize(fs, this);
             }
         }
-        
+
         public void Load()
         {
             if (HasRequiredPropertiesMissing()) return;
 
-            _filename = string.Format(CultureInfo.InvariantCulture, Resources.ConfigFileName, Server, SelectedProject.Name, SelectedWorkItemType.Name);
-            
+            _filename = string.Format(CultureInfo.InvariantCulture, Resources.ConfigFileName, Connection.Server, Connection.SelectedProject.Name, SelectedWorkItemType.Name);
+
             string filePath = Path.Combine(Settings.Default.ConfigurationsPath, _filename);
             if (File.Exists(filePath))
             {
@@ -242,7 +162,7 @@ namespace Rowan.TfsWorkingOn
         }
         private bool HasRequiredPropertiesMissing()
         {
-            return string.IsNullOrEmpty(Server) || SelectedProject == null || SelectedWorkItemType == null;
+            return string.IsNullOrEmpty(Connection.Server) || Connection.SelectedProject == null || SelectedWorkItemType == null;
         }
         #endregion
 
