@@ -36,8 +36,13 @@
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
             this.buttonSetDirectory = new System.Windows.Forms.Button();
             this.textBoxCurrentDirectory = new System.Windows.Forms.TextBox();
+            this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControlConfiguration = new System.Windows.Forms.TabControl();
             this.tabPageOptions = new System.Windows.Forms.TabPage();
+            this.pictureBoxHelpNag = new System.Windows.Forms.PictureBox();
+            this.pictureBoxHelpUserActivity = new System.Windows.Forms.PictureBox();
+            this.checkBoxEnableNag = new System.Windows.Forms.CheckBox();
+            this.checkBoxMonitorUserActivity = new System.Windows.Forms.CheckBox();
             this.labelNagInterval = new System.Windows.Forms.Label();
             this.numericUpDownNagInterval = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownAutoTimeOut = new System.Windows.Forms.NumericUpDown();
@@ -49,6 +54,7 @@
             this.labelDuration = new System.Windows.Forms.Label();
             this.comboBoxElapsed = new System.Windows.Forms.ComboBox();
             this.workingItemConfigurationBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.connectionBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fieldDefinitionsElapsedBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.selectedWorkItemTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.comboBoxRemaining = new System.Windows.Forms.ComboBox();
@@ -61,7 +67,6 @@
             this.comboBoxWorkItemType = new System.Windows.Forms.ComboBox();
             this.workItemTypesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.projectsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.connectionBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonConnect = new System.Windows.Forms.Button();
             this.comboBoxProjects = new System.Windows.Forms.ComboBox();
             this.tabPageUpdateWarehouse = new System.Windows.Forms.TabPage();
@@ -69,19 +74,23 @@
             this.pictureBoxAbout = new System.Windows.Forms.PictureBox();
             this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
             this.label1 = new System.Windows.Forms.Label();
+            this.toolTipHelp = new System.Windows.Forms.ToolTip(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
             this.tabControlConfiguration.SuspendLayout();
             this.tabPageOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpNag)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpUserActivity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNagInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAutoTimeOut)).BeginInit();
             this.tabPageMappings.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.workingItemConfigurationBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.connectionBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsElapsedBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectedWorkItemTypeBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsRemainingBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsDurationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.workItemTypesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.projectsBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.connectionBindingSource)).BeginInit();
             this.tabPageAbout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAbout)).BeginInit();
             this.SuspendLayout();
@@ -118,10 +127,6 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
-            // folderBrowserDialog
-            // 
-            this.folderBrowserDialog.SelectedPath = global::Rowan.TfsWorkingOn.WinForm.Properties.Settings.Default.ConfigurationsPath;
-            // 
             // buttonSetDirectory
             // 
             this.buttonSetDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -137,12 +142,15 @@
             // 
             this.textBoxCurrentDirectory.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxCurrentDirectory.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Rowan.TfsWorkingOn.WinForm.Properties.Settings.Default, "ConfigurationsPath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.textBoxCurrentDirectory.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "ConfigurationsPath", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.textBoxCurrentDirectory.Location = new System.Drawing.Point(94, 6);
             this.textBoxCurrentDirectory.Name = "textBoxCurrentDirectory";
             this.textBoxCurrentDirectory.Size = new System.Drawing.Size(304, 20);
             this.textBoxCurrentDirectory.TabIndex = 17;
-            this.textBoxCurrentDirectory.Text = global::Rowan.TfsWorkingOn.WinForm.Properties.Settings.Default.ConfigurationsPath;
+            // 
+            // settingsBindingSource
+            // 
+            this.settingsBindingSource.DataSource = typeof(Rowan.TfsWorkingOn.Settings);
             // 
             // tabControlConfiguration
             // 
@@ -158,9 +166,14 @@
             this.tabControlConfiguration.SelectedIndex = 0;
             this.tabControlConfiguration.Size = new System.Drawing.Size(442, 201);
             this.tabControlConfiguration.TabIndex = 19;
+            this.tabControlConfiguration.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControlConfiguration_Selecting);
             // 
             // tabPageOptions
             // 
+            this.tabPageOptions.Controls.Add(this.pictureBoxHelpNag);
+            this.tabPageOptions.Controls.Add(this.pictureBoxHelpUserActivity);
+            this.tabPageOptions.Controls.Add(this.checkBoxEnableNag);
+            this.tabPageOptions.Controls.Add(this.checkBoxMonitorUserActivity);
             this.tabPageOptions.Controls.Add(this.labelNagInterval);
             this.tabPageOptions.Controls.Add(this.numericUpDownNagInterval);
             this.tabPageOptions.Controls.Add(this.numericUpDownAutoTimeOut);
@@ -176,6 +189,46 @@
             this.tabPageOptions.Text = "Options";
             this.tabPageOptions.UseVisualStyleBackColor = true;
             // 
+            // pictureBoxHelpNag
+            // 
+            this.pictureBoxHelpNag.Image = global::Rowan.TfsWorkingOn.WinForm.Properties.Resources.helpImage;
+            this.pictureBoxHelpNag.Location = new System.Drawing.Point(340, 60);
+            this.pictureBoxHelpNag.Name = "pictureBoxHelpNag";
+            this.pictureBoxHelpNag.Size = new System.Drawing.Size(22, 22);
+            this.pictureBoxHelpNag.TabIndex = 31;
+            this.pictureBoxHelpNag.TabStop = false;
+            // 
+            // pictureBoxHelpUserActivity
+            // 
+            this.pictureBoxHelpUserActivity.Image = global::Rowan.TfsWorkingOn.WinForm.Properties.Resources.helpImage;
+            this.pictureBoxHelpUserActivity.Location = new System.Drawing.Point(340, 33);
+            this.pictureBoxHelpUserActivity.Name = "pictureBoxHelpUserActivity";
+            this.pictureBoxHelpUserActivity.Size = new System.Drawing.Size(22, 22);
+            this.pictureBoxHelpUserActivity.TabIndex = 30;
+            this.pictureBoxHelpUserActivity.TabStop = false;
+            // 
+            // checkBoxEnableNag
+            // 
+            this.checkBoxEnableNag.AutoSize = true;
+            this.checkBoxEnableNag.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.settingsBindingSource, "NagEnabled", true));
+            this.checkBoxEnableNag.Location = new System.Drawing.Point(211, 61);
+            this.checkBoxEnableNag.Name = "checkBoxEnableNag";
+            this.checkBoxEnableNag.Size = new System.Drawing.Size(82, 17);
+            this.checkBoxEnableNag.TabIndex = 29;
+            this.checkBoxEnableNag.Text = "Enable Nag";
+            this.checkBoxEnableNag.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxMonitorUserActivity
+            // 
+            this.checkBoxMonitorUserActivity.AutoSize = true;
+            this.checkBoxMonitorUserActivity.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.settingsBindingSource, "MonitorUserActivity", true));
+            this.checkBoxMonitorUserActivity.Location = new System.Drawing.Point(211, 34);
+            this.checkBoxMonitorUserActivity.Name = "checkBoxMonitorUserActivity";
+            this.checkBoxMonitorUserActivity.Size = new System.Drawing.Size(123, 17);
+            this.checkBoxMonitorUserActivity.TabIndex = 28;
+            this.checkBoxMonitorUserActivity.Text = "Monitor User Activity";
+            this.checkBoxMonitorUserActivity.UseVisualStyleBackColor = true;
+            // 
             // labelNagInterval
             // 
             this.labelNagInterval.AutoSize = true;
@@ -187,17 +240,51 @@
             // 
             // numericUpDownNagInterval
             // 
+            this.numericUpDownNagInterval.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.settingsBindingSource, "NagIntervalMinutes", true));
+            this.numericUpDownNagInterval.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.settingsBindingSource, "NagEnabled", true));
             this.numericUpDownNagInterval.Location = new System.Drawing.Point(94, 60);
+            this.numericUpDownNagInterval.Maximum = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numericUpDownNagInterval.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownNagInterval.Name = "numericUpDownNagInterval";
             this.numericUpDownNagInterval.Size = new System.Drawing.Size(111, 20);
             this.numericUpDownNagInterval.TabIndex = 26;
+            this.numericUpDownNagInterval.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // numericUpDownAutoTimeOut
             // 
+            this.numericUpDownAutoTimeOut.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.settingsBindingSource, "UserActivityIdleTimeoutMinutes", true));
+            this.numericUpDownAutoTimeOut.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.settingsBindingSource, "MonitorUserActivity", true));
             this.numericUpDownAutoTimeOut.Location = new System.Drawing.Point(94, 33);
+            this.numericUpDownAutoTimeOut.Maximum = new decimal(new int[] {
+            120,
+            0,
+            0,
+            0});
+            this.numericUpDownAutoTimeOut.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numericUpDownAutoTimeOut.Name = "numericUpDownAutoTimeOut";
             this.numericUpDownAutoTimeOut.Size = new System.Drawing.Size(111, 20);
             this.numericUpDownAutoTimeOut.TabIndex = 25;
+            this.numericUpDownAutoTimeOut.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // labelAutoTimeOut
             // 
@@ -286,6 +373,11 @@
             // workingItemConfigurationBindingSource
             // 
             this.workingItemConfigurationBindingSource.DataSource = typeof(Rowan.TfsWorkingOn.WorkingItemConfiguration);
+            // 
+            // connectionBindingSource
+            // 
+            this.connectionBindingSource.DataMember = "Connection";
+            this.connectionBindingSource.DataSource = this.workingItemConfigurationBindingSource;
             // 
             // fieldDefinitionsElapsedBindingSource
             // 
@@ -392,11 +484,6 @@
             this.projectsBindingSource.DataMember = "Projects";
             this.projectsBindingSource.DataSource = this.connectionBindingSource;
             // 
-            // connectionBindingSource
-            // 
-            this.connectionBindingSource.DataMember = "Connection";
-            this.connectionBindingSource.DataSource = this.workingItemConfigurationBindingSource;
-            // 
             // buttonConnect
             // 
             this.buttonConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -473,6 +560,17 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Copyright (C) 2008 Matthew Rowan";
             // 
+            // toolTipHelp
+            // 
+            this.toolTipHelp.AutomaticDelay = 50;
+            this.toolTipHelp.AutoPopDelay = 100000;
+            this.toolTipHelp.InitialDelay = 50;
+            this.toolTipHelp.IsBalloon = true;
+            this.toolTipHelp.ReshowDelay = 10;
+            this.toolTipHelp.Tag = "";
+            this.toolTipHelp.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.toolTipHelp.ToolTipTitle = "Configuration Help";
+            // 
             // FormWorkItemConfiguration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -486,21 +584,24 @@
             this.Name = "FormWorkItemConfiguration";
             this.Text = "TFS Working On... Configuration";
             this.Load += new System.EventHandler(this.FormWorkItemConfiguration_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
             this.tabControlConfiguration.ResumeLayout(false);
             this.tabPageOptions.ResumeLayout(false);
             this.tabPageOptions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpNag)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpUserActivity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNagInterval)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAutoTimeOut)).EndInit();
             this.tabPageMappings.ResumeLayout(false);
             this.tabPageMappings.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.workingItemConfigurationBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.connectionBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsElapsedBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectedWorkItemTypeBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsRemainingBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsDurationBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.workItemTypesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.projectsBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.connectionBindingSource)).EndInit();
             this.tabPageAbout.ResumeLayout(false);
             this.tabPageAbout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAbout)).EndInit();
@@ -549,6 +650,12 @@
         private System.Windows.Forms.BindingSource fieldDefinitionsDurationBindingSource;
         private System.Windows.Forms.BindingSource fieldDefinitionsRemainingBindingSource;
         private System.Windows.Forms.BindingSource fieldDefinitionsElapsedBindingSource;
+        private System.Windows.Forms.BindingSource settingsBindingSource;
+        private System.Windows.Forms.CheckBox checkBoxMonitorUserActivity;
+        private System.Windows.Forms.CheckBox checkBoxEnableNag;
+        private System.Windows.Forms.PictureBox pictureBoxHelpUserActivity;
+        private System.Windows.Forms.ToolTip toolTipHelp;
+        private System.Windows.Forms.PictureBox pictureBoxHelpNag;
     }
 }
 

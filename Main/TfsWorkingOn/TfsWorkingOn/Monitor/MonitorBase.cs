@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Rowan.TfsWorkingOn.Monitor
 {
@@ -22,7 +23,7 @@ namespace Rowan.TfsWorkingOn.Monitor
 
         protected virtual void OnMonitorStarted(MonitorEventArgs monitorEventArgs)
         {
-            Debug.WriteLine(string.Format("Monitor {0} Started Event, Reason: {1}", monitorEventArgs.MonitorType, monitorEventArgs.Reason));
+            Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Monitor {0} Started Event, Reason: {1}", monitorEventArgs.MonitorType, monitorEventArgs.Reason));
             var handler = MonitorStartedEvent;
             if (handler != null)
             {
@@ -32,7 +33,7 @@ namespace Rowan.TfsWorkingOn.Monitor
 
         protected virtual void OnMonitorStopped(MonitorEventArgs monitorEventArgs)
         {
-            Debug.WriteLine(string.Format("Monitor {0} Stopped Event, Reason: {1}", monitorEventArgs.MonitorType, monitorEventArgs.Reason));
+            Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Monitor {0} Stopped Event, Reason: {1}", monitorEventArgs.MonitorType, monitorEventArgs.Reason));
             var handler = MonitorStoppedEvent;
             if (handler != null)
             {
@@ -42,7 +43,7 @@ namespace Rowan.TfsWorkingOn.Monitor
 
         protected virtual void OnMonitorTriggered(MonitorEventArgs monitorEventArgs)
         {
-            Debug.WriteLine(string.Format("Monitor {0} Triggered Event, Reason: {1}", monitorEventArgs.MonitorType, monitorEventArgs.Reason));
+            Debug.WriteLine(string.Format(CultureInfo.CurrentCulture, "Monitor {0} Triggered Event, Reason: {1}", monitorEventArgs.MonitorType, monitorEventArgs.Reason));
             var handler = MonitorTriggeredEvent;
             if (handler != null)
             {

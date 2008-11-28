@@ -97,6 +97,37 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enabling Monitor User Activity causes an automatic 
+        ///Stop/Pause &quot;working on&quot; when the computer has 
+        ///been idle for the time out specified (minutes). When
+        ///user activity begins again, the Start/Resume &quot;working
+        ///on&quot; is triggered..
+        /// </summary>
+        internal static string HelpActivityMonitor {
+            get {
+                return ResourceManager.GetString("HelpActivityMonitor", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap helpImage {
+            get {
+                object obj = ResourceManager.GetObject("helpImage", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enabling Nag causes a balloon notification 
+        ///to be displayed at the set interval (minutes)
+        ///if no work item is being worked on. .
+        /// </summary>
+        internal static string HelpNag {
+            get {
+                return ResourceManager.GetString("HelpNag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid fields.
         /// </summary>
         internal static string InvalidFields {
@@ -111,6 +142,24 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         internal static string ItemAlreadyUpdated {
             get {
                 return ResourceManager.GetString("ItemAlreadyUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Before configuring the work item type field mappings, please set the Mapping Path..
+        /// </summary>
+        internal static string MappingPath {
+            get {
+                return ResourceManager.GetString("MappingPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Mapping Path.
+        /// </summary>
+        internal static string MappingPathTitle {
+            get {
+                return ResourceManager.GetString("MappingPathTitle", resourceCulture);
             }
         }
         

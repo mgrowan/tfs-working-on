@@ -132,22 +132,12 @@
     <None Include="..\TfsWorkingOn.snk">
       <Link>TfsWorkingOn.snk</Link>
     </None>
-    <None Include="app.config" />
     <None Include="Properties\DataSources\Rowan.TfsWorkingOn.Connection.datasource" />
     <None Include="Properties\DataSources\Rowan.TfsWorkingOn.Estimates.datasource" />
     <None Include="Properties\DataSources\Rowan.TfsWorkingOn.SelectWorkItem.datasource" />
+    <None Include="Properties\DataSources\Rowan.TfsWorkingOn.Settings.datasource" />
     <None Include="Properties\DataSources\Rowan.TfsWorkingOn.WorkingItem.datasource" />
     <None Include="Properties\DataSources\Rowan.TfsWorkingOn.WorkingItemConfiguration.datasource" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Properties\Settings.cs" />
     <Compile Include="FormSetConnection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,6 +152,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\help.png" />
     <Content Include="WorkingOn.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

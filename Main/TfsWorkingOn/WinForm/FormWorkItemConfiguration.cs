@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
-using Rowan.TfsWorkingOn.WinForm.Properties;
 using Microsoft.TeamFoundation.Client;
+using Rowan.TfsWorkingOn.WinForm.Properties;
 
 namespace Rowan.TfsWorkingOn.WinForm
 {
@@ -16,14 +16,14 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void FormWorkItemConfiguration_Load(object sender, EventArgs e)
         {
-            //connectionBindingSource.DataSource = workingItemConfiguration.Connection;
             workingItemConfigurationBindingSource.DataSource = workingItemConfiguration;
-
-            // TODO: Update with new settings manager
-            TfsWorkingOn.Properties.Settings.Default.ConfigurationsPath = Settings.Default.ConfigurationsPath;
+            settingsBindingSource.DataSource = Settings.Default;
 
             comboBoxTfsServers.Items.AddRange(RegisteredServers.GetServerNames());
             workingItemConfiguration.Connection.Server = Settings.Default.TfsServer;
+            
+            toolTipHelp.SetToolTip(pictureBoxHelpUserActivity, Resources.HelpActivityMonitor);
+            toolTipHelp.SetToolTip(pictureBoxHelpNag, Resources.HelpNag);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -32,8 +32,6 @@ namespace Rowan.TfsWorkingOn.WinForm
             try
             {
                 workingItemConfiguration.Connection.Connect();
-
-                // TODO: Update with new Settings manager
                 Settings.Default.TfsServer = workingItemConfiguration.Connection.Server;
 
             }
@@ -46,7 +44,6 @@ namespace Rowan.TfsWorkingOn.WinForm
         private void buttonSave_Click(object sender, EventArgs e)
         {
             workingItemConfiguration.Save();
-            // TODO: Also Save settings
             Settings.Default.Save();
         }
 
@@ -54,9 +51,7 @@ namespace Rowan.TfsWorkingOn.WinForm
         {
             if (folderBrowserDialog.ShowDialog(this) == DialogResult.OK)
             {
-                // TODO: New Settings Manager
                 Settings.Default.ConfigurationsPath = folderBrowserDialog.SelectedPath;
-                Settings.Default.Save();
             }
         }
 
@@ -68,6 +63,15 @@ namespace Rowan.TfsWorkingOn.WinForm
         private void linkLabelAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(linkLabelAbout.Text);
+        }
+
+        private void tabControlConfiguration_Selecting(object sender, TabControlCancelEventArgs e)
+        {
+            if (e.TabPage == tabPageMappings && string.IsNullOrEmpty(Settings.Default.ConfigurationsPath))
+            {
+                MessageBox.Show(Resources.MappingPath, Resources.MappingPathTitle, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                tabControlConfiguration.SelectedTab = tabPageOptions;
+            }
         }
     }
 }

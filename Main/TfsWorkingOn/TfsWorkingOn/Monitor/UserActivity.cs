@@ -62,7 +62,7 @@ namespace Rowan.TfsWorkingOn.Monitor
         /// Constructs a new timer to track the idle/activity status of the user.
         /// Defaults to 60-second idle threshold in a disabled state
         /// </summary>
-        public UserActivity() : this(Settings.Default.UserActivityIdleTimeoutSeconds * 1000) {}
+        public UserActivity() : this(Settings.Default.UserActivityIdleTimeoutMinutes * 60000) {}
 
         /// <summary>
         /// Constructs a new timer to track the idle/activity status of the user.

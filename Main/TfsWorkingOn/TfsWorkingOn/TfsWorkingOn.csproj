@@ -73,24 +73,14 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.cs" />
     <Compile Include="Connection.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="WorkingItem.cs" />
     <Compile Include="WorkingItemConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\TfsWorkingOn.snk">
       <Link>TfsWorkingOn.snk</Link>
-    </None>
-    <None Include="app.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>PublicSettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
   <ItemGroup>
