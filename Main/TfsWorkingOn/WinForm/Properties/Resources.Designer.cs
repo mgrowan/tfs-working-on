@@ -307,6 +307,27 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
             }
         }
         
+        internal static System.Drawing.Icon Stopwatch_Blue {
+            get {
+                object obj = ResourceManager.GetObject("Stopwatch_Blue", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon Stopwatch_Green {
+            get {
+                object obj = ResourceManager.GetObject("Stopwatch_Green", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Icon Stopwatch_Red {
+            get {
+                object obj = ResourceManager.GetObject("Stopwatch_Red", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         /// <summary>
         ///   Looks up a localized string similar to Do you wish to stop working on Work Item: {0}?.
         /// </summary>

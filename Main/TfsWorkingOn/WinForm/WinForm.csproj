@@ -154,6 +154,9 @@
   <ItemGroup>
     <None Include="Resources\help.png" />
     <None Include="Resources\tfsworkingon.png" />
+    <None Include="Resources\Stopwatch-Green.ico" />
+    <None Include="Resources\Stopwatch-Red.ico" />
+    <None Include="Resources\Stopwatch-Blue.ico" />
     <Content Include="WorkingOn.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,7 +15,7 @@ namespace Rowan.TfsWorkingOn.Monitor
         /// Constructs a new timer to track the idle/activity status of the user.
         /// Defaults to 60-second idle threshold in a disabled state
         /// </summary>
-        public Nag() : this(Settings.Default.NagIntervalMinutes * 60000) {}
+        public Nag() : this(Settings.Default.NagIntervalMinutes * 60000) { }
 
         /// <summary>
         /// Constructs a new timer to track the idle/activity status of the user.
@@ -70,7 +70,7 @@ namespace Rowan.TfsWorkingOn.Monitor
         /// <param name="userState">Ignored - required for ThreadStart delegate</param>
         private void RaiseNag(object userState)
         {
-            OnMonitorTriggered(new MonitorEventArgs { MonitorType = GetType(), Reason = string.Format(CultureInfo.CurrentCulture, Resources.NagTriggeredEventReason, Interval / 1000), Details = Resources.NagMonitorDetails });
+            OnMonitorTriggered(new MonitorEventArgs { MonitorType = GetType(), Reason = Resources.NagTriggeredEventReason, Details = Resources.NagMonitorDetails });
         }
 
 
@@ -93,7 +93,7 @@ namespace Rowan.TfsWorkingOn.Monitor
         #region IComponent Members
 
         public event EventHandler Disposed;
-        
+
         public ISite Site { get; set; }
 
         #endregion

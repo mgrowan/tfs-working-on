@@ -80,7 +80,7 @@ namespace Rowan.TfsWorkingOn.WinForm
                 Show();
                 return;
             }
-            
+
             FormSearchWorkItems formSearchWorkItems = new FormSearchWorkItems(_connection.WorkItemStore, _connection.SelectedProjectName);
             formSearchWorkItems.WorkingItem.PropertyChanged += new PropertyChangedEventHandler(formSearchWorkItems_WorkingItem_PropertyChanged);
             formSearchWorkItems.Show();
@@ -94,19 +94,21 @@ namespace Rowan.TfsWorkingOn.WinForm
                 return;
             }
 
-            if (_workingItem.Started)
+            if (_workingItem.Started) // Stop
             {
-                _nag.Stop();
+                _nag.Start();
                 startToolStripMenuItem.Text = Resources.Start;
                 notifyIcon.Text = NotifyIconText;
                 notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.StoppedWorkingOn, _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture));
+                notifyIcon.Icon = Resources.Stopwatch_Red;
             }
-            else
+            else // Start
             {
-                _nag.Start();
+                _nag.Stop();
                 startToolStripMenuItem.Text = Resources.Stop;
                 notifyIcon.Text = NotifyIconText + _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture);
                 notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.StartedWorkingOn, _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture));
+                notifyIcon.Icon = Resources.Stopwatch_Green;
             }
             _workingItem.StartStop();
             notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
