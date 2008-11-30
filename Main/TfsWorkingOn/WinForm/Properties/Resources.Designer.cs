@@ -164,6 +164,15 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select what you are working on!.
+        /// </summary>
+        internal static string NagMessage {
+            get {
+                return ResourceManager.GetString("NagMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to TFS Working On....
         /// </summary>
         internal static string NotifyIconText {
@@ -304,6 +313,13 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         internal static string StopWorkingOnWorkItem {
             get {
                 return ResourceManager.GetString("StopWorkingOnWorkItem", resourceCulture);
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tfsworkingon {
+            get {
+                object obj = ResourceManager.GetObject("tfsworkingon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

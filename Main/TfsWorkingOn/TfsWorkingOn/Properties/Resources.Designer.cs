@@ -88,6 +88,42 @@ namespace Rowan.TfsWorkingOn.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The nag monitor triggers continuously at a set interval if no work item is being worked on..
+        /// </summary>
+        internal static string NagMonitorDetails {
+            get {
+                return ResourceManager.GetString("NagMonitorDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The nag monitor was manually started..
+        /// </summary>
+        internal static string NagMonitorStartedEventReason {
+            get {
+                return ResourceManager.GetString("NagMonitorStartedEventReason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The nag monitor was manually stopped..
+        /// </summary>
+        internal static string NagMonitorStoppedEventReason {
+            get {
+                return ResourceManager.GetString("NagMonitorStoppedEventReason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The nag interval has occurred..
+        /// </summary>
+        internal static string NagTriggeredEventReason {
+            get {
+                return ResourceManager.GetString("NagTriggeredEventReason", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Server.
         /// </summary>
         internal static string Server {

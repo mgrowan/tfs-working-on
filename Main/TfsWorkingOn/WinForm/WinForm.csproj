@@ -153,6 +153,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\help.png" />
+    <None Include="Resources\tfsworkingon.png" />
     <Content Include="WorkingOn.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

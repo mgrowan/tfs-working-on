@@ -12,6 +12,7 @@ namespace Rowan.TfsWorkingOn.WinForm
     {
         private Connection _connection = new Connection();
         private WorkingItem _workingItem;
+        private Nag _nag = new Nag();
 
         private bool _exiting;
         private static string NotifyIconText = Resources.NotifyIconText;
@@ -25,6 +26,10 @@ namespace Rowan.TfsWorkingOn.WinForm
             comboBoxTfsServers.Items.AddRange(RegisteredServers.GetServerNames());
 
             _connection.Server = Settings.Default.TfsServer;
+
+            _nag.MonitorTriggeredEvent += new EventHandler<MonitorEventArgs>(_nag_MonitorTriggeredEvent);
+            components.Add(_nag);
+            _nag.Start();
             try
             {
                 if (!string.IsNullOrEmpty(_connection.Server))
@@ -48,6 +53,7 @@ namespace Rowan.TfsWorkingOn.WinForm
                 _connection.SelectedProjectId = Settings.Default.SelectedProjectId;
                 _connection.SelectedProjectName = Settings.Default.SelectedProjectName;
                 Hide();
+                ShowSearchForm();
             }
             else
             {
@@ -90,12 +96,14 @@ namespace Rowan.TfsWorkingOn.WinForm
 
             if (_workingItem.Started)
             {
+                _nag.Stop();
                 startToolStripMenuItem.Text = Resources.Start;
                 notifyIcon.Text = NotifyIconText;
                 notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.StoppedWorkingOn, _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture));
             }
             else
             {
+                _nag.Start();
                 startToolStripMenuItem.Text = Resources.Stop;
                 notifyIcon.Text = NotifyIconText + _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture);
                 notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.StartedWorkingOn, _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture));
@@ -123,6 +131,12 @@ namespace Rowan.TfsWorkingOn.WinForm
                 notifyIcon.Text = string.Format(CultureInfo.CurrentCulture, "{0} {1}{2}", Resources.Resumed, NotifyIconText, _workingItem.WorkItem.Id);
                 notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.ResumedWorkingOn, _workingItem.WorkItem.Id);
             }
+            notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
+        }
+
+        void _nag_MonitorTriggeredEvent(object sender, MonitorEventArgs e)
+        {
+            notifyIcon.BalloonTipText = Resources.NagMessage;
             notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
         }
 

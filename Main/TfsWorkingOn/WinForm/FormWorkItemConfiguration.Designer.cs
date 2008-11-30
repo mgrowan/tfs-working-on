@@ -534,9 +534,10 @@
             // 
             // pictureBoxAbout
             // 
-            this.pictureBoxAbout.Location = new System.Drawing.Point(7, 6);
+            this.pictureBoxAbout.Image = global::Rowan.TfsWorkingOn.WinForm.Properties.Resources.tfsworkingon;
+            this.pictureBoxAbout.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxAbout.Name = "pictureBoxAbout";
-            this.pictureBoxAbout.Size = new System.Drawing.Size(420, 131);
+            this.pictureBoxAbout.Size = new System.Drawing.Size(434, 137);
             this.pictureBoxAbout.TabIndex = 2;
             this.pictureBoxAbout.TabStop = false;
             // 

@@ -67,6 +67,7 @@
     <Compile Include="Estimates.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Monitor\MonitorBase.cs" />
+    <Compile Include="Monitor\Nag.cs" />
     <Compile Include="Monitor\UserActivity.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>

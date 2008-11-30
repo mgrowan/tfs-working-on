@@ -126,6 +126,18 @@
   <data name="FileName" xml:space="preserve">
     <value>{0} - {1}.WorkingOn</value>
   </data>
+  <data name="NagMonitorDetails" xml:space="preserve">
+    <value>The nag monitor triggers continuously at a set interval if no work item is being worked on.</value>
+  </data>
+  <data name="NagMonitorStartedEventReason" xml:space="preserve">
+    <value>The nag monitor was manually started.</value>
+  </data>
+  <data name="NagMonitorStoppedEventReason" xml:space="preserve">
+    <value>The nag monitor was manually stopped.</value>
+  </data>
+  <data name="NagTriggeredEventReason" xml:space="preserve">
+    <value>The nag interval has occurred.</value>
+  </data>
   <data name="Server" xml:space="preserve">
     <value>Server</value>
   </data>
