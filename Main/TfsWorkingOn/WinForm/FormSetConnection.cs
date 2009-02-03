@@ -20,6 +20,7 @@ namespace Rowan.TfsWorkingOn.WinForm
         public FormSetConnection()
         {
             InitializeComponent();
+            Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
 
             connectionBindingSource.DataSource = _connection;
             comboBoxTfsServers.Items.AddRange(RegisteredServers.GetServerNames());
@@ -196,6 +197,11 @@ namespace Rowan.TfsWorkingOn.WinForm
             }
         }
 
+        void Application_ApplicationExit(object sender, EventArgs e)
+        {
+            if (_workingItem != null && _workingItem.Started) _workingItem.StartStop();
+            notifyIcon.Dispose();
+        }
         #endregion events
 
         #region System Tray Menu Clicks
@@ -212,7 +218,6 @@ namespace Rowan.TfsWorkingOn.WinForm
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _exiting = true;
-            notifyIcon.Dispose();
             Application.Exit();
         }
 
