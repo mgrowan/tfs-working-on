@@ -15,7 +15,6 @@ namespace Rowan.TfsWorkingOn.WinForm
         private Nag _nag = new Nag();
 
         private bool _exiting;
-        private static string NotifyIconText = Resources.NotifyIconText;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public FormSetConnection()
@@ -98,16 +97,18 @@ namespace Rowan.TfsWorkingOn.WinForm
             {
                 _nag.Start();
                 startToolStripMenuItem.Text = Resources.Start;
-                notifyIcon.Text = NotifyIconText;
-                notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.StoppedWorkingOn, _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture));
+                notifyIcon.Text = GetStringWithEllipsis(Resources.NotifyIconText + _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture) + "\n" + _workingItem.WorkItem.Title, 63);
+                notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.StoppedWorkingOn,
+                    _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture), GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
                 notifyIcon.Icon = Resources.Stopwatch_Red;
             }
             else // Start
             {
                 _nag.Stop();
                 startToolStripMenuItem.Text = Resources.Stop;
-                notifyIcon.Text = NotifyIconText + _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture);
-                notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.StartedWorkingOn, _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture));
+                notifyIcon.Text = GetStringWithEllipsis(Resources.NotifyIconText + _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture) + "\n" + _workingItem.WorkItem.Title, 63);
+                notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.StartedWorkingOn,
+                    _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture), GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
                 notifyIcon.Icon = Resources.Stopwatch_Green;
             }
             _workingItem.StartStop();
@@ -123,17 +124,22 @@ namespace Rowan.TfsWorkingOn.WinForm
             if (userActivity.UserActiveState == UserActivityState.Inactive)
             {
                 _workingItem.Pause(e.Reason);
-                notifyIcon.Text = string.Format(CultureInfo.CurrentCulture, "{0} {1}{2}", Resources.Paused, NotifyIconText, _workingItem.WorkItem.Id);
-                notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.PausedWorkingOn, _workingItem.WorkItem.Id);
+                notifyIcon.Text = string.Format(CultureInfo.CurrentCulture, "{0} {1}{2}\n{3}", Resources.Paused, Resources.NotifyIconText, _workingItem.WorkItem.Id, GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
+                notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.PausedWorkingOn, _workingItem.WorkItem.Id, GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
                 notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
             }
             else if (userActivity.UserActiveState == UserActivityState.Active)
             {
                 _workingItem.Resume();
-                notifyIcon.Text = string.Format(CultureInfo.CurrentCulture, "{0} {1}{2}", Resources.Resumed, NotifyIconText, _workingItem.WorkItem.Id);
-                notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.ResumedWorkingOn, _workingItem.WorkItem.Id);
+                notifyIcon.Text = string.Format(CultureInfo.CurrentCulture, "{0} {1}{2}\n{3}", Resources.Resumed, Resources.NotifyIconText, _workingItem.WorkItem.Id, GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
+                notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.ResumedWorkingOn, _workingItem.WorkItem.Id, GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
             }
             notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
+        }
+
+        private static string GetStringWithEllipsis(string text, int length)
+        {
+            return text.Length > length ? string.Concat(text.Substring(0, length - 3), "...") : text;
         }
 
         void _nag_MonitorTriggeredEvent(object sender, MonitorEventArgs e)
@@ -183,6 +189,7 @@ namespace Rowan.TfsWorkingOn.WinForm
                     _workingItem.Connection = _connection;
                     _workingItem.UserActivityMonitor.MonitorTriggeredEvent += new EventHandler<MonitorEventArgs>(_userActivity_MonitorTriggeredEvent);
                     selectedToolStripMenuItem.Text = string.Format(CultureInfo.CurrentCulture, Resources.Selected, _workingItem.WorkItem.Id);
+                    selectedToolStripMenuItem.ToolTipText = _workingItem.WorkItem.Title;
                     selectedToolStripMenuItem.Enabled = true;
                     StartStop();
                 }

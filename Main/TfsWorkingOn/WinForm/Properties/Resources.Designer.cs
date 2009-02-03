@@ -200,7 +200,7 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Paused Working On.
+        ///   Looks up a localized string similar to Paused Working On {0}: {1}.
         /// </summary>
         internal static string PausedWorkingOn {
             get {
@@ -227,7 +227,7 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Resumed Working On.
+        ///   Looks up a localized string similar to Resumed Working On {0}: {1}.
         /// </summary>
         internal static string ResumedWorkingOn {
             get {
@@ -272,7 +272,8 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Started working on {0}.
+        ///   Looks up a localized string similar to Started working on {0}: 
+        ///{1}.
         /// </summary>
         internal static string StartedWorkingOn {
             get {
@@ -299,7 +300,8 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Stopped working on {0}.
+        ///   Looks up a localized string similar to Stopped working on {0}: 
+        ///{1}.
         /// </summary>
         internal static string StoppedWorkingOn {
             get {

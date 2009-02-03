@@ -134,7 +134,8 @@
     <value>Double click the work item you are working on...</value>
   </data>
   <data name="StartedWorkingOn" xml:space="preserve">
-    <value>Started working on {0}</value>
+    <value>Started working on {0}: 
+{1}</value>
   </data>
   <data name="FailedToConnect" xml:space="preserve">
     <value>Failed to connect: {0}</value>
@@ -173,7 +174,7 @@ if no work item is being worked on. </value>
     <value>Set Mapping Path</value>
   </data>
   <data name="ResumedWorkingOn" xml:space="preserve">
-    <value>Resumed Working On</value>
+    <value>Resumed Working On {0}: {1}</value>
   </data>
   <data name="StopWorkingOnWorkItem" xml:space="preserve">
     <value>Do you wish to stop working on Work Item: {0}?</value>
@@ -191,10 +192,11 @@ if no work item is being worked on. </value>
     <value>Save Changes</value>
   </data>
   <data name="StoppedWorkingOn" xml:space="preserve">
-    <value>Stopped working on {0}</value>
+    <value>Stopped working on {0}: 
+{1}</value>
   </data>
   <data name="PausedWorkingOn" xml:space="preserve">
-    <value>Paused Working On</value>
+    <value>Paused Working On {0}: {1}</value>
   </data>
   <data name="StopCurrentWorkItem" xml:space="preserve">
     <value>Stop current Work Item</value>
