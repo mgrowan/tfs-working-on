@@ -22,205 +22,151 @@
         "Entry"
         {
         "MsmKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
-        "OwnerKey" = "8:_6C5ED8E7303986A6C76A1A3226D8EF3A"
+        "OwnerKey" = "8:_F63553561E17D5228A8BC65515DB7533"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
-        "OwnerKey" = "8:_BFA8367CABAC451F53345B7445E9E520"
+        "OwnerKey" = "8:_6F9B4CF8668086456461EF5F9CE441CE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_2A5F027821AE0E74FCA123780D460F0C"
-        "OwnerKey" = "8:_D10406CEEA9027C5A40846E8AA20EB2C"
+        "OwnerKey" = "8:_88319ABF3CF91774CA73E0E1C47A004A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_313BB0163B8C6C29CDF76E556329267B"
-        "OwnerKey" = "8:_77A3E74BE332101916574DA488062857"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_313BB0163B8C6C29CDF76E556329267B"
-        "OwnerKey" = "8:_92D83DF75F50FFB9B44A56643AB3F645"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_313BB0163B8C6C29CDF76E556329267B"
-        "OwnerKey" = "8:_3C73EDB66334C4757D3C6BD3F102CF94"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_313BB0163B8C6C29CDF76E556329267B"
+        "MsmKey" = "8:_3E1B0D4697095B8C3B057D84651BA8C9"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_381A382B15AE9EA2A270A0262485751A"
-        "OwnerKey" = "8:_68AF893CCAD349CF089B29D88B9D2285"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_381A382B15AE9EA2A270A0262485751A"
+        "MsmKey" = "8:_4797565840482F8B408BC457589E8178"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3C73EDB66334C4757D3C6BD3F102CF94"
+        "MsmKey" = "8:_4797565840482F8B408BC457589E8178"
+        "OwnerKey" = "8:_3E1B0D4697095B8C3B057D84651BA8C9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4797565840482F8B408BC457589E8178"
+        "OwnerKey" = "8:_DA9505482D3BD003BEC8E9BAD7EB85F9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4797565840482F8B408BC457589E8178"
+        "OwnerKey" = "8:_7578CE83AB5059BA1A0256952D8613F8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6F9B4CF8668086456461EF5F9CE441CE"
+        "OwnerKey" = "8:_F63553561E17D5228A8BC65515DB7533"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_6F9B4CF8668086456461EF5F9CE441CE"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_3C73EDB66334C4757D3C6BD3F102CF94"
-        "OwnerKey" = "8:_92D83DF75F50FFB9B44A56643AB3F645"
+        "MsmKey" = "8:_6F9B4CF8668086456461EF5F9CE441CE"
+        "OwnerKey" = "8:_E664D1C08ECAB430195D779785F302B2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_68AF893CCAD349CF089B29D88B9D2285"
-        "OwnerKey" = "8:_313BB0163B8C6C29CDF76E556329267B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_68AF893CCAD349CF089B29D88B9D2285"
-        "OwnerKey" = "8:_92D83DF75F50FFB9B44A56643AB3F645"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_68AF893CCAD349CF089B29D88B9D2285"
+        "MsmKey" = "8:_7578CE83AB5059BA1A0256952D8613F8"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_68AF893CCAD349CF089B29D88B9D2285"
-        "OwnerKey" = "8:_77A3E74BE332101916574DA488062857"
+        "MsmKey" = "8:_7578CE83AB5059BA1A0256952D8613F8"
+        "OwnerKey" = "8:_DA9505482D3BD003BEC8E9BAD7EB85F9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6C5ED8E7303986A6C76A1A3226D8EF3A"
-        "OwnerKey" = "8:_381A382B15AE9EA2A270A0262485751A"
+        "MsmKey" = "8:_774E6C31F6D272A8B29B935CE9C20C73"
+        "OwnerKey" = "8:_6F9B4CF8668086456461EF5F9CE441CE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6C5ED8E7303986A6C76A1A3226D8EF3A"
-        "OwnerKey" = "8:_B547A50E6F4C2168B50809529A118EAF"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6C5ED8E7303986A6C76A1A3226D8EF3A"
-        "OwnerKey" = "8:_92D83DF75F50FFB9B44A56643AB3F645"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_6C5ED8E7303986A6C76A1A3226D8EF3A"
+        "MsmKey" = "8:_774E6C31F6D272A8B29B935CE9C20C73"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_6C5ED8E7303986A6C76A1A3226D8EF3A"
-        "OwnerKey" = "8:_3C73EDB66334C4757D3C6BD3F102CF94"
+        "MsmKey" = "8:_87D44DEC689C592B7AFAAC6D34BED4DE"
+        "OwnerKey" = "8:_A56ECDB84B57357EB8CA7C51802FCBB2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_77A3E74BE332101916574DA488062857"
+        "MsmKey" = "8:_87D44DEC689C592B7AFAAC6D34BED4DE"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_77A3E74BE332101916574DA488062857"
-        "OwnerKey" = "8:_B547A50E6F4C2168B50809529A118EAF"
+        "MsmKey" = "8:_88319ABF3CF91774CA73E0E1C47A004A"
+        "OwnerKey" = "8:_6F9B4CF8668086456461EF5F9CE441CE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_77A3E74BE332101916574DA488062857"
-        "OwnerKey" = "8:_92D83DF75F50FFB9B44A56643AB3F645"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_77A3E74BE332101916574DA488062857"
-        "OwnerKey" = "8:_3C73EDB66334C4757D3C6BD3F102CF94"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_92D83DF75F50FFB9B44A56643AB3F645"
+        "MsmKey" = "8:_88319ABF3CF91774CA73E0E1C47A004A"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B457E47FED9530E7F53E6AF72FB3A180"
-        "OwnerKey" = "8:_6C5ED8E7303986A6C76A1A3226D8EF3A"
+        "MsmKey" = "8:_A56ECDB84B57357EB8CA7C51802FCBB2"
+        "OwnerKey" = "8:_DD7106B7292C472A3D099D13E87A35A4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B457E47FED9530E7F53E6AF72FB3A180"
-        "OwnerKey" = "8:_92D83DF75F50FFB9B44A56643AB3F645"
+        "MsmKey" = "8:_A56ECDB84B57357EB8CA7C51802FCBB2"
+        "OwnerKey" = "8:_DA9505482D3BD003BEC8E9BAD7EB85F9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B457E47FED9530E7F53E6AF72FB3A180"
+        "MsmKey" = "8:_A56ECDB84B57357EB8CA7C51802FCBB2"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_B547A50E6F4C2168B50809529A118EAF"
+        "MsmKey" = "8:_A56ECDB84B57357EB8CA7C51802FCBB2"
+        "OwnerKey" = "8:_4797565840482F8B408BC457589E8178"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BD500B4F24B61B35A36F0DDD6980F302"
+        "OwnerKey" = "8:_6F9B4CF8668086456461EF5F9CE441CE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BD500B4F24B61B35A36F0DDD6980F302"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B9B65DF7C9C4C244DC9C89021E6D1BA7"
-        "OwnerKey" = "8:_381A382B15AE9EA2A270A0262485751A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_B9B65DF7C9C4C244DC9C89021E6D1BA7"
-        "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_BFA8367CABAC451F53345B7445E9E520"
-        "OwnerKey" = "8:_6C5ED8E7303986A6C76A1A3226D8EF3A"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_BFA8367CABAC451F53345B7445E9E520"
-        "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_BFA8367CABAC451F53345B7445E9E520"
-        "OwnerKey" = "8:_B457E47FED9530E7F53E6AF72FB3A180"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -237,38 +183,92 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D10406CEEA9027C5A40846E8AA20EB2C"
-        "OwnerKey" = "8:_BFA8367CABAC451F53345B7445E9E520"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_D10406CEEA9027C5A40846E8AA20EB2C"
+        "MsmKey" = "8:_DA9505482D3BD003BEC8E9BAD7EB85F9"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E0427FA2513554D87FBC0CC7746272D8"
-        "OwnerKey" = "8:_BFA8367CABAC451F53345B7445E9E520"
+        "MsmKey" = "8:_DD7106B7292C472A3D099D13E87A35A4"
+        "OwnerKey" = "8:_4797565840482F8B408BC457589E8178"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E0427FA2513554D87FBC0CC7746272D8"
+        "MsmKey" = "8:_DD7106B7292C472A3D099D13E87A35A4"
+        "OwnerKey" = "8:_DA9505482D3BD003BEC8E9BAD7EB85F9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DD7106B7292C472A3D099D13E87A35A4"
+        "OwnerKey" = "8:_7578CE83AB5059BA1A0256952D8613F8"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_DD7106B7292C472A3D099D13E87A35A4"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F7815F4B731704A9DB1C25E247162C67"
-        "OwnerKey" = "8:_BFA8367CABAC451F53345B7445E9E520"
+        "MsmKey" = "8:_E664D1C08ECAB430195D779785F302B2"
+        "OwnerKey" = "8:_F63553561E17D5228A8BC65515DB7533"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F7815F4B731704A9DB1C25E247162C67"
+        "MsmKey" = "8:_E664D1C08ECAB430195D779785F302B2"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E664D1C08ECAB430195D779785F302B2"
+        "OwnerKey" = "8:_DA9505482D3BD003BEC8E9BAD7EB85F9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F5B1B76438BEC77455A6EB6B6FC90991"
+        "OwnerKey" = "8:_87D44DEC689C592B7AFAAC6D34BED4DE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F5B1B76438BEC77455A6EB6B6FC90991"
+        "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F63553561E17D5228A8BC65515DB7533"
+        "OwnerKey" = "8:_87D44DEC689C592B7AFAAC6D34BED4DE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F63553561E17D5228A8BC65515DB7533"
+        "OwnerKey" = "8:_3E1B0D4697095B8C3B057D84651BA8C9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F63553561E17D5228A8BC65515DB7533"
+        "OwnerKey" = "8:_DA9505482D3BD003BEC8E9BAD7EB85F9"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F63553561E17D5228A8BC65515DB7533"
+        "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F63553561E17D5228A8BC65515DB7533"
+        "OwnerKey" = "8:_7578CE83AB5059BA1A0256952D8613F8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -280,91 +280,91 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B547A50E6F4C2168B50809529A118EAF"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_C5FA5F18F04240A68B4352E95FC23193"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_92D83DF75F50FFB9B44A56643AB3F645"
+        "OwnerKey" = "8:_3E1B0D4697095B8C3B057D84651BA8C9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3C73EDB66334C4757D3C6BD3F102CF94"
+        "OwnerKey" = "8:_DA9505482D3BD003BEC8E9BAD7EB85F9"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_77A3E74BE332101916574DA488062857"
+        "OwnerKey" = "8:_7578CE83AB5059BA1A0256952D8613F8"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_313BB0163B8C6C29CDF76E556329267B"
+        "OwnerKey" = "8:_4797565840482F8B408BC457589E8178"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_68AF893CCAD349CF089B29D88B9D2285"
+        "OwnerKey" = "8:_DD7106B7292C472A3D099D13E87A35A4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_381A382B15AE9EA2A270A0262485751A"
+        "OwnerKey" = "8:_A56ECDB84B57357EB8CA7C51802FCBB2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_6C5ED8E7303986A6C76A1A3226D8EF3A"
+        "OwnerKey" = "8:_87D44DEC689C592B7AFAAC6D34BED4DE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B457E47FED9530E7F53E6AF72FB3A180"
+        "OwnerKey" = "8:_F63553561E17D5228A8BC65515DB7533"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BFA8367CABAC451F53345B7445E9E520"
+        "OwnerKey" = "8:_E664D1C08ECAB430195D779785F302B2"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E0427FA2513554D87FBC0CC7746272D8"
+        "OwnerKey" = "8:_6F9B4CF8668086456461EF5F9CE441CE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_F7815F4B731704A9DB1C25E247162C67"
+        "OwnerKey" = "8:_BD500B4F24B61B35A36F0DDD6980F302"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D10406CEEA9027C5A40846E8AA20EB2C"
+        "OwnerKey" = "8:_774E6C31F6D272A8B29B935CE9C20C73"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B9B65DF7C9C4C244DC9C89021E6D1BA7"
+        "OwnerKey" = "8:_88319ABF3CF91774CA73E0E1C47A004A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_F5B1B76438BEC77455A6EB6B6FC90991"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -503,262 +503,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_313BB0163B8C6C29CDF76E556329267B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3E1B0D4697095B8C3B057D84651BA8C9"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Rowan.TfsWorkingOn, Version=1.1.3322.14905, Culture=neutral, PublicKeyToken=5374c8350fd1106d, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_313BB0163B8C6C29CDF76E556329267B"
-                    {
-                    "Name" = "8:Microsoft.TeamFoundation.Common.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.TeamFoundation.Common.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_381A382B15AE9EA2A270A0262485751A"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.VersionControl.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_381A382B15AE9EA2A270A0262485751A"
-                    {
-                    "Name" = "8:Microsoft.TeamFoundation.VersionControl.Client.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.TeamFoundation.VersionControl.Client.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3C73EDB66334C4757D3C6BD3F102CF94"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.Common.Library, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_3C73EDB66334C4757D3C6BD3F102CF94"
-                    {
-                    "Name" = "8:Microsoft.TeamFoundation.Common.Library.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.TeamFoundation.Common.Library.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_68AF893CCAD349CF089B29D88B9D2285"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_68AF893CCAD349CF089B29D88B9D2285"
-                    {
-                    "Name" = "8:Microsoft.TeamFoundation.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.TeamFoundation.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6C5ED8E7303986A6C76A1A3226D8EF3A"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_6C5ED8E7303986A6C76A1A3226D8EF3A"
-                    {
-                    "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_77A3E74BE332101916574DA488062857"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_77A3E74BE332101916574DA488062857"
-                    {
-                    "Name" = "8:Microsoft.TeamFoundation.Client.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.TeamFoundation.Client.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_92D83DF75F50FFB9B44A56643AB3F645"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Controls, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_92D83DF75F50FFB9B44A56643AB3F645"
-                    {
-                    "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Controls.DLL"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Controls.DLL"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B457E47FED9530E7F53E6AF72FB3A180"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_B457E47FED9530E7F53E6AF72FB3A180"
-                    {
-                    "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B547A50E6F4C2168B50809529A118EAF"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Rowan.TfsWorkingOn, Version=1.1.3182.185, Culture=neutral, PublicKeyToken=0794166e0f23b3e6, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_B547A50E6F4C2168B50809529A118EAF"
+                    "_3E1B0D4697095B8C3B057D84651BA8C9"
                     {
                     "Name" = "8:Rowan.TfsWorkingOn.dll"
                     "Attributes" = "3:512"
@@ -782,20 +534,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B9B65DF7C9C4C244DC9C89021E6D1BA7"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_4797565840482F8B408BC457589E8178"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.VersionControl.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_B9B65DF7C9C4C244DC9C89021E6D1BA7"
+                    "_4797565840482F8B408BC457589E8178"
                     {
-                    "Name" = "8:Microsoft.TeamFoundation.VersionControl.Common.dll"
+                    "Name" = "8:Microsoft.TeamFoundation.Client.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Microsoft.TeamFoundation.VersionControl.Common.dll"
+            "SourcePath" = "8:Microsoft.TeamFoundation.Client.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
@@ -813,20 +565,206 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BFA8367CABAC451F53345B7445E9E520"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_6F9B4CF8668086456461EF5F9CE441CE"
             {
             "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyIsInGAC" = "11:TRUE"
             "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_BFA8367CABAC451F53345B7445E9E520"
+                    "_6F9B4CF8668086456461EF5F9CE441CE"
                     {
                     "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore.dll"
                     "Attributes" = "3:512"
                     }
                 }
             "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.DataStore.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_7578CE83AB5059BA1A0256952D8613F8"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.Common.Library, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_7578CE83AB5059BA1A0256952D8613F8"
+                    {
+                    "Name" = "8:Microsoft.TeamFoundation.Common.Library.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Microsoft.TeamFoundation.Common.Library.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_774E6C31F6D272A8B29B935CE9C20C73"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:TRUE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.Provision, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_774E6C31F6D272A8B29B935CE9C20C73"
+                    {
+                    "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_87D44DEC689C592B7AFAAC6D34BED4DE"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.VersionControl.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_87D44DEC689C592B7AFAAC6D34BED4DE"
+                    {
+                    "Name" = "8:Microsoft.TeamFoundation.VersionControl.Client.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Microsoft.TeamFoundation.VersionControl.Client.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_88319ABF3CF91774CA73E0E1C47A004A"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:TRUE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.Cache, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_88319ABF3CF91774CA73E0E1C47A004A"
+                    {
+                    "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A56ECDB84B57357EB8CA7C51802FCBB2"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_A56ECDB84B57357EB8CA7C51802FCBB2"
+                    {
+                    "Name" = "8:Microsoft.TeamFoundation.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Microsoft.TeamFoundation.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BD500B4F24B61B35A36F0DDD6980F302"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:TRUE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_BD500B4F24B61B35A36F0DDD6980F302"
+                    {
+                    "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
@@ -864,20 +802,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D10406CEEA9027C5A40846E8AA20EB2C"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DA9505482D3BD003BEC8E9BAD7EB85F9"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.Cache, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Controls, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_D10406CEEA9027C5A40846E8AA20EB2C"
+                    "_DA9505482D3BD003BEC8E9BAD7EB85F9"
                     {
-                    "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll"
+                    "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Controls.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.Cache.dll"
+            "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Controls.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
@@ -895,20 +833,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E0427FA2513554D87FBC0CC7746272D8"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_DD7106B7292C472A3D099D13E87A35A4"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E0427FA2513554D87FBC0CC7746272D8"
+                    "_DD7106B7292C472A3D099D13E87A35A4"
                     {
-                    "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll"
+                    "Name" = "8:Microsoft.TeamFoundation.Common.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.RuleEngine.dll"
+            "SourcePath" = "8:Microsoft.TeamFoundation.Common.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
@@ -926,20 +864,82 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F7815F4B731704A9DB1C25E247162C67"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E664D1C08ECAB430195D779785F302B2"
             {
             "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.Provision, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86"
+            "AssemblyIsInGAC" = "11:TRUE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_F7815F4B731704A9DB1C25E247162C67"
+                    "_E664D1C08ECAB430195D779785F302B2"
                     {
-                    "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll"
+                    "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.Provision.dll"
+            "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.QueryLanguage.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F5B1B76438BEC77455A6EB6B6FC90991"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.VersionControl.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_F5B1B76438BEC77455A6EB6B6FC90991"
+                    {
+                    "Name" = "8:Microsoft.TeamFoundation.VersionControl.Common.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Microsoft.TeamFoundation.VersionControl.Common.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F63553561E17D5228A8BC65515DB7533"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_F63553561E17D5228A8BC65515DB7533"
+                    {
+                    "Name" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Microsoft.TeamFoundation.WorkItemTracking.Client.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_7CC46D791A8348929F12DBE201E533B3"
@@ -1013,14 +1013,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:TFS Working On"
-        "ProductCode" = "8:{7DBAC3FE-D417-4AB1-9DD8-B423EA3BE1E4}"
-        "PackageCode" = "8:{1511D3BA-3FF3-48A0-B4C3-81158E5C9870}"
+        "ProductCode" = "8:{1DD257F6-0537-44D0-8BD5-7E4E745258BE}"
+        "PackageCode" = "8:{86D341B0-3929-408C-95D1-E4427A2717B3}"
         "UpgradeCode" = "8:{EC09BE0B-AF88-4234-BF50-0428CA90F70B}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.1.0"
+        "ProductVersion" = "8:1.2.0"
         "Manufacturer" = "8:Rowan"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
