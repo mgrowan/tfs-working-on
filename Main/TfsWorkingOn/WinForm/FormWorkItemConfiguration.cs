@@ -21,8 +21,9 @@ namespace Rowan.TfsWorkingOn.WinForm
 
             comboBoxTfsServers.Items.AddRange(RegisteredServers.GetServerNames());
             workingItemConfiguration.Connection.Server = Settings.Default.TfsServer;
-            
+
             toolTipHelp.SetToolTip(pictureBoxHelpUserActivity, Resources.HelpActivityMonitor);
+            toolTipHelp.SetToolTip(pictureBoxHelpPromptOnResume, Resources.HelpPromptOnResume);
             toolTipHelp.SetToolTip(pictureBoxHelpNag, Resources.HelpNag);
         }
 

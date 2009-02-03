@@ -37,8 +37,8 @@ namespace Rowan.TfsWorkingOn
         }
 
         public const string StopTimePropertyName = "StopTime";
-        private DateTime _stopTime;
-        public DateTime StopTime
+        private DateTime? _stopTime;
+        public DateTime? StopTime
         {
             get { return _stopTime; }
             set
@@ -121,7 +121,7 @@ namespace Rowan.TfsWorkingOn
 
         public void UpdateEstimates(string reason)
         {
-            TimeSpan interval = StopTime.Subtract(StartTime);
+            TimeSpan interval = StopTime.Value.Subtract(StartTime);
             Estimates.ElapsedTime += interval.TotalHours;
             Estimates.RemainingTime -= interval.TotalHours;
             if (Estimates.RemainingTime < 0) Estimates.RemainingTime = 0d;
@@ -193,13 +193,14 @@ namespace Rowan.TfsWorkingOn
         {
             if (Started) // Stop
             {
-                StopTime = DateTime.Now;
+                if (StopTime == null) StopTime = DateTime.Now;
                 UserActivityMonitor.Stop();
                 UpdateEstimates();
             }
             else // Start
             {
                 StartTime = DateTime.Now;
+                StopTime = null;
                 UserActivityMonitor.Start();
             }
             Started = !Started;
@@ -208,14 +209,22 @@ namespace Rowan.TfsWorkingOn
         public void Pause(string reason)
         {
             Paused = true;
-            StopTime = DateTime.Now;
-            UpdateEstimates(reason);
+            StopTime = DateTime.Now.Subtract(new TimeSpan(0, Settings.Default.UserActivityIdleTimeoutMinutes, 0));
+            if (!Settings.Default.PromptOnResume) UpdateEstimates(reason);
         }
 
-        public void Resume()
+        public void Resume(bool record)
         {
+            if (Settings.Default.PromptOnResume && !record)
+            {
+                UpdateEstimates(string.Format(CultureInfo.CurrentCulture, Resources.UserActivityMonitorTriggeredEventIdleReason, UserActivityMonitor.IdleThreshold / 1000));
+            }
+            if (!record)
+            {
+                StartTime = DateTime.Now;
+            }
             Paused = false;
-            StartTime = DateTime.Now;
+            StopTime = null;
         }
 
         #region IDisposable Members

@@ -39,6 +39,8 @@
             this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControlConfiguration = new System.Windows.Forms.TabControl();
             this.tabPageOptions = new System.Windows.Forms.TabPage();
+            this.pictureBoxHelpPromptOnResume = new System.Windows.Forms.PictureBox();
+            this.checkBoxPromptOnResume = new System.Windows.Forms.CheckBox();
             this.pictureBoxHelpNag = new System.Windows.Forms.PictureBox();
             this.pictureBoxHelpUserActivity = new System.Windows.Forms.PictureBox();
             this.checkBoxEnableNag = new System.Windows.Forms.CheckBox();
@@ -78,6 +80,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
             this.tabControlConfiguration.SuspendLayout();
             this.tabPageOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpPromptOnResume)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpNag)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpUserActivity)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNagInterval)).BeginInit();
@@ -170,6 +173,8 @@
             // 
             // tabPageOptions
             // 
+            this.tabPageOptions.Controls.Add(this.pictureBoxHelpPromptOnResume);
+            this.tabPageOptions.Controls.Add(this.checkBoxPromptOnResume);
             this.tabPageOptions.Controls.Add(this.pictureBoxHelpNag);
             this.tabPageOptions.Controls.Add(this.pictureBoxHelpUserActivity);
             this.tabPageOptions.Controls.Add(this.checkBoxEnableNag);
@@ -189,10 +194,31 @@
             this.tabPageOptions.Text = "Options";
             this.tabPageOptions.UseVisualStyleBackColor = true;
             // 
+            // pictureBoxHelpPromptOnResume
+            // 
+            this.pictureBoxHelpPromptOnResume.Image = global::Rowan.TfsWorkingOn.WinForm.Properties.Resources.helpImage;
+            this.pictureBoxHelpPromptOnResume.Location = new System.Drawing.Point(340, 61);
+            this.pictureBoxHelpPromptOnResume.Name = "pictureBoxHelpPromptOnResume";
+            this.pictureBoxHelpPromptOnResume.Size = new System.Drawing.Size(22, 22);
+            this.pictureBoxHelpPromptOnResume.TabIndex = 33;
+            this.pictureBoxHelpPromptOnResume.TabStop = false;
+            // 
+            // checkBoxPromptOnResume
+            // 
+            this.checkBoxPromptOnResume.AutoSize = true;
+            this.checkBoxPromptOnResume.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.settingsBindingSource, "PromptOnResume", true));
+            this.checkBoxPromptOnResume.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.settingsBindingSource, "MonitorUserActivity", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.checkBoxPromptOnResume.Location = new System.Drawing.Point(211, 61);
+            this.checkBoxPromptOnResume.Name = "checkBoxPromptOnResume";
+            this.checkBoxPromptOnResume.Size = new System.Drawing.Size(111, 17);
+            this.checkBoxPromptOnResume.TabIndex = 32;
+            this.checkBoxPromptOnResume.Text = "Prompt on resume";
+            this.checkBoxPromptOnResume.UseVisualStyleBackColor = true;
+            // 
             // pictureBoxHelpNag
             // 
             this.pictureBoxHelpNag.Image = global::Rowan.TfsWorkingOn.WinForm.Properties.Resources.helpImage;
-            this.pictureBoxHelpNag.Location = new System.Drawing.Point(340, 60);
+            this.pictureBoxHelpNag.Location = new System.Drawing.Point(340, 89);
             this.pictureBoxHelpNag.Name = "pictureBoxHelpNag";
             this.pictureBoxHelpNag.Size = new System.Drawing.Size(22, 22);
             this.pictureBoxHelpNag.TabIndex = 31;
@@ -211,7 +237,7 @@
             // 
             this.checkBoxEnableNag.AutoSize = true;
             this.checkBoxEnableNag.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.settingsBindingSource, "NagEnabled", true));
-            this.checkBoxEnableNag.Location = new System.Drawing.Point(211, 61);
+            this.checkBoxEnableNag.Location = new System.Drawing.Point(211, 90);
             this.checkBoxEnableNag.Name = "checkBoxEnableNag";
             this.checkBoxEnableNag.Size = new System.Drawing.Size(82, 17);
             this.checkBoxEnableNag.TabIndex = 29;
@@ -221,7 +247,7 @@
             // checkBoxMonitorUserActivity
             // 
             this.checkBoxMonitorUserActivity.AutoSize = true;
-            this.checkBoxMonitorUserActivity.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.settingsBindingSource, "MonitorUserActivity", true));
+            this.checkBoxMonitorUserActivity.DataBindings.Add(new System.Windows.Forms.Binding("Checked", this.settingsBindingSource, "MonitorUserActivity", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.checkBoxMonitorUserActivity.Location = new System.Drawing.Point(211, 34);
             this.checkBoxMonitorUserActivity.Name = "checkBoxMonitorUserActivity";
             this.checkBoxMonitorUserActivity.Size = new System.Drawing.Size(123, 17);
@@ -232,7 +258,7 @@
             // labelNagInterval
             // 
             this.labelNagInterval.AutoSize = true;
-            this.labelNagInterval.Location = new System.Drawing.Point(20, 62);
+            this.labelNagInterval.Location = new System.Drawing.Point(20, 91);
             this.labelNagInterval.Name = "labelNagInterval";
             this.labelNagInterval.Size = new System.Drawing.Size(68, 13);
             this.labelNagInterval.TabIndex = 27;
@@ -242,7 +268,7 @@
             // 
             this.numericUpDownNagInterval.DataBindings.Add(new System.Windows.Forms.Binding("Value", this.settingsBindingSource, "NagIntervalMinutes", true));
             this.numericUpDownNagInterval.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.settingsBindingSource, "NagEnabled", true));
-            this.numericUpDownNagInterval.Location = new System.Drawing.Point(94, 60);
+            this.numericUpDownNagInterval.Location = new System.Drawing.Point(94, 89);
             this.numericUpDownNagInterval.Maximum = new decimal(new int[] {
             120,
             0,
@@ -589,6 +615,7 @@
             this.tabControlConfiguration.ResumeLayout(false);
             this.tabPageOptions.ResumeLayout(false);
             this.tabPageOptions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpPromptOnResume)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpNag)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpUserActivity)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNagInterval)).EndInit();
@@ -657,6 +684,8 @@
         private System.Windows.Forms.PictureBox pictureBoxHelpUserActivity;
         private System.Windows.Forms.ToolTip toolTipHelp;
         private System.Windows.Forms.PictureBox pictureBoxHelpNag;
+        private System.Windows.Forms.PictureBox pictureBoxHelpPromptOnResume;
+        private System.Windows.Forms.CheckBox checkBoxPromptOnResume;
     }
 }
 

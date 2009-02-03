@@ -225,4 +225,17 @@ if no work item is being worked on. </value>
   <data name="Stopwatch_Red" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Stopwatch-Red.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="HelpPromptOnResume" xml:space="preserve">
+    <value>When a time out occurs, on resuming, you are prompted if you were working on the work item away from your computer. If so, the inactive time is added to your working on time, otherwise it is removed.</value>
+  </data>
+  <data name="PromptOnResumeCaption" xml:space="preserve">
+    <value>Resume working on...</value>
+  </data>
+  <data name="PromptOnResumeText" xml:space="preserve">
+    <value>Were you working on "{0}: {1}" while you were away from your computer?
+
+Yes to record the time away and continue
+No to not record the time away and resume
+Cancel to not record the time away and not resume</value>
+  </data>
 </root>

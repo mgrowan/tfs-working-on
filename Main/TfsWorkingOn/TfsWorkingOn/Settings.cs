@@ -140,7 +140,22 @@ namespace Rowan.TfsWorkingOn
             set
             {
                 _monitorUserActivity = value;
+                if (!value) PromptOnResume = value;
                 OnPropertyChanged(new PropertyChangedEventArgs(MonitorUserActivityPropertyName));
+            }
+        }
+
+        private const bool DefaultPromptOnResume = false;
+        public const string PromptOnResumePropertyName = "PromptOnResume";
+        private bool _promptOnResume;
+        [DefaultValue(DefaultPromptOnResume)]
+        public bool PromptOnResume
+        {
+            get { return _promptOnResume; }
+            set
+            {
+                _promptOnResume = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(PromptOnResumePropertyName));
             }
         }
 

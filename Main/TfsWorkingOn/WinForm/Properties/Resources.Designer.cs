@@ -128,6 +128,15 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to When a time out occurs, on resuming, you are prompted if you were working on the work item away from your computer. If so, the inactive time is added to your working on time, otherwise it is removed..
+        /// </summary>
+        internal static string HelpPromptOnResume {
+            get {
+                return ResourceManager.GetString("HelpPromptOnResume", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid fields.
         /// </summary>
         internal static string InvalidFields {
@@ -205,6 +214,28 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         internal static string PausedWorkingOn {
             get {
                 return ResourceManager.GetString("PausedWorkingOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resume working on....
+        /// </summary>
+        internal static string PromptOnResumeCaption {
+            get {
+                return ResourceManager.GetString("PromptOnResumeCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Were you working on &quot;{0}: {1}&quot; while you were away from your computer?
+        ///
+        ///Yes to record the time away and continue
+        ///No to not record the time away and resume
+        ///Cancel to not record the time away and not resume.
+        /// </summary>
+        internal static string PromptOnResumeText {
+            get {
+                return ResourceManager.GetString("PromptOnResumeText", resourceCulture);
             }
         }
         
