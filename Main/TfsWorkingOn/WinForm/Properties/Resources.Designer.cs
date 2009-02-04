@@ -79,6 +79,15 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string ErrorCaption {
+            get {
+                return ResourceManager.GetString("ErrorCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to connect: {0}.
         /// </summary>
         internal static string FailedToConnect {
@@ -128,7 +137,10 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When a time out occurs, on resuming, you are prompted if you were working on the work item away from your computer. If so, the inactive time is added to your working on time, otherwise it is removed..
+        ///   Looks up a localized string similar to When a time out occurs, on resuming, you are prompted 
+        ///if you were working on the work item away from your 
+        ///computer. If so, the inactive time is added to your working 
+        ///on time, otherwise it is removed..
         /// </summary>
         internal static string HelpPromptOnResume {
             get {
@@ -374,6 +386,15 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
             get {
                 object obj = ResourceManager.GetObject("tfsworkingon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version {0}.
+        /// </summary>
+        internal static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
             }
         }
         

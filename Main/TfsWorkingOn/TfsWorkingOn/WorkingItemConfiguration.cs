@@ -6,10 +6,11 @@ using System.Xml.Serialization;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using Rowan.TfsWorkingOn.Properties;
+using Rowan.TfsWorkingOn.TfsWarehouse;
 
 namespace Rowan.TfsWorkingOn
 {
-    public class WorkingItemConfiguration : INotifyPropertyChanged
+    public class WorkingItemConfiguration : INotifyPropertyChanged, IDisposable
     {
         #region Members
         private string _filename = string.Empty;
@@ -84,6 +85,22 @@ namespace Rowan.TfsWorkingOn
             {
                 _elapsedField = value;
                 OnPropertyChanged(new PropertyChangedEventArgs(ElapsedFieldPropertyName));
+            }
+        }
+
+        private ControllerService _warehouseController;
+        [XmlIgnore]
+        public ControllerService WarehouseController
+        {
+            get
+            {
+                if (_warehouseController == null)
+                {
+                    _warehouseController = new ControllerService();
+                    _warehouseController.Url = string.Format("{0}warehouse/v1.0/warehousecontroller.asmx", TeamFoundationServerFactory.GetServer(Connection.Server).Uri.AbsoluteUri);
+                    _warehouseController.UseDefaultCredentials = true;
+                }
+                return _warehouseController;
             }
         }
 
@@ -166,5 +183,19 @@ namespace Rowan.TfsWorkingOn
         }
         #endregion
 
+        #region IDisposable Members
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposing && (_warehouseController != null))
+            {
+                _warehouseController.Dispose();
+            }
+        }
+        #endregion
     }
 }

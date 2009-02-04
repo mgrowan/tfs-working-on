@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03" xmlns:s1="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Notification/03" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Team Foundation Warehouse Controller web service</wsdl:documentation>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03">
+      <s:element name="GetWarehouseStatus">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetWarehouseStatusResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetWarehouseStatusResult" type="tns:WarehouseStatus" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:simpleType name="WarehouseStatus">
+        <s:restriction base="s:string">
+          <s:enumeration value="Idle" />
+          <s:enumeration value="ProcessingOlap" />
+          <s:enumeration value="RunningAdapters" />
+          <s:enumeration value="Blocked" />
+        </s:restriction>
+      </s:simpleType>
+      <s:element name="Block">
+        <s:complexType />
+      </s:element>
+      <s:element name="BlockResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="BlockResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Unblock">
+        <s:complexType />
+      </s:element>
+      <s:element name="UnblockResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="UnblockResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Reinitialize">
+        <s:complexType />
+      </s:element>
+      <s:element name="ReinitializeResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="ChangeSetting">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="settingID" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="newValue" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ChangeSettingResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ChangeSettingResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="Run">
+        <s:complexType />
+      </s:element>
+      <s:element name="RunResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RunResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="NotifyResponse">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetNextInterval">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="lastInterval" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetNextIntervalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetNextIntervalResult" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Notification/03">
+      <s:element name="Notify">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="eventXml" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="tfsIdentityXml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="GetWarehouseStatusSoapIn">
+    <wsdl:part name="parameters" element="tns:GetWarehouseStatus" />
+  </wsdl:message>
+  <wsdl:message name="GetWarehouseStatusSoapOut">
+    <wsdl:part name="parameters" element="tns:GetWarehouseStatusResponse" />
+  </wsdl:message>
+  <wsdl:message name="BlockSoapIn">
+    <wsdl:part name="parameters" element="tns:Block" />
+  </wsdl:message>
+  <wsdl:message name="BlockSoapOut">
+    <wsdl:part name="parameters" element="tns:BlockResponse" />
+  </wsdl:message>
+  <wsdl:message name="UnblockSoapIn">
+    <wsdl:part name="parameters" element="tns:Unblock" />
+  </wsdl:message>
+  <wsdl:message name="UnblockSoapOut">
+    <wsdl:part name="parameters" element="tns:UnblockResponse" />
+  </wsdl:message>
+  <wsdl:message name="ReinitializeSoapIn">
+    <wsdl:part name="parameters" element="tns:Reinitialize" />
+  </wsdl:message>
+  <wsdl:message name="ReinitializeSoapOut">
+    <wsdl:part name="parameters" element="tns:ReinitializeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ChangeSettingSoapIn">
+    <wsdl:part name="parameters" element="tns:ChangeSetting" />
+  </wsdl:message>
+  <wsdl:message name="ChangeSettingSoapOut">
+    <wsdl:part name="parameters" element="tns:ChangeSettingResponse" />
+  </wsdl:message>
+  <wsdl:message name="RunSoapIn">
+    <wsdl:part name="parameters" element="tns:Run" />
+  </wsdl:message>
+  <wsdl:message name="RunSoapOut">
+    <wsdl:part name="parameters" element="tns:RunResponse" />
+  </wsdl:message>
+  <wsdl:message name="NotifySoapIn">
+    <wsdl:part name="parameters" element="s1:Notify" />
+  </wsdl:message>
+  <wsdl:message name="NotifySoapOut">
+    <wsdl:part name="parameters" element="tns:NotifyResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetNextIntervalSoapIn">
+    <wsdl:part name="parameters" element="tns:GetNextInterval" />
+  </wsdl:message>
+  <wsdl:message name="GetNextIntervalSoapOut">
+    <wsdl:part name="parameters" element="tns:GetNextIntervalResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ControllerServiceSoap">
+    <wsdl:operation name="GetWarehouseStatus">
+      <wsdl:input message="tns:GetWarehouseStatusSoapIn" />
+      <wsdl:output message="tns:GetWarehouseStatusSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Block">
+      <wsdl:input message="tns:BlockSoapIn" />
+      <wsdl:output message="tns:BlockSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Unblock">
+      <wsdl:input message="tns:UnblockSoapIn" />
+      <wsdl:output message="tns:UnblockSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Reinitialize">
+      <wsdl:input message="tns:ReinitializeSoapIn" />
+      <wsdl:output message="tns:ReinitializeSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ChangeSetting">
+      <wsdl:input message="tns:ChangeSettingSoapIn" />
+      <wsdl:output message="tns:ChangeSettingSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Run">
+      <wsdl:input message="tns:RunSoapIn" />
+      <wsdl:output message="tns:RunSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="Notify">
+      <wsdl:input message="tns:NotifySoapIn" />
+      <wsdl:output message="tns:NotifySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNextInterval">
+      <wsdl:input message="tns:GetNextIntervalSoapIn" />
+      <wsdl:output message="tns:GetNextIntervalSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ControllerServiceSoap" type="tns:ControllerServiceSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetWarehouseStatus">
+      <soap:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03/GetWarehouseStatus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Block">
+      <soap:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03/Block" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Unblock">
+      <soap:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03/Unblock" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Reinitialize">
+      <soap:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03/Reinitialize" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeSetting">
+      <soap:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03/ChangeSetting" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Run">
+      <soap:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03/Run" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Notify">
+      <soap:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Notification/03/Notify" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNextInterval">
+      <soap:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03/GetNextInterval" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="ControllerServiceSoap12" type="tns:ControllerServiceSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetWarehouseStatus">
+      <soap12:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03/GetWarehouseStatus" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Block">
+      <soap12:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03/Block" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Unblock">
+      <soap12:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03/Unblock" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Reinitialize">
+      <soap12:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03/Reinitialize" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ChangeSetting">
+      <soap12:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03/ChangeSetting" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Run">
+      <soap12:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03/Run" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Notify">
+      <soap12:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Notification/03/Notify" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNextInterval">
+      <soap12:operation soapAction="http://schemas.microsoft.com/TeamFoundation/2005/06/Services/Controller/03/GetNextInterval" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ControllerService">
+    <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Team Foundation Warehouse Controller web service</wsdl:documentation>
+    <wsdl:port name="ControllerServiceSoap" binding="tns:ControllerServiceSoap">
+      <soap:address location="http://bdhvmaster:8080/warehouse/v1.0/warehousecontroller.asmx" />
+    </wsdl:port>
+    <wsdl:port name="ControllerServiceSoap12" binding="tns:ControllerServiceSoap12">
+      <soap12:address location="http://bdhvmaster:8080/warehouse/v1.0/warehousecontroller.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

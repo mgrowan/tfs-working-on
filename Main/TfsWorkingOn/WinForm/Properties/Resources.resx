@@ -226,7 +226,10 @@ if no work item is being worked on. </value>
     <value>..\Resources\Stopwatch-Red.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HelpPromptOnResume" xml:space="preserve">
-    <value>When a time out occurs, on resuming, you are prompted if you were working on the work item away from your computer. If so, the inactive time is added to your working on time, otherwise it is removed.</value>
+    <value>When a time out occurs, on resuming, you are prompted 
+if you were working on the work item away from your 
+computer. If so, the inactive time is added to your working 
+on time, otherwise it is removed.</value>
   </data>
   <data name="PromptOnResumeCaption" xml:space="preserve">
     <value>Resume working on...</value>
@@ -237,5 +240,11 @@ if no work item is being worked on. </value>
 Yes to record the time away and continue
 No to not record the time away and resume
 Cancel to not record the time away and not resume</value>
+  </data>
+  <data name="ErrorCaption" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Version {0}</value>
   </data>
 </root>

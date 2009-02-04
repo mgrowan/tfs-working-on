@@ -11,6 +11,7 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2213:DisposableFieldsShouldBeDisposed", MessageId = "workingItemConfiguration")]
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -72,11 +73,19 @@
             this.buttonConnect = new System.Windows.Forms.Button();
             this.comboBoxProjects = new System.Windows.Forms.ComboBox();
             this.tabPageUpdateWarehouse = new System.Windows.Forms.TabPage();
+            this.labelWarehouseStatus = new System.Windows.Forms.Label();
+            this.labelUpdateDataWarehouse = new System.Windows.Forms.Label();
+            this.textBoxWarehouseStatus = new System.Windows.Forms.TextBox();
+            this.progressBarWarehouse = new System.Windows.Forms.ProgressBar();
+            this.buttonRefreshWarehouseStatus = new System.Windows.Forms.Button();
+            this.buttonUpdateWarehouse = new System.Windows.Forms.Button();
             this.tabPageAbout = new System.Windows.Forms.TabPage();
+            this.labelVersion = new System.Windows.Forms.Label();
             this.pictureBoxAbout = new System.Windows.Forms.PictureBox();
             this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelCopyright = new System.Windows.Forms.Label();
             this.toolTipHelp = new System.Windows.Forms.ToolTip(this.components);
+            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
             this.tabControlConfiguration.SuspendLayout();
             this.tabPageOptions.SuspendLayout();
@@ -94,6 +103,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsDurationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.workItemTypesBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.projectsBindingSource)).BeginInit();
+            this.tabPageUpdateWarehouse.SuspendLayout();
             this.tabPageAbout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAbout)).BeginInit();
             this.SuspendLayout();
@@ -538,6 +548,12 @@
             // 
             // tabPageUpdateWarehouse
             // 
+            this.tabPageUpdateWarehouse.Controls.Add(this.labelWarehouseStatus);
+            this.tabPageUpdateWarehouse.Controls.Add(this.labelUpdateDataWarehouse);
+            this.tabPageUpdateWarehouse.Controls.Add(this.textBoxWarehouseStatus);
+            this.tabPageUpdateWarehouse.Controls.Add(this.progressBarWarehouse);
+            this.tabPageUpdateWarehouse.Controls.Add(this.buttonRefreshWarehouseStatus);
+            this.tabPageUpdateWarehouse.Controls.Add(this.buttonUpdateWarehouse);
             this.tabPageUpdateWarehouse.Location = new System.Drawing.Point(4, 22);
             this.tabPageUpdateWarehouse.Name = "tabPageUpdateWarehouse";
             this.tabPageUpdateWarehouse.Size = new System.Drawing.Size(434, 175);
@@ -545,11 +561,68 @@
             this.tabPageUpdateWarehouse.Text = "Update Warehouse";
             this.tabPageUpdateWarehouse.UseVisualStyleBackColor = true;
             // 
+            // labelWarehouseStatus
+            // 
+            this.labelWarehouseStatus.AutoSize = true;
+            this.labelWarehouseStatus.Location = new System.Drawing.Point(8, 46);
+            this.labelWarehouseStatus.Name = "labelWarehouseStatus";
+            this.labelWarehouseStatus.Size = new System.Drawing.Size(98, 13);
+            this.labelWarehouseStatus.TabIndex = 5;
+            this.labelWarehouseStatus.Text = "Warehouse Status:";
+            // 
+            // labelUpdateDataWarehouse
+            // 
+            this.labelUpdateDataWarehouse.AutoSize = true;
+            this.labelUpdateDataWarehouse.Location = new System.Drawing.Point(8, 89);
+            this.labelUpdateDataWarehouse.Name = "labelUpdateDataWarehouse";
+            this.labelUpdateDataWarehouse.Size = new System.Drawing.Size(129, 13);
+            this.labelUpdateDataWarehouse.TabIndex = 4;
+            this.labelUpdateDataWarehouse.Text = "Update Data Warehouse:";
+            // 
+            // textBoxWarehouseStatus
+            // 
+            this.textBoxWarehouseStatus.Location = new System.Drawing.Point(11, 62);
+            this.textBoxWarehouseStatus.Name = "textBoxWarehouseStatus";
+            this.textBoxWarehouseStatus.ReadOnly = true;
+            this.textBoxWarehouseStatus.Size = new System.Drawing.Size(334, 20);
+            this.textBoxWarehouseStatus.TabIndex = 3;
+            // 
+            // progressBarWarehouse
+            // 
+            this.progressBarWarehouse.Location = new System.Drawing.Point(11, 105);
+            this.progressBarWarehouse.MarqueeAnimationSpeed = 0;
+            this.progressBarWarehouse.Name = "progressBarWarehouse";
+            this.progressBarWarehouse.Size = new System.Drawing.Size(334, 23);
+            this.progressBarWarehouse.Step = 1;
+            this.progressBarWarehouse.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.progressBarWarehouse.TabIndex = 2;
+            // 
+            // buttonRefreshWarehouseStatus
+            // 
+            this.buttonRefreshWarehouseStatus.Location = new System.Drawing.Point(351, 60);
+            this.buttonRefreshWarehouseStatus.Name = "buttonRefreshWarehouseStatus";
+            this.buttonRefreshWarehouseStatus.Size = new System.Drawing.Size(75, 23);
+            this.buttonRefreshWarehouseStatus.TabIndex = 0;
+            this.buttonRefreshWarehouseStatus.Text = "Refresh";
+            this.buttonRefreshWarehouseStatus.UseVisualStyleBackColor = true;
+            this.buttonRefreshWarehouseStatus.Click += new System.EventHandler(this.buttonRefreshWarehouseStatus_Click);
+            // 
+            // buttonUpdateWarehouse
+            // 
+            this.buttonUpdateWarehouse.Location = new System.Drawing.Point(351, 105);
+            this.buttonUpdateWarehouse.Name = "buttonUpdateWarehouse";
+            this.buttonUpdateWarehouse.Size = new System.Drawing.Size(75, 23);
+            this.buttonUpdateWarehouse.TabIndex = 1;
+            this.buttonUpdateWarehouse.Text = "Update";
+            this.buttonUpdateWarehouse.UseVisualStyleBackColor = true;
+            this.buttonUpdateWarehouse.Click += new System.EventHandler(this.buttonUpdateWarehouse_Click);
+            // 
             // tabPageAbout
             // 
+            this.tabPageAbout.Controls.Add(this.labelVersion);
             this.tabPageAbout.Controls.Add(this.pictureBoxAbout);
             this.tabPageAbout.Controls.Add(this.linkLabelAbout);
-            this.tabPageAbout.Controls.Add(this.label1);
+            this.tabPageAbout.Controls.Add(this.labelCopyright);
             this.tabPageAbout.Location = new System.Drawing.Point(4, 22);
             this.tabPageAbout.Name = "tabPageAbout";
             this.tabPageAbout.Padding = new System.Windows.Forms.Padding(3);
@@ -557,6 +630,14 @@
             this.tabPageAbout.TabIndex = 3;
             this.tabPageAbout.Text = "About";
             this.tabPageAbout.UseVisualStyleBackColor = true;
+            // 
+            // labelVersion
+            // 
+            this.labelVersion.AutoSize = true;
+            this.labelVersion.Location = new System.Drawing.Point(387, 157);
+            this.labelVersion.Name = "labelVersion";
+            this.labelVersion.Size = new System.Drawing.Size(0, 13);
+            this.labelVersion.TabIndex = 3;
             // 
             // pictureBoxAbout
             // 
@@ -578,14 +659,14 @@
             this.linkLabelAbout.Text = "http://matthewrowan.spaces.live.com/";
             this.linkLabelAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAbout_LinkClicked);
             // 
-            // label1
+            // labelCopyright
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(120, 140);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(175, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Copyright (C) 2008 Matthew Rowan";
+            this.labelCopyright.AutoSize = true;
+            this.labelCopyright.Location = new System.Drawing.Point(120, 140);
+            this.labelCopyright.Name = "labelCopyright";
+            this.labelCopyright.Size = new System.Drawing.Size(175, 13);
+            this.labelCopyright.TabIndex = 0;
+            this.labelCopyright.Text = "Copyright (C) 2009 Matthew Rowan";
             // 
             // toolTipHelp
             // 
@@ -597,6 +678,13 @@
             this.toolTipHelp.Tag = "";
             this.toolTipHelp.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.toolTipHelp.ToolTipTitle = "Configuration Help";
+            // 
+            // backgroundWorker
+            // 
+            this.backgroundWorker.WorkerReportsProgress = true;
+            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
+            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
+            this.backgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_ProgressChanged);
             // 
             // FormWorkItemConfiguration
             // 
@@ -630,6 +718,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsDurationBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.workItemTypesBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.projectsBindingSource)).EndInit();
+            this.tabPageUpdateWarehouse.ResumeLayout(false);
+            this.tabPageUpdateWarehouse.PerformLayout();
             this.tabPageAbout.ResumeLayout(false);
             this.tabPageAbout.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAbout)).EndInit();
@@ -664,7 +754,7 @@
         private System.Windows.Forms.Label labelConfigurationPath;
         private System.Windows.Forms.TabPage tabPageAbout;
         private System.Windows.Forms.LinkLabel linkLabelAbout;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelCopyright;
         private System.Windows.Forms.PictureBox pictureBoxAbout;
         private System.Windows.Forms.Label labelNagInterval;
         private System.Windows.Forms.NumericUpDown numericUpDownNagInterval;
@@ -686,6 +776,14 @@
         private System.Windows.Forms.PictureBox pictureBoxHelpNag;
         private System.Windows.Forms.PictureBox pictureBoxHelpPromptOnResume;
         private System.Windows.Forms.CheckBox checkBoxPromptOnResume;
+        private System.Windows.Forms.Label labelUpdateDataWarehouse;
+        private System.Windows.Forms.TextBox textBoxWarehouseStatus;
+        private System.Windows.Forms.ProgressBar progressBarWarehouse;
+        private System.Windows.Forms.Button buttonRefreshWarehouseStatus;
+        private System.Windows.Forms.Button buttonUpdateWarehouse;
+        private System.Windows.Forms.Label labelWarehouseStatus;
+        private System.ComponentModel.BackgroundWorker backgroundWorker;
+        private System.Windows.Forms.Label labelVersion;
     }
 }
 
