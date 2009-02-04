@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Forms;
 using Microsoft.TeamFoundation.Client;
+using Microsoft.Win32;
 using Rowan.TfsWorkingOn.Monitor;
 using Rowan.TfsWorkingOn.WinForm.Properties;
 
@@ -21,6 +22,7 @@ namespace Rowan.TfsWorkingOn.WinForm
         {
             InitializeComponent();
             Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
+            SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
 
             connectionBindingSource.DataSource = _connection;
             comboBoxTfsServers.Items.AddRange(RegisteredServers.GetServerNames());
@@ -159,13 +161,19 @@ namespace Rowan.TfsWorkingOn.WinForm
             return text.Length > length ? string.Concat(text.Substring(0, length - 3), "...") : text;
         }
 
+        private void SafeShutdown()
+        {
+            if (_workingItem != null && _workingItem.Started) _workingItem.StartStop();
+            notifyIcon.Dispose();
+        }
+
+        #region Events
         void _nag_MonitorTriggeredEvent(object sender, MonitorEventArgs e)
         {
             notifyIcon.BalloonTipText = Resources.NagMessage;
             notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
         }
 
-        #region Events
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void buttonConnect_Click(object sender, EventArgs e)
         {
@@ -215,8 +223,12 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         void Application_ApplicationExit(object sender, EventArgs e)
         {
-            if (_workingItem != null && _workingItem.Started) _workingItem.StartStop();
-            notifyIcon.Dispose();
+            SafeShutdown();
+        }
+
+        void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
+        {
+            SafeShutdown();
         }
         #endregion events
 
