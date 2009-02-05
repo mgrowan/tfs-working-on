@@ -104,7 +104,6 @@ namespace Rowan.TfsWorkingOn.WinForm
             {
                 _nag.Start();
                 startToolStripMenuItem.Text = Resources.Start;
-                notifyIcon.Text = GetStringWithEllipsis(Resources.NotifyIconText + _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture) + "\n" + _workingItem.WorkItem.Title, 63);
                 notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.StoppedWorkingOn,
                     _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture), GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
                 notifyIcon.Icon = Resources.Stopwatch_Red;
@@ -352,6 +351,19 @@ namespace Rowan.TfsWorkingOn.WinForm
         {
             FormEstimates formEstimates = new FormEstimates(_workingItem);
             formEstimates.Show();
+        }
+
+        private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_workingItem.Started)
+            {
+                _nag.Start();
+                startToolStripMenuItem.Text = Resources.Start;
+                notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.CancelledWorkingOn,
+                    _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture), GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
+                notifyIcon.Icon = Resources.Stopwatch_Red;
+                _workingItem.Cancel();
+            }
         }
         #endregion
     }

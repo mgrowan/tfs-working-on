@@ -61,6 +61,16 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancelled working on {0}:
+        ///{1}.
+        /// </summary>
+        internal static string CancelledWorkingOn {
+            get {
+                return ResourceManager.GetString("CancelledWorkingOn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connection Failed.
         /// </summary>
         internal static string ConnectionFailedTitle {

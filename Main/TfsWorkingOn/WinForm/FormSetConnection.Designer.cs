@@ -54,6 +54,8 @@
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBoxTfsServers = new System.Windows.Forms.ComboBox();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.cancelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.connectionBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.projectsBindingSource)).BeginInit();
             this.notifyMenu.SuspendLayout();
@@ -189,7 +191,9 @@
             // 
             this.selectedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.viewToolStripMenuItem,
-            this.modifyEstimatesToolStripMenuItem});
+            this.modifyEstimatesToolStripMenuItem,
+            this.toolStripMenuItem4,
+            this.cancelToolStripMenuItem});
             this.selectedToolStripMenuItem.Enabled = false;
             this.selectedToolStripMenuItem.Name = "selectedToolStripMenuItem";
             this.selectedToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
@@ -249,6 +253,18 @@
             this.comboBoxTfsServers.Size = new System.Drawing.Size(229, 21);
             this.comboBoxTfsServers.TabIndex = 11;
             // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(149, 6);
+            // 
+            // cancelToolStripMenuItem
+            // 
+            this.cancelToolStripMenuItem.Name = "cancelToolStripMenuItem";
+            this.cancelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.cancelToolStripMenuItem.Text = "&Cancel";
+            this.cancelToolStripMenuItem.Click += new System.EventHandler(this.cancelToolStripMenuItem_Click);
+            // 
             // FormSetConnection
             // 
             this.AcceptButton = this.buttonOK;
@@ -301,6 +317,8 @@
         private System.Windows.Forms.ComboBox comboBoxTfsServers;
         private System.Windows.Forms.ToolStripMenuItem queryListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem workItemsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem cancelToolStripMenuItem;
 
     }
 }

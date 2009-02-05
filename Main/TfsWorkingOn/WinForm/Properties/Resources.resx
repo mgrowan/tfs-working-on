@@ -254,4 +254,8 @@ shown in a sub menu. This allows fast work item switching
 as a work item can be selected to start working on without 
 going to the find work item search dialog.</value>
   </data>
+  <data name="CancelledWorkingOn" xml:space="preserve">
+    <value>Cancelled working on {0}:
+{1}</value>
+  </data>
 </root>

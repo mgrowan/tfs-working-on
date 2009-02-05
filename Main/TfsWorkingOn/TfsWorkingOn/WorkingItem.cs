@@ -227,6 +227,13 @@ namespace Rowan.TfsWorkingOn
             StopTime = null;
         }
 
+        public void Cancel()
+        {
+            UserActivityMonitor.Stop();
+            StopTime = null;
+            Started = false;
+        }
+
         #region IDisposable Members
         public void Dispose()
         {
