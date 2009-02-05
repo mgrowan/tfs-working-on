@@ -196,6 +196,18 @@ namespace Rowan.TfsWorkingOn
             }
         }
 
+        public const string SelectedQueryPropertyName = "SelectedQuery";
+        private Guid _selectedQuery;
+        public Guid SelectedQuery
+        {
+            get { return _selectedQuery; }
+            set
+            {
+                _selectedQuery = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(SelectedQueryPropertyName));
+            }
+        }
+
         #endregion Settings
     }
 }

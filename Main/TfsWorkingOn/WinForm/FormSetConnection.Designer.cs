@@ -11,6 +11,7 @@
         /// Clean up any resources being used.
         /// </summary>
         /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2213:DisposableFieldsShouldBeDisposed", MessageId = "_workingItem")]
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -42,6 +43,8 @@
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
             this.selectWorkItemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.queryListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.workItemsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.selectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifyEstimatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -137,6 +140,7 @@
             this.startToolStripMenuItem,
             this.toolStripMenuItem2,
             this.selectWorkItemToolStripMenuItem,
+            this.queryListToolStripMenuItem,
             this.selectedToolStripMenuItem,
             this.toolStripMenuItem1,
             this.toolStripConnect,
@@ -144,7 +148,7 @@
             this.toolStripMenuItem3,
             this.exitToolStripMenuItem});
             this.notifyMenu.Name = "notifyMenu";
-            this.notifyMenu.Size = new System.Drawing.Size(173, 154);
+            this.notifyMenu.Size = new System.Drawing.Size(173, 198);
             // 
             // startToolStripMenuItem
             // 
@@ -166,6 +170,21 @@
             this.selectWorkItemToolStripMenuItem.Text = "Select &Work Item...";
             this.selectWorkItemToolStripMenuItem.Click += new System.EventHandler(this.selectWorkItemToolStripMenuItem_Click);
             // 
+            // queryListToolStripMenuItem
+            // 
+            this.queryListToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.workItemsToolStripMenuItem});
+            this.queryListToolStripMenuItem.Name = "queryListToolStripMenuItem";
+            this.queryListToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.queryListToolStripMenuItem.Text = "Query List";
+            this.queryListToolStripMenuItem.DropDownOpening += new System.EventHandler(this.queryListToolStripMenuItem_DropDownOpening);
+            // 
+            // workItemsToolStripMenuItem
+            // 
+            this.workItemsToolStripMenuItem.Name = "workItemsToolStripMenuItem";
+            this.workItemsToolStripMenuItem.Size = new System.Drawing.Size(392, 22);
+            this.workItemsToolStripMenuItem.Text = "Set Menu Query in Configuration for quick work item access";
+            // 
             // selectedToolStripMenuItem
             // 
             this.selectedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -179,14 +198,14 @@
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.viewToolStripMenuItem.Text = "&View";
             this.viewToolStripMenuItem.Click += new System.EventHandler(this.viewToolStripMenuItem_Click);
             // 
             // modifyEstimatesToolStripMenuItem
             // 
             this.modifyEstimatesToolStripMenuItem.Name = "modifyEstimatesToolStripMenuItem";
-            this.modifyEstimatesToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.modifyEstimatesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.modifyEstimatesToolStripMenuItem.Text = "&Estimates";
             this.modifyEstimatesToolStripMenuItem.Click += new System.EventHandler(this.modifyEstimatesToolStripMenuItem_Click);
             // 
@@ -280,6 +299,8 @@
         private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem modifyEstimatesToolStripMenuItem;
         private System.Windows.Forms.ComboBox comboBoxTfsServers;
+        private System.Windows.Forms.ToolStripMenuItem queryListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem workItemsToolStripMenuItem;
 
     }
 }

@@ -126,6 +126,19 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The Query selected will be displayed in the system tray 
+        ///context menu, with the work items from the query results 
+        ///shown in a sub menu. This allows fast work item switching
+        ///as a work item can be selected to start working on without 
+        ///going to the find work item search dialog..
+        /// </summary>
+        internal static string HelpMenuQuery {
+            get {
+                return ResourceManager.GetString("HelpMenuQuery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enabling Nag causes a balloon notification 
         ///to be displayed at the set interval (minutes)
         ///if no work item is being worked on. .

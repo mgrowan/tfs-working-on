@@ -40,6 +40,9 @@
             this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabControlConfiguration = new System.Windows.Forms.TabControl();
             this.tabPageOptions = new System.Windows.Forms.TabPage();
+            this.pictureBoxHelpMenuQuery = new System.Windows.Forms.PictureBox();
+            this.labelMenuQuery = new System.Windows.Forms.Label();
+            this.comboBoxMenuQuery = new System.Windows.Forms.ComboBox();
             this.pictureBoxHelpPromptOnResume = new System.Windows.Forms.PictureBox();
             this.checkBoxPromptOnResume = new System.Windows.Forms.CheckBox();
             this.pictureBoxHelpNag = new System.Windows.Forms.PictureBox();
@@ -89,6 +92,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
             this.tabControlConfiguration.SuspendLayout();
             this.tabPageOptions.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpMenuQuery)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpPromptOnResume)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpNag)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpUserActivity)).BeginInit();
@@ -183,6 +187,9 @@
             // 
             // tabPageOptions
             // 
+            this.tabPageOptions.Controls.Add(this.pictureBoxHelpMenuQuery);
+            this.tabPageOptions.Controls.Add(this.labelMenuQuery);
+            this.tabPageOptions.Controls.Add(this.comboBoxMenuQuery);
             this.tabPageOptions.Controls.Add(this.pictureBoxHelpPromptOnResume);
             this.tabPageOptions.Controls.Add(this.checkBoxPromptOnResume);
             this.tabPageOptions.Controls.Add(this.pictureBoxHelpNag);
@@ -204,10 +211,41 @@
             this.tabPageOptions.Text = "Options";
             this.tabPageOptions.UseVisualStyleBackColor = true;
             // 
+            // pictureBoxHelpMenuQuery
+            // 
+            this.pictureBoxHelpMenuQuery.Cursor = System.Windows.Forms.Cursors.Help;
+            this.pictureBoxHelpMenuQuery.Image = global::Rowan.TfsWorkingOn.WinForm.Properties.Resources.helpImage;
+            this.pictureBoxHelpMenuQuery.Location = new System.Drawing.Point(340, 114);
+            this.pictureBoxHelpMenuQuery.Name = "pictureBoxHelpMenuQuery";
+            this.pictureBoxHelpMenuQuery.Size = new System.Drawing.Size(22, 22);
+            this.pictureBoxHelpMenuQuery.TabIndex = 34;
+            this.pictureBoxHelpMenuQuery.TabStop = false;
+            // 
+            // labelMenuQuery
+            // 
+            this.labelMenuQuery.AutoSize = true;
+            this.labelMenuQuery.Location = new System.Drawing.Point(20, 118);
+            this.labelMenuQuery.Name = "labelMenuQuery";
+            this.labelMenuQuery.Size = new System.Drawing.Size(68, 13);
+            this.labelMenuQuery.TabIndex = 20;
+            this.labelMenuQuery.Text = "Menu Query:";
+            // 
+            // comboBoxMenuQuery
+            // 
+            this.comboBoxMenuQuery.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.settingsBindingSource, "SelectedQuery", true));
+            this.comboBoxMenuQuery.DisplayMember = "Name";
+            this.comboBoxMenuQuery.FormattingEnabled = true;
+            this.comboBoxMenuQuery.Location = new System.Drawing.Point(94, 115);
+            this.comboBoxMenuQuery.Name = "comboBoxMenuQuery";
+            this.comboBoxMenuQuery.Size = new System.Drawing.Size(240, 21);
+            this.comboBoxMenuQuery.TabIndex = 21;
+            this.comboBoxMenuQuery.ValueMember = "QueryGuid";
+            // 
             // pictureBoxHelpPromptOnResume
             // 
+            this.pictureBoxHelpPromptOnResume.Cursor = System.Windows.Forms.Cursors.Help;
             this.pictureBoxHelpPromptOnResume.Image = global::Rowan.TfsWorkingOn.WinForm.Properties.Resources.helpImage;
-            this.pictureBoxHelpPromptOnResume.Location = new System.Drawing.Point(340, 61);
+            this.pictureBoxHelpPromptOnResume.Location = new System.Drawing.Point(340, 60);
             this.pictureBoxHelpPromptOnResume.Name = "pictureBoxHelpPromptOnResume";
             this.pictureBoxHelpPromptOnResume.Size = new System.Drawing.Size(22, 22);
             this.pictureBoxHelpPromptOnResume.TabIndex = 33;
@@ -227,8 +265,9 @@
             // 
             // pictureBoxHelpNag
             // 
+            this.pictureBoxHelpNag.Cursor = System.Windows.Forms.Cursors.Help;
             this.pictureBoxHelpNag.Image = global::Rowan.TfsWorkingOn.WinForm.Properties.Resources.helpImage;
-            this.pictureBoxHelpNag.Location = new System.Drawing.Point(340, 89);
+            this.pictureBoxHelpNag.Location = new System.Drawing.Point(340, 87);
             this.pictureBoxHelpNag.Name = "pictureBoxHelpNag";
             this.pictureBoxHelpNag.Size = new System.Drawing.Size(22, 22);
             this.pictureBoxHelpNag.TabIndex = 31;
@@ -236,6 +275,7 @@
             // 
             // pictureBoxHelpUserActivity
             // 
+            this.pictureBoxHelpUserActivity.Cursor = System.Windows.Forms.Cursors.Help;
             this.pictureBoxHelpUserActivity.Image = global::Rowan.TfsWorkingOn.WinForm.Properties.Resources.helpImage;
             this.pictureBoxHelpUserActivity.Location = new System.Drawing.Point(340, 33);
             this.pictureBoxHelpUserActivity.Name = "pictureBoxHelpUserActivity";
@@ -670,11 +710,10 @@
             // 
             // toolTipHelp
             // 
-            this.toolTipHelp.AutomaticDelay = 50;
-            this.toolTipHelp.AutoPopDelay = 100000;
-            this.toolTipHelp.InitialDelay = 50;
+            this.toolTipHelp.AutoPopDelay = 20000;
+            this.toolTipHelp.InitialDelay = 500;
             this.toolTipHelp.IsBalloon = true;
-            this.toolTipHelp.ReshowDelay = 10;
+            this.toolTipHelp.ReshowDelay = 100;
             this.toolTipHelp.Tag = "";
             this.toolTipHelp.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             this.toolTipHelp.ToolTipTitle = "Configuration Help";
@@ -703,6 +742,7 @@
             this.tabControlConfiguration.ResumeLayout(false);
             this.tabPageOptions.ResumeLayout(false);
             this.tabPageOptions.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpMenuQuery)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpPromptOnResume)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpNag)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxHelpUserActivity)).EndInit();
@@ -784,6 +824,9 @@
         private System.Windows.Forms.Label labelWarehouseStatus;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.Label labelVersion;
+        private System.Windows.Forms.PictureBox pictureBoxHelpMenuQuery;
+        private System.Windows.Forms.Label labelMenuQuery;
+        private System.Windows.Forms.ComboBox comboBoxMenuQuery;
     }
 }
 
