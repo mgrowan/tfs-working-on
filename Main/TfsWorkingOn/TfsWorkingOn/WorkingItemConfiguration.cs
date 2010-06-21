@@ -148,7 +148,7 @@ namespace Rowan.TfsWorkingOn
         {
             if (HasRequiredPropertiesMissing()) return;
 
-            _filename = string.Format(CultureInfo.InvariantCulture, Resources.ConfigFileName, Connection.Server, Connection.SelectedProject.Name, SelectedWorkItemType.Name);
+            _filename = string.Format(CultureInfo.InvariantCulture, Resources.ConfigFileName, Connection.ServerInstanceId.ToString("N"), Connection.SelectedProject.Name, SelectedWorkItemType.Name);
 
             string filePath = Path.Combine(Settings.Default.ConfigurationsPath, _filename);
             if (File.Exists(filePath))
