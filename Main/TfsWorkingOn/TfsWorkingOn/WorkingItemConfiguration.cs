@@ -89,6 +89,7 @@ namespace Rowan.TfsWorkingOn
         }
 
         private ControllerService _warehouseController;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)")]
         [XmlIgnore]
         public ControllerService WarehouseController
         {

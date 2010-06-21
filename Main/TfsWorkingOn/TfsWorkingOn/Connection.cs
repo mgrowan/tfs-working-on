@@ -15,7 +15,14 @@ namespace Rowan.TfsWorkingOn
         #endregion
 
         #region Properties
-        public Guid ServerInstanceId { get { return _tfsServer.InstanceId; } }
+        public Guid ServerInstanceId
+        {
+            get
+            {
+                if (_tfsServer == null) Connect();
+                return _tfsServer.InstanceId;
+            }
+        }
 
         public const string ServerPropertyName = "Server";
         private string _server;
