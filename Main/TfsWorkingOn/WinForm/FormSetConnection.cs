@@ -125,9 +125,16 @@ namespace Rowan.TfsWorkingOn.WinForm
         {
             if (Settings.Default.SelectedQuery != Guid.Empty)
             {
-                StoredQuery query = _connection.WorkItemStore.GetStoredQuery(Settings.Default.SelectedQuery);
-                queryListToolStripMenuItem.Text = GetStringWithEllipsis(query.Name, 30);
-                queryListToolStripMenuItem.ToolTipText = query.Name;
+                try
+                {
+                    StoredQuery query = _connection.WorkItemStore.GetStoredQuery(Settings.Default.SelectedQuery);
+                    queryListToolStripMenuItem.Text = GetStringWithEllipsis(query.Name, 30);
+                    queryListToolStripMenuItem.ToolTipText = query.Name;
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    Settings.Default.SelectedQuery = Guid.Empty;
+                }
             }
         }
 
@@ -143,42 +150,52 @@ namespace Rowan.TfsWorkingOn.WinForm
         }
 
         #region Events
+        private static readonly object _userActivityMutex = new object();
+        private static bool _userActivityTriggeredCurrentlyProcessing;
         // Pause Resume on User Activity Monitor
         private void _userActivity_MonitorTriggeredEvent(object sender, MonitorEventArgs e)
         {
             UserActivity userActivity = sender as UserActivity;
             if (userActivity == null) return;
+            if (_userActivityTriggeredCurrentlyProcessing) return;
 
-            if (userActivity.UserActiveState == UserActivityState.Inactive)
+            lock (_userActivityMutex)
             {
-                _workingItem.Pause(e.Reason);
-                notifyIcon.Text = GetStringWithEllipsis(string.Format(CultureInfo.CurrentCulture, "{0} {1}{2}\n{3}", Resources.Paused, Resources.NotifyIconText, _workingItem.WorkItem.Id, _workingItem.WorkItem.Title), 63);
-                notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.PausedWorkingOn, _workingItem.WorkItem.Id, GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
+                if (_userActivityTriggeredCurrentlyProcessing) return;
+                _userActivityTriggeredCurrentlyProcessing = true;
+
+                if (userActivity.UserActiveState == UserActivityState.Inactive)
+                {
+                    _workingItem.Pause(e.Reason);
+                    notifyIcon.Text = GetStringWithEllipsis(string.Format(CultureInfo.CurrentCulture, "{0} {1}{2}\n{3}", Resources.Paused, Resources.NotifyIconText, _workingItem.WorkItem.Id, _workingItem.WorkItem.Title), 63);
+                    notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.PausedWorkingOn, _workingItem.WorkItem.Id, GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
+                    notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
+                }
+                else if (userActivity.UserActiveState == UserActivityState.Active)
+                {
+                    bool record = false;
+                    if (Settings.Default.PromptOnResume)
+                    {
+                        DialogResult dialogResult = MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Resources.PromptOnResumeText, _workingItem.WorkItem.Id, _workingItem.WorkItem.Title),
+                            Resources.PromptOnResumeCaption, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
+
+                        switch (dialogResult)
+                        {
+                            case DialogResult.Cancel:
+                                StartStop();
+                                return;
+                            case DialogResult.Yes:
+                                record = true;
+                                break;
+                        }
+                    }
+                    if (_workingItem.Paused) _workingItem.Resume(record);
+                    notifyIcon.Text = GetStringWithEllipsis(string.Format(CultureInfo.CurrentCulture, "{0} {1}{2}\n{3}", Resources.Resumed, Resources.NotifyIconText, _workingItem.WorkItem.Id, _workingItem.WorkItem.Title), 63);
+                    notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.ResumedWorkingOn, _workingItem.WorkItem.Id, GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
+                }
                 notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
             }
-            else if (userActivity.UserActiveState == UserActivityState.Active)
-            {
-                bool record = false;
-                if (Settings.Default.PromptOnResume)
-                {
-                    DialogResult dialogResult = MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Resources.PromptOnResumeText, _workingItem.WorkItem.Id, _workingItem.WorkItem.Title),
-                        Resources.PromptOnResumeCaption, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
-
-                    switch (dialogResult)
-                    {
-                        case DialogResult.Cancel:
-                            StartStop();
-                            return;
-                        case DialogResult.Yes:
-                            record = true;
-                            break;
-                    }
-                }
-                _workingItem.Resume(record);
-                notifyIcon.Text = GetStringWithEllipsis(string.Format(CultureInfo.CurrentCulture, "{0} {1}{2}\n{3}", Resources.Resumed, Resources.NotifyIconText, _workingItem.WorkItem.Id, _workingItem.WorkItem.Title), 63);
-                notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.ResumedWorkingOn, _workingItem.WorkItem.Id, GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
-            }
-            notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
+            _userActivityTriggeredCurrentlyProcessing = false;
         }
 
         void _nag_MonitorTriggeredEvent(object sender, MonitorEventArgs e)

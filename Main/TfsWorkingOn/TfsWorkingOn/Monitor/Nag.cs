@@ -28,7 +28,7 @@ namespace Rowan.TfsWorkingOn.Monitor
 
             // Create underlying timer
             _nagIntervalTimer = new Timer(new TimerCallback(RaiseNag), null, Timeout.Infinite, Timeout.Infinite);
-            Enabled = Settings.Default.MonitorUserActivity;
+            Enabled = Settings.Default.NagEnabled;
             Started = false;
         }
         #endregion Constructors

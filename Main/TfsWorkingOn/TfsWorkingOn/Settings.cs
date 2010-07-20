@@ -10,29 +10,35 @@ namespace Rowan.TfsWorkingOn
     {
         #region Settings Management
         private static Settings _defaultInstance;
-        [XmlIgnore, System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        [XmlIgnore]
         public static Settings Default
         {
             get
             {
-                if (_defaultInstance == null && File.Exists(SettingsFilePath))
-                {
-                    try
-                    {
-                        using (FileStream fs = new FileStream(SettingsFilePath, FileMode.OpenOrCreate))
-                        {
-                            XmlSerializer xs = new XmlSerializerFactory().CreateSerializer(typeof(Settings));
-                            _defaultInstance = xs.Deserialize(fs) as Settings;
-                        }
-                    }
-                    catch (Exception) { /* Swallowed, not found or load error, just use defaults */ }
-                }
-
-                if (_defaultInstance == null)
-                {
-                    _defaultInstance = new Settings();
-                }
+                Load();
                 return _defaultInstance;
+            }
+        }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        private static void Load()
+        {
+            if (_defaultInstance == null && File.Exists(SettingsFilePath))
+            {
+                try
+                {
+                    using (FileStream fs = new FileStream(SettingsFilePath, FileMode.OpenOrCreate))
+                    {
+                        XmlSerializer xs = new XmlSerializerFactory().CreateSerializer(typeof(Settings));
+                        _defaultInstance = xs.Deserialize(fs) as Settings;
+                    }
+                }
+                catch (Exception) { /* Swallowed, not found or load error, just use defaults */ }
+            }
+
+            if (_defaultInstance == null)
+            {
+                _defaultInstance = new Settings();
             }
         }
 
@@ -43,6 +49,12 @@ namespace Rowan.TfsWorkingOn
                 XmlSerializer xs = new XmlSerializerFactory().CreateSerializer(this.GetType());
                 xs.Serialize(fs, this);
             }
+        }
+
+        public static void Reload()
+        {
+            _defaultInstance = null;
+            Load();
         }
 
         private static string _settingsFilePath;

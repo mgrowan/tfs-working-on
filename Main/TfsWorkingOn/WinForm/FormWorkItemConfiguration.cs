@@ -53,6 +53,12 @@ namespace Rowan.TfsWorkingOn.WinForm
             }
         }
 
+        private void buttonOK_Click(object sender, EventArgs e)
+        {
+            buttonSave_Click(sender, e);
+            Close();
+        }
+
         private void buttonSave_Click(object sender, EventArgs e)
         {
             workingItemConfiguration.Save();
@@ -69,6 +75,8 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            workingItemConfiguration.Load();
+            Settings.Reload();
             Close();
         }
 
