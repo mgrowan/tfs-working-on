@@ -40,6 +40,12 @@ namespace Rowan.TfsWorkingOn
             {
                 _defaultInstance = new Settings();
             }
+            _defaultInstance.PropertyChanged += new PropertyChangedEventHandler(_defaultInstance_PropertyChanged);
+        }
+
+        static void _defaultInstance_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != IsDirtyPropertyName) _defaultInstance.IsDirty = true;
         }
 
         public void Save()
@@ -49,12 +55,14 @@ namespace Rowan.TfsWorkingOn
                 XmlSerializer xs = new XmlSerializerFactory().CreateSerializer(this.GetType());
                 xs.Serialize(fs, this);
             }
+            IsDirty = false;
         }
 
         public static void Reload()
         {
             _defaultInstance = null;
             Load();
+            _defaultInstance.IsDirty = false;
         }
 
         private static string _settingsFilePath;
@@ -67,6 +75,19 @@ namespace Rowan.TfsWorkingOn
                     _settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + typeof(Settings).Assembly.GetName().Name + " Settings.xml";
                 }
                 return _settingsFilePath;
+            }
+        }
+
+        public const string IsDirtyPropertyName = "IsDirty";
+        private bool _isDirty;
+        [XmlIgnore]
+        public bool IsDirty
+        {
+            get { return _isDirty; }
+            private set
+            {
+                _isDirty = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(IsDirtyPropertyName));
             }
         }
         #endregion Settings Management

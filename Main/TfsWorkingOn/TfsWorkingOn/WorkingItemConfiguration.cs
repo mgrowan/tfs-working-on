@@ -17,6 +17,19 @@ namespace Rowan.TfsWorkingOn
         #endregion
 
         #region Properties
+        private const string IsDirtyPropertyName = "IsDirty";
+        private bool _isDirty;
+        [XmlIgnore]
+        public bool IsDirty
+        {
+            get { return _isDirty; }
+            private set
+            {
+                _isDirty = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(IsDirtyPropertyName));
+            }
+        }
+
         public const string ConnectionPropertyName = "Connection";
         private Connection _connection = new Connection();
         public Connection Connection
@@ -110,6 +123,18 @@ namespace Rowan.TfsWorkingOn
         public WorkingItemConfiguration()
         {
             this.Connection.PropertyChanged += new PropertyChangedEventHandler(Connection_PropertyChanged);
+            this.PropertyChanged += new PropertyChangedEventHandler(WorkingItemConfiguration_PropertyChanged);
+            Settings.Default.PropertyChanged += new PropertyChangedEventHandler(Default_PropertyChanged);
+        }
+
+        void Default_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == Settings.IsDirtyPropertyName) IsDirty = Settings.Default.IsDirty; // TODO Not nice, need to Combine properties in a ModelView
+        }
+
+        void WorkingItemConfiguration_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != IsDirtyPropertyName) IsDirty = true;
         }
 
         void Connection_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -143,6 +168,7 @@ namespace Rowan.TfsWorkingOn
                 XmlSerializer xs = new XmlSerializerFactory().CreateSerializer(this.GetType());
                 xs.Serialize(fs, this);
             }
+            IsDirty = false;
         }
 
         public void Load()
@@ -170,6 +196,7 @@ namespace Rowan.TfsWorkingOn
             {
                 this.DurationField = this.RemainingField = this.ElapsedField = string.Empty;
             }
+            IsDirty = false;
         }
         #endregion
 

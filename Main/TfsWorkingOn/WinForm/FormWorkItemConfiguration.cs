@@ -75,9 +75,28 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            workingItemConfiguration.Load();
-            Settings.Reload();
             Close();
+        }
+
+        private void FormWorkItemConfiguration_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (Settings.Default.IsDirty || workingItemConfiguration.IsDirty)
+            {
+                DialogResult result = MessageBox.Show(Resources.OutstandingChanges, Resources.SaveChanges, MessageBoxButtons.YesNoCancel);
+                switch (result)
+                {
+                    case DialogResult.Yes:
+                        buttonSave_Click(sender, e);
+                        break;
+                    case DialogResult.No:
+                        workingItemConfiguration.Load();
+                        Settings.Reload();
+                        break;
+                    default:
+                        e.Cancel = true;
+                        break;
+                }
+            }
         }
 
         private void linkLabelAbout_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
