@@ -32,8 +32,23 @@ namespace Rowan.TfsWorkingOn.WinForm
         void pickWorkItemsControl_PickWorkItemsListViewDoubleClicked(object sender, EventArgs e)
         {
             // TODO: Check if assigned to user
-            WorkingItem.WorkItem = (pickWorkItemsControl.SelectedWorkItems()[0] as WorkItem);
-            WorkingItem.WorkItem.Open();
+            WorkItem workItem = (pickWorkItemsControl.SelectedWorkItems()[0] as WorkItem);
+            try
+            {
+                workItem.Open();
+            }
+            catch (ItemAlreadyUpdatedOnServerException)
+            {
+                Connection connection = new Connection();
+                connection.Server = Settings.Default.TfsServer;
+                connection.Connect();
+                workItem = connection.WorkItemStore.GetWorkItem(workItem.Id);
+                workItem.Open();
+            }
+            finally
+            {
+                WorkingItem.WorkItem = workItem;
+            }
             Close();
         }
     }
