@@ -48,14 +48,14 @@
             this.selectedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.modifyEstimatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
+            this.cancelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripConnect = new System.Windows.Forms.ToolStripMenuItem();
             this.configureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBoxTfsServers = new System.Windows.Forms.ComboBox();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripSeparator();
-            this.cancelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.connectionBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.projectsBindingSource)).BeginInit();
             this.notifyMenu.SuspendLayout();
@@ -186,6 +186,7 @@
             this.workItemsToolStripMenuItem.Name = "workItemsToolStripMenuItem";
             this.workItemsToolStripMenuItem.Size = new System.Drawing.Size(392, 22);
             this.workItemsToolStripMenuItem.Text = "Set Menu Query in Configuration for quick work item access";
+            this.workItemsToolStripMenuItem.Click += new System.EventHandler(this.workItemsToolStripMenuItem_Click);
             // 
             // selectedToolStripMenuItem
             // 
@@ -202,16 +203,28 @@
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.viewToolStripMenuItem.Text = "&View";
             this.viewToolStripMenuItem.Click += new System.EventHandler(this.viewToolStripMenuItem_Click);
             // 
             // modifyEstimatesToolStripMenuItem
             // 
             this.modifyEstimatesToolStripMenuItem.Name = "modifyEstimatesToolStripMenuItem";
-            this.modifyEstimatesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.modifyEstimatesToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.modifyEstimatesToolStripMenuItem.Text = "&Estimates";
             this.modifyEstimatesToolStripMenuItem.Click += new System.EventHandler(this.modifyEstimatesToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(121, 6);
+            // 
+            // cancelToolStripMenuItem
+            // 
+            this.cancelToolStripMenuItem.Name = "cancelToolStripMenuItem";
+            this.cancelToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.cancelToolStripMenuItem.Text = "&Cancel";
+            this.cancelToolStripMenuItem.Click += new System.EventHandler(this.cancelToolStripMenuItem_Click);
             // 
             // toolStripMenuItem1
             // 
@@ -252,18 +265,6 @@
             this.comboBoxTfsServers.Name = "comboBoxTfsServers";
             this.comboBoxTfsServers.Size = new System.Drawing.Size(229, 21);
             this.comboBoxTfsServers.TabIndex = 11;
-            // 
-            // toolStripMenuItem4
-            // 
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(149, 6);
-            // 
-            // cancelToolStripMenuItem
-            // 
-            this.cancelToolStripMenuItem.Name = "cancelToolStripMenuItem";
-            this.cancelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.cancelToolStripMenuItem.Text = "&Cancel";
-            this.cancelToolStripMenuItem.Click += new System.EventHandler(this.cancelToolStripMenuItem_Click);
             // 
             // FormSetConnection
             // 

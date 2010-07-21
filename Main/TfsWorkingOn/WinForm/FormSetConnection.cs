@@ -288,6 +288,11 @@ namespace Rowan.TfsWorkingOn.WinForm
             ShowSearchForm();
         }
 
+        private void workItemsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            configureToolStripMenuItem_Click(sender, e);
+        }
+
         private void queryListToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
             if (queryListToolStripMenuItem.DropDownItems.Count > 1 || Settings.Default.SelectedQuery == Guid.Empty) return;
