@@ -25,6 +25,7 @@ namespace Rowan.TfsWorkingOn
             get { return _isDirty; }
             private set
             {
+                if (_isDirty == value) return;
                 _isDirty = value;
                 OnPropertyChanged(new PropertyChangedEventArgs(IsDirtyPropertyName));
             }
@@ -161,12 +162,13 @@ namespace Rowan.TfsWorkingOn
         #region Public Methods
         public void Save()
         {
-            if (HasNoFileContents()) return;
-
-            using (FileStream fs = new FileStream(Path.Combine(Settings.Default.ConfigurationsPath, _filename), FileMode.Create))
+            if (!HasNoFileContents())
             {
-                XmlSerializer xs = new XmlSerializerFactory().CreateSerializer(this.GetType());
-                xs.Serialize(fs, this);
+                using (FileStream fs = new FileStream(Path.Combine(Settings.Default.ConfigurationsPath, _filename), FileMode.Create))
+                {
+                    XmlSerializer xs = new XmlSerializerFactory().CreateSerializer(this.GetType());
+                    xs.Serialize(fs, this);
+                }
             }
             IsDirty = false;
         }

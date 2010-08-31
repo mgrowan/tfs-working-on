@@ -86,6 +86,7 @@ namespace Rowan.TfsWorkingOn
             get { return _isDirty; }
             private set
             {
+                if (_isDirty == value) return;
                 _isDirty = value;
                 OnPropertyChanged(new PropertyChangedEventArgs(IsDirtyPropertyName));
             }
