@@ -6,6 +6,7 @@ using System.Windows.Forms;
 using Microsoft.TeamFoundation.Client;
 using Rowan.TfsWorkingOn.TfsWarehouse;
 using Rowan.TfsWorkingOn.WinForm.Properties;
+using System.Web.Services.Protocols;
 
 namespace Rowan.TfsWorkingOn.WinForm
 {
@@ -35,7 +36,9 @@ namespace Rowan.TfsWorkingOn.WinForm
 
             labelVersion.Text = Assembly.GetExecutingAssembly().GetCustomAttributes(true).OfType<AssemblyInformationalVersionAttribute>().FirstOrDefault().InformationalVersion;
 
+            backgroundWorker.WorkerSupportsCancellation = true;
             workingItemConfiguration.WarehouseController.GetWarehouseStatusCompleted += new GetWarehouseStatusCompletedEventHandler(WarehouseController_GetWarehouseStatusCompleted);
+            workingItemConfiguration.WarehouseController.RunCompleted += new RunCompletedEventHandler(WarehouseController_RunCompleted);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
@@ -113,17 +116,59 @@ namespace Rowan.TfsWorkingOn.WinForm
             }
         }
 
-        private void buttonRefreshWarehouseStatus_Click(object sender, EventArgs e)
+        private void GetWarehouseStatus()
         {
             workingItemConfiguration.WarehouseController.GetWarehouseStatusAsync();
         }
 
+        private void buttonRefreshWarehouseStatus_Click(object sender, EventArgs e)
+        {
+            GetWarehouseStatus();
+        }
+
         private void WarehouseController_GetWarehouseStatusCompleted(object sender, GetWarehouseStatusCompletedEventArgs e)
         {
+            if (e.Error != null &&
+                e.Error is SoapException &&
+                e.Error.Message.Contains("Attempted to perform an unauthorized operation"))
+            {
+
+                MessageBox.Show("You do not have the correct permissions to view the warehouse status.",
+                    "Permission Denied",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+
             textBoxWarehouseStatus.Text = e.Result.ToString();
+            _idle = (e.Result == WarehouseStatus.Idle);
+
         }
 
         #region Async Data Warehouse Processing
+
+        /// <summary>
+        /// Handles the async 'Warehouse Update' web service call back.
+        /// If there has been an error, it needs to be trapped and displayed to the user.
+        /// </summary>
+        private void WarehouseController_RunCompleted(object sender, RunCompletedEventArgs e)
+        {
+            _idle = true;
+            backgroundWorker.CancelAsync();
+
+            if (e.Error != null &&
+                e.Error is SoapException &&
+                e.Error.Message.Contains("Attempted to perform an unauthorized operation"))
+            {
+
+                MessageBox.Show("You do not have the correct permissions to view the warehouse status.",
+                    "Permission Denied",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+                return;
+            }
+        }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         private void buttonUpdateWarehouse_Click(object sender, EventArgs e)
         {
@@ -132,8 +177,8 @@ namespace Rowan.TfsWorkingOn.WinForm
             try
             {
                 _idle = false;
-                backgroundWorker.RunWorkerAsync();
                 workingItemConfiguration.WarehouseController.RunAsync();
+                backgroundWorker.RunWorkerAsync();
             }
             catch (Exception ex)
             {
@@ -143,12 +188,18 @@ namespace Rowan.TfsWorkingOn.WinForm
             }
         }
 
-        bool _idle;
+        private bool _idle;
         private void backgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
         {
             while (!_idle)
             {
                 Thread.Sleep(1000);
+
+                if (backgroundWorker.CancellationPending)
+                {
+                    e.Cancel = true;
+                    return;
+                }
                 backgroundWorker.ReportProgress(1);
             }
             backgroundWorker.ReportProgress(100);
@@ -156,14 +207,14 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void backgroundWorker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
         {
-            WarehouseStatus ws = workingItemConfiguration.WarehouseController.GetWarehouseStatus();
-            textBoxWarehouseStatus.Text = ws.ToString();
-            _idle = (ws == WarehouseStatus.Idle);
+            GetWarehouseStatus();
         }
 
         private void backgroundWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
         {
-            textBoxWarehouseStatus.Text = workingItemConfiguration.WarehouseController.GetWarehouseStatus().ToString();
+            if (e.Cancelled != true)
+                GetWarehouseStatus();
+
             buttonUpdateWarehouse.Enabled = true;
             progressBarWarehouse.MarqueeAnimationSpeed = 0;
         }

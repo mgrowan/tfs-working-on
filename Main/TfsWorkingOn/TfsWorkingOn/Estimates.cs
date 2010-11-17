@@ -13,7 +13,7 @@ namespace Rowan.TfsWorkingOn
         private double _duration;
         public double Duration
         {
-            get { return _duration; }
+            get { return Math.Round(_duration, 2); }
             set
             {
                 _duration = value;
@@ -30,7 +30,7 @@ namespace Rowan.TfsWorkingOn
         private double _remainingTime;
         public double RemainingTime
         {
-            get { return _remainingTime; }
+            get { return Math.Round(_remainingTime, 2); }
             set
             {
                 _remainingTime = value;
@@ -42,7 +42,7 @@ namespace Rowan.TfsWorkingOn
         private double _elapsedTime;
         public double ElapsedTime
         {
-            get { return _elapsedTime; }
+            get { return Math.Round(_elapsedTime, 2); }
             set
             {
                 _elapsedTime = value;

@@ -80,7 +80,6 @@ namespace Rowan.TfsWorkingOn
             {
                 _projects = value;
                 OnPropertyChanged(new PropertyChangedEventArgs(ProjectsPropertyName));
-                SelectedProject = value[0];
             }
         }
 
@@ -91,7 +90,15 @@ namespace Rowan.TfsWorkingOn
         [XmlIgnore]
         public Project SelectedProject
         {
-            get { return _selectedProject == null ? _workItemStore.Projects[SelectedProjectName] : _selectedProject; }
+            get
+            {
+                if (_selectedProject == null && string.IsNullOrEmpty(SelectedProjectName))
+                    return _workItemStore.Projects[0];
+                else if (_selectedProject == null)
+                    return _workItemStore.Projects[SelectedProjectName];
+                else
+                    return _selectedProject;
+            }
             set
             {
                 if (_selectedProject != value)
