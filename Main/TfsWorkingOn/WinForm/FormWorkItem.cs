@@ -23,9 +23,21 @@ namespace Rowan.TfsWorkingOn.WinForm
         {
             if (workItem != null)
             {
-                // The work item must be open before it can be sync'd
-                if (workItem.IsOpen)
-                    workItem.SyncToLatest();
+                
+                    // The work item must be open before it can be sync'd
+                    if (workItem.IsOpen)
+                    {
+                        try
+                        {
+                            workItem.SyncToLatest();
+                        }
+                        catch (UnexpectedErrorException ex2)
+                        {
+                            // This occurs when TFS connection has been lost.
+                            // The message returned from the exception is informative, so using it.
+                            MessageBox.Show(ex2.Message, @"Problem Saving", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
                 
                 Text = string.Format(CultureInfo.CurrentCulture, Resources.WorkItemTitle, workItem.Id, workItem.Title);
                 witControl.Item = workItem;
@@ -65,6 +77,13 @@ namespace Rowan.TfsWorkingOn.WinForm
                         witControl.Item.SyncToLatest();
                         return false;
                     }
+                }
+                catch (UnexpectedErrorException ex2)
+                {
+                    // This occurs when TFS connection has been lost.
+                    // The message returned from the exception is informative, so using it.
+                    MessageBox.Show(ex2.Message, @"Problem Saving", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
                 }
             }
             return true;
