@@ -23,6 +23,18 @@ namespace Rowan.TfsWorkingOn.WinForm
             pickWorkItemsControl.PortfolioDisplayName = projectName;
             pickWorkItemsControl.SelectListViewLabel = Resources.DoubleClickToSelect;
             pickWorkItemsControl.PickWorkItemsListViewDoubleClicked += new PickWorkItemsListViewDoubleClickedEventHandler(pickWorkItemsControl_PickWorkItemsListViewDoubleClicked);
+            
+            // Add context menu to view the work item when trying to pick from the query
+            try
+            {
+                // Dirty hack - this will continue to work as long as the TFS control has not been updated by Microsoft.
+                ((ListView)pickWorkItemsControl.Controls[0].Controls[9]).ContextMenuStrip = workitemMenuStrip;
+            }
+            catch (Exception)
+            {
+                // Let this go!!
+                // The only implication is the context menu wont display
+            }
 
             Controls.Add(pickWorkItemsControl);
             SetClientSizeCore(pickWorkItemsControl.PreferredSize.Width, pickWorkItemsControl.PreferredSize.Height);
@@ -31,10 +43,23 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         void pickWorkItemsControl_PickWorkItemsListViewDoubleClicked(object sender, EventArgs e)
         {
+            PickWorkItem((pickWorkItemsControl.SelectedWorkItems()[0] as WorkItem));
+            Close();
+        }
+
+        private void selectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PickWorkItem((pickWorkItemsControl.SelectedWorkItems()[0] as WorkItem));
+            Close();
+        }
+
+        private void PickWorkItem(WorkItem workItem)
+        {
             // TODO: Check if assigned to user
-            WorkItem workItem = (pickWorkItemsControl.SelectedWorkItems()[0] as WorkItem);
             try
             {
+                // Not sure if we really need to explicitly open this workitem. 
+                // The item will automatically open when a field has been edited.
                 workItem.Open();
             }
             catch (ItemAlreadyUpdatedOnServerException)
@@ -49,7 +74,21 @@ namespace Rowan.TfsWorkingOn.WinForm
             {
                 WorkingItem.WorkItem = workItem;
             }
-            Close();
+            
+        }
+
+        private void viewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (pickWorkItemsControl.SelectedWorkItems().Count > 0)
+            {
+                var workItem = (pickWorkItemsControl.SelectedWorkItems()[0] as WorkItem);
+                FormWorkItem formWorkItem = new FormWorkItem(workItem);
+                formWorkItem.ShowDialog(this);
+            }
+            else
+            {
+                MessageBox.Show(@"Please select a work item to view", @"No Work Item Selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

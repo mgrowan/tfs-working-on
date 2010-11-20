@@ -28,8 +28,35 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSearchWorkItems));
+            this.workitemMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.selectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.workitemMenuStrip.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // workitemMenuStrip
+            // 
+            this.workitemMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.selectToolStripMenuItem,
+            this.viewToolStripMenuItem});
+            this.workitemMenuStrip.Name = "workitemMenuStrip";
+            this.workitemMenuStrip.Size = new System.Drawing.Size(153, 70);
+            // 
+            // selectToolStripMenuItem
+            // 
+            this.selectToolStripMenuItem.Name = "selectToolStripMenuItem";
+            this.selectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.selectToolStripMenuItem.Text = "Select";
+            this.selectToolStripMenuItem.Click += new System.EventHandler(this.selectToolStripMenuItem_Click);
+            // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.viewToolStripMenuItem.Text = "View";
+            this.viewToolStripMenuItem.Click += new System.EventHandler(this.viewToolStripMenuItem_Click);
             // 
             // FormSearchWorkItems
             // 
@@ -39,10 +66,15 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormSearchWorkItems";
             this.Text = "FormSearchWorkItems";
+            this.workitemMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.ContextMenuStrip workitemMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem selectToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
     }
 }

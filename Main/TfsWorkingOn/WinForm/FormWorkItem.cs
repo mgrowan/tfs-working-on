@@ -23,7 +23,10 @@ namespace Rowan.TfsWorkingOn.WinForm
         {
             if (workItem != null)
             {
-                workItem.SyncToLatest();
+                // The work item must be open before it can be sync'd
+                if (workItem.IsOpen)
+                    workItem.SyncToLatest();
+                
                 Text = string.Format(CultureInfo.CurrentCulture, Resources.WorkItemTitle, workItem.Id, workItem.Title);
                 witControl.Item = workItem;
             }
