@@ -295,24 +295,33 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void queryListToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            if (queryListToolStripMenuItem.DropDownItems.Count > 1 || Settings.Default.SelectedQuery == Guid.Empty) return;
-            queryListToolStripMenuItem.DropDownItems.Clear();
-
-            Dictionary<string, string> parameters = new Dictionary<string, string>(2);
-            parameters.Add("me", TeamFoundationServerFactory.GetServer(_connection.Server).AuthenticatedUserDisplayName);
-            parameters.Add("project", Settings.Default.SelectedProjectName);
-            WorkItemCollection workItems = _connection.WorkItemStore.Query(_connection.WorkItemStore.GetStoredQuery(Settings.Default.SelectedQuery).QueryText, parameters);
-            List<ToolStripItem> workItemToolStripItems = new List<ToolStripItem>();
-            foreach (WorkItem workItem in workItems)
+            try
             {
-                ToolStripItem wi = new ToolStripMenuItem();
-                wi.Tag = workItem.Id;
-                wi.ToolTipText = string.Format(CultureInfo.CurrentCulture, "{0}: {1}", workItem.Id, workItem.Title);
-                wi.Text = GetStringWithEllipsis(wi.ToolTipText, 60);
-                wi.Click += ToolStripWorkItem_Click;
-                workItemToolStripItems.Add(wi);
+                if (queryListToolStripMenuItem.DropDownItems.Count > 1 || Settings.Default.SelectedQuery == Guid.Empty) return;
+                queryListToolStripMenuItem.DropDownItems.Clear();
+
+                Dictionary<string, string> parameters = new Dictionary<string, string>(2);
+                parameters.Add("me", TeamFoundationServerFactory.GetServer(_connection.Server).AuthenticatedUserDisplayName);
+                parameters.Add("project", Settings.Default.SelectedProjectName);
+                WorkItemCollection workItems = _connection.WorkItemStore.Query(_connection.WorkItemStore.GetStoredQuery(Settings.Default.SelectedQuery).QueryText, parameters);
+                List<ToolStripItem> workItemToolStripItems = new List<ToolStripItem>();
+                foreach (WorkItem workItem in workItems)
+                {
+                    ToolStripItem wi = new ToolStripMenuItem();
+                    wi.Tag = workItem.Id;
+                    wi.ToolTipText = string.Format(CultureInfo.CurrentCulture, "{0}: {1}", workItem.Id, workItem.Title);
+                    wi.Text = GetStringWithEllipsis(wi.ToolTipText, 60);
+                    wi.Click += ToolStripWorkItem_Click;
+                    workItemToolStripItems.Add(wi);
+                }
+                queryListToolStripMenuItem.DropDownItems.AddRange(workItemToolStripItems.ToArray());
             }
-            queryListToolStripMenuItem.DropDownItems.AddRange(workItemToolStripItems.ToArray());
+            catch (System.UnauthorizedAccessException ex)
+            {
+                queryListToolStripMenuItem.DropDownItems.Clear();
+                // The message is informative, using this in the msgbox.
+                MessageBox.Show(ex.Message, @"Error Loading Query", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         void ToolStripWorkItem_Click(object sender, EventArgs e)
