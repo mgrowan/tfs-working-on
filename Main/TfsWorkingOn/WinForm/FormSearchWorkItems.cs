@@ -12,6 +12,7 @@ namespace Rowan.TfsWorkingOn.WinForm
         private PickWorkItemsControl pickWorkItemsControl;
         public WorkingItem WorkingItem { get; private set; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public FormSearchWorkItems(WorkItemStore workItemStore, string projectName)
         {
             InitializeComponent();
@@ -58,9 +59,9 @@ namespace Rowan.TfsWorkingOn.WinForm
             // TODO: Check if assigned to user
             try
             {
-                // Not sure if we really need to explicitly open this workitem. 
-                // The item will automatically open when a field has been edited.
+                WorkingItem.WorkItem = workItem;
                 workItem.Open();
+
             }
             catch (ItemAlreadyUpdatedOnServerException)
             {
@@ -70,11 +71,6 @@ namespace Rowan.TfsWorkingOn.WinForm
                 workItem = connection.WorkItemStore.GetWorkItem(workItem.Id);
                 workItem.Open();
             }
-            finally
-            {
-                WorkingItem.WorkItem = workItem;
-            }
-            
         }
 
         private void viewToolStripMenuItem_Click(object sender, EventArgs e)

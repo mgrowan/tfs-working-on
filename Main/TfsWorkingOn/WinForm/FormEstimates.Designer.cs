@@ -147,6 +147,7 @@
             this.Controls.Add(this.buttonViewWorkItem);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FormEstimates";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Estimates";
             ((System.ComponentModel.ISupportInitialize)(this.estimatesBindingSource)).EndInit();
             this.ResumeLayout(false);

@@ -169,6 +169,10 @@ namespace Rowan.TfsWorkingOn
 
         public void UpdateWorkingOnEstimates()
         {
+            // The work item must be open prior to sync.
+            if (!WorkItem.IsOpen)
+                WorkItem.Open();
+
             WorkItem.SyncToLatest();
 
             WorkingItemConfiguration workingItemConfiguration = LoadWorkItemConfiguration();

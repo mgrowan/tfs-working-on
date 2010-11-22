@@ -243,10 +243,26 @@ namespace Rowan.TfsWorkingOn.WinForm
                 {
                     _workingItem.Connection = _connection;
                     _workingItem.UserActivityMonitor.MonitorTriggeredEvent += new EventHandler<MonitorEventArgs>(_userActivity_MonitorTriggeredEvent);
+
+                    AskForEstimates();
+                    
                     selectedToolStripMenuItem.Text = string.Format(CultureInfo.CurrentCulture, Resources.Selected, _workingItem.WorkItem.Id);
                     selectedToolStripMenuItem.ToolTipText = _workingItem.WorkItem.Title;
                     selectedToolStripMenuItem.Enabled = true;
                     StartStop();
+                }
+            }
+        }
+
+        private void AskForEstimates()
+        {
+            // If no estimates, then ask user add some
+            if (_workingItem.Estimates.Duration == 0 && _workingItem.Estimates.ElapsedTime == 0)
+            {
+                if (MessageBox.Show("There are no estimates for the workitem.\r\nDo you want to add estimates now?", @"Add Estimates", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    FormEstimates formEstimates = new FormEstimates(_workingItem);
+                    formEstimates.ShowDialog(this);
                 }
             }
         }
