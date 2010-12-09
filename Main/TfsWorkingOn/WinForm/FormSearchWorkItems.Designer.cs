@@ -42,19 +42,19 @@
             this.selectToolStripMenuItem,
             this.viewToolStripMenuItem});
             this.workitemMenuStrip.Name = "workitemMenuStrip";
-            this.workitemMenuStrip.Size = new System.Drawing.Size(153, 70);
+            this.workitemMenuStrip.Size = new System.Drawing.Size(115, 48);
             // 
             // selectToolStripMenuItem
             // 
             this.selectToolStripMenuItem.Name = "selectToolStripMenuItem";
-            this.selectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.selectToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.selectToolStripMenuItem.Text = "Select";
             this.selectToolStripMenuItem.Click += new System.EventHandler(this.selectToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.viewToolStripMenuItem.Text = "View";
             this.viewToolStripMenuItem.Click += new System.EventHandler(this.viewToolStripMenuItem_Click);
             // 
@@ -64,8 +64,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(285, 254);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.KeyPreview = true;
             this.Name = "FormSearchWorkItems";
             this.Text = "FormSearchWorkItems";
+            this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.FormSearchWorkItems_KeyPress);
             this.workitemMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
 

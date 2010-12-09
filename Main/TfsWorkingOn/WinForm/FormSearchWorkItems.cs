@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Microsoft.TeamFoundation.Controls;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using Rowan.TfsWorkingOn.WinForm.Properties;
+using System.Collections;
 
 namespace Rowan.TfsWorkingOn.WinForm
 {
@@ -85,6 +86,12 @@ namespace Rowan.TfsWorkingOn.WinForm
             {
                 MessageBox.Show(@"Please select a work item to view", @"No Work Item Selected", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void FormSearchWorkItems_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (Char)Keys.Escape)
+                this.Close();
         }
     }
 }
