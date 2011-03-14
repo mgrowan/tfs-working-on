@@ -2,11 +2,10 @@
 using System.Linq;
 using System.Reflection;
 using System.Threading;
+using System.Web.Services.Protocols;
 using System.Windows.Forms;
-using Microsoft.TeamFoundation.Client;
 using Rowan.TfsWorkingOn.TfsWarehouse;
 using Rowan.TfsWorkingOn.WinForm.Properties;
-using System.Web.Services.Protocols;
 
 namespace Rowan.TfsWorkingOn.WinForm
 {
@@ -24,9 +23,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             workingItemConfigurationBindingSource.DataSource = workingItemConfiguration;
             settingsBindingSource.DataSource = Settings.Default;
 
-            comboBoxTfsServers.Items.AddRange(RegisteredServers.GetServerNames());
-            workingItemConfiguration.Connection.Server = Settings.Default.TfsServer;
-            comboBoxMenuQuery.DataSource = workingItemConfiguration.Connection.WorkItemStore.Projects[Settings.Default.SelectedProjectName].StoredQueries;
+            comboBoxMenuQuery.DataSource = Connection.GetConnection().WorkItemStore.Projects[Settings.Default.SelectedProjectName].QueryHierarchy;
             comboBoxMenuQuery.SelectedValue = Settings.Default.SelectedQuery;
 
             toolTipHelp.SetToolTip(pictureBoxHelpUserActivity, Resources.HelpActivityMonitor);
@@ -39,21 +36,6 @@ namespace Rowan.TfsWorkingOn.WinForm
             backgroundWorker.WorkerSupportsCancellation = true;
             workingItemConfiguration.WarehouseController.GetWarehouseStatusCompleted += new GetWarehouseStatusCompletedEventHandler(WarehouseController_GetWarehouseStatusCompleted);
             workingItemConfiguration.WarehouseController.RunCompleted += new RunCompletedEventHandler(WarehouseController_RunCompleted);
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private void buttonConnect_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                workingItemConfiguration.Connection.Connect();
-                Settings.Default.TfsServer = workingItemConfiguration.Connection.Server;
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, Resources.ConnectionFailedTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-            }
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -116,6 +98,8 @@ namespace Rowan.TfsWorkingOn.WinForm
             }
         }
 
+        #region Data Warehouse Processing
+
         private void GetWarehouseStatus()
         {
             workingItemConfiguration.WarehouseController.GetWarehouseStatusAsync();
@@ -144,8 +128,6 @@ namespace Rowan.TfsWorkingOn.WinForm
             _idle = (e.Result == WarehouseStatus.Idle);
 
         }
-
-        #region Async Data Warehouse Processing
 
         /// <summary>
         /// Handles the async 'Warehouse Update' web service call back.

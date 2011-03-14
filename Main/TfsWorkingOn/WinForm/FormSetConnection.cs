@@ -13,7 +13,7 @@ namespace Rowan.TfsWorkingOn.WinForm
 {
     public partial class FormSetConnection : Form
     {
-        private Connection _connection = new Connection();
+        private Connection _connection = Connection.GetConnection();
         private WorkingItem _workingItem;
         private Nag _nag = new Nag();
 
@@ -27,43 +27,39 @@ namespace Rowan.TfsWorkingOn.WinForm
             SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
             Settings.Default.PropertyChanged += new PropertyChangedEventHandler(Settings_PropertyChanged);
 
-            connectionBindingSource.DataSource = _connection;
-            comboBoxTfsServers.Items.AddRange(RegisteredServers.GetServerNames());
-
-            _connection.Server = Settings.Default.TfsServer;
+            _connection.TeamProjectCollectionAbsoluteUri = Settings.Default.TeamProjectCollectionAbsoluteUri;
 
             _nag.MonitorTriggeredEvent += new EventHandler<MonitorEventArgs>(_nag_MonitorTriggeredEvent);
             components.Add(_nag);
             _nag.Start();
             try
             {
-                if (!string.IsNullOrEmpty(_connection.Server))
+                if (_connection.TeamProjectCollectionAbsoluteUri != null)
                 {
                     _connection.Connect();
                 }
                 else
                 {
-                    Show();
+                    ShowTeamProjectPicker();
                     return;
                 }
             }
             catch (Exception)
             {
-                Show();
+                ShowTeamProjectPicker();
                 return;
             }
 
-            if (_connection.IsConnected && Settings.Default.SelectedProjectId != -1 && !string.IsNullOrEmpty(Settings.Default.SelectedProjectName))
+            if (!string.IsNullOrEmpty(Settings.Default.SelectedProjectName))
             {
-                _connection.SelectedProjectId = Settings.Default.SelectedProjectId;
                 _connection.SelectedProjectName = Settings.Default.SelectedProjectName;
-                Hide();
+                Hide(); // TODO Don't ever show this form
                 ShowSearchForm();
                 SetMenuQuery();
             }
             else
             {
-                Show();
+                ShowTeamProjectPicker();
             }
         }
 
@@ -83,13 +79,31 @@ namespace Rowan.TfsWorkingOn.WinForm
 
             if (!_connection.IsConnected)
             {
-                Show();
+                ShowTeamProjectPicker();
                 return;
             }
 
             FormSearchWorkItems formSearchWorkItems = new FormSearchWorkItems(_connection.WorkItemStore, _connection.SelectedProjectName);
             formSearchWorkItems.WorkingItem.PropertyChanged += new PropertyChangedEventHandler(WorkingItem_PropertyChanged);
             formSearchWorkItems.Show();
+        }
+
+        private static TeamProjectPicker _teamProjectPicker = new TeamProjectPicker();
+        private void ShowTeamProjectPicker()
+        {
+            switch (_teamProjectPicker.ShowDialog())
+            {
+                case DialogResult.OK:
+                    _connection.TeamProjectCollectionAbsoluteUri = _teamProjectPicker.SelectedTeamProjectCollection.Uri.AbsoluteUri;
+                    _connection.SelectedProjectName = _teamProjectPicker.SelectedProjects[0].Name;
+                    Settings.Default.Save();
+
+                    ShowSearchForm();
+                    break;
+                default:
+                    ShowTeamProjectPicker(); // TODO Allow an Application Exit
+                    break;
+            }
         }
 
         private void StartStop()
@@ -127,7 +141,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             {
                 try
                 {
-                    StoredQuery query = _connection.WorkItemStore.GetStoredQuery(Settings.Default.SelectedQuery);
+                    QueryDefinition query = _connection.WorkItemStore.GetQueryDefinition(Settings.Default.SelectedQuery);
                     queryListToolStripMenuItem.Text = GetStringWithEllipsis(query.Name, 30);
                     queryListToolStripMenuItem.ToolTipText = query.Name;
                 }
@@ -205,7 +219,7 @@ namespace Rowan.TfsWorkingOn.WinForm
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private void buttonConnect_Click(object sender, EventArgs e)
+        private void buttonConnect_Click(object sender, EventArgs e) // NOCOMMIT Move catch around TfsTeamProjectCollection call
         {
             try
             {
@@ -215,17 +229,6 @@ namespace Rowan.TfsWorkingOn.WinForm
             {
                 MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Resources.FailedToConnect, ex.Message), Resources.ConnectionFailedTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
             }
-        }
-
-        private void buttonOK_Click(object sender, EventArgs e)
-        {
-            Settings.Default.TfsServer = _connection.Server;
-            Settings.Default.SelectedProjectId = _connection.SelectedProjectId;
-            Settings.Default.SelectedProjectName = _connection.SelectedProjectName;
-            Settings.Default.Save();
-            Hide();
-
-            ShowSearchForm();
         }
 
         private void FormSetConnection_FormClosing(object sender, FormClosingEventArgs e)
@@ -245,7 +248,7 @@ namespace Rowan.TfsWorkingOn.WinForm
                     _workingItem.UserActivityMonitor.MonitorTriggeredEvent += new EventHandler<MonitorEventArgs>(_userActivity_MonitorTriggeredEvent);
 
                     AskForEstimates();
-                    
+
                     selectedToolStripMenuItem.Text = string.Format(CultureInfo.CurrentCulture, Resources.Selected, _workingItem.WorkItem.Id);
                     selectedToolStripMenuItem.ToolTipText = _workingItem.WorkItem.Title;
                     selectedToolStripMenuItem.Enabled = true;
@@ -259,7 +262,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             // If no estimates, then ask user add some
             if (_workingItem.Estimates.Duration == 0 && _workingItem.Estimates.ElapsedTime == 0)
             {
-                if (MessageBox.Show("There are no estimates for the workitem.\r\nDo you want to add estimates now?", @"Add Estimates", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show(Resources.ThereAreNoEstimatesForTheWorkitem, Resources.AddEstimates, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     FormEstimates formEstimates = new FormEstimates(_workingItem);
                     formEstimates.ShowDialog(this);
@@ -296,7 +299,7 @@ namespace Rowan.TfsWorkingOn.WinForm
         #region System Tray Menu Clicks
         private void toolStripConnect_Click(object sender, EventArgs e)
         {
-            Show();
+            ShowTeamProjectPicker();
         }
 
         private void selectWorkItemToolStripMenuItem_Click(object sender, EventArgs e)
@@ -311,16 +314,26 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void queryListToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
+            if (queryListToolStripMenuItem.DropDownItems.Count > 1 || Settings.Default.SelectedQuery == Guid.Empty) return;
+            RefreshQueryList();
+        }
+
+        private void RefreshQueryList()
+        {
+            queryListToolStripMenuItem.DropDownItems.Clear();
+
+            List<ToolStripItem> workItemToolStripItems = new List<ToolStripItem>();
+            ToolStripItem refreshQueryList = new ToolStripMenuItem(Resources.RefreshQueryList, Resources.Refresh, refreshQueryToolStripItem_Click);
+            workItemToolStripItems.Add(refreshQueryList);
+            workItemToolStripItems.Add(new ToolStripSeparator());
+
             try
             {
-                if (queryListToolStripMenuItem.DropDownItems.Count > 1 || Settings.Default.SelectedQuery == Guid.Empty) return;
-                queryListToolStripMenuItem.DropDownItems.Clear();
-
                 Dictionary<string, string> parameters = new Dictionary<string, string>(2);
-                parameters.Add("me", TeamFoundationServerFactory.GetServer(_connection.Server).AuthenticatedUserDisplayName);
+                //parameters.Add("me", TfsTeamProjectCollectionFactory.GetTeamProjectCollection(.GetServer(_connection.Server).AuthenticatedUserDisplayName);
                 parameters.Add("project", Settings.Default.SelectedProjectName);
-                WorkItemCollection workItems = _connection.WorkItemStore.Query(_connection.WorkItemStore.GetStoredQuery(Settings.Default.SelectedQuery).QueryText, parameters);
-                List<ToolStripItem> workItemToolStripItems = new List<ToolStripItem>();
+                WorkItemCollection workItems = _connection.WorkItemStore.Query(_connection.WorkItemStore.GetQueryDefinition(Settings.Default.SelectedQuery).QueryText, parameters);
+
                 foreach (WorkItem workItem in workItems)
                 {
                     ToolStripItem wi = new ToolStripMenuItem();
@@ -336,8 +349,14 @@ namespace Rowan.TfsWorkingOn.WinForm
             {
                 queryListToolStripMenuItem.DropDownItems.Clear();
                 // The message is informative, using this in the msgbox.
-                MessageBox.Show(ex.Message, @"Error Loading Query", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, Resources.ErrorLoadingQuery, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void refreshQueryToolStripItem_Click(object sender, EventArgs e)
+        {
+            if (Settings.Default.SelectedQuery == Guid.Empty) configureToolStripMenuItem_Click(sender, e); // Open Configuration
+            else RefreshQueryList();
         }
 
         void ToolStripWorkItem_Click(object sender, EventArgs e)
@@ -356,7 +375,7 @@ namespace Rowan.TfsWorkingOn.WinForm
 
             if (!_connection.IsConnected)
             {
-                Show();
+                ShowTeamProjectPicker();
                 return;
             }
 
@@ -413,5 +432,6 @@ namespace Rowan.TfsWorkingOn.WinForm
             }
         }
         #endregion
+
     }
 }

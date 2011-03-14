@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Forms;
-using Microsoft.TeamFoundation.Controls;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
+using Microsoft.TeamFoundation.WorkItemTracking.Controls;
 using Rowan.TfsWorkingOn.WinForm.Properties;
-using System.Collections;
 
 namespace Rowan.TfsWorkingOn.WinForm
 {
@@ -23,9 +22,8 @@ namespace Rowan.TfsWorkingOn.WinForm
             pickWorkItemsControl = new PickWorkItemsControl(workItemStore, false);
             pickWorkItemsControl.Dock = DockStyle.Fill;
             pickWorkItemsControl.PortfolioDisplayName = projectName;
-            pickWorkItemsControl.SelectListViewLabel = Resources.DoubleClickToSelect;
-            pickWorkItemsControl.PickWorkItemsListViewDoubleClicked += new PickWorkItemsListViewDoubleClickedEventHandler(pickWorkItemsControl_PickWorkItemsListViewDoubleClicked);
-            
+            pickWorkItemsControl.PickWorkItemsDoubleClicked += new PickWorkItemsDoubleClickedEventHandler(pickWorkItemsControl_PickWorkItemsListViewDoubleClicked);
+
             // Add context menu to view the work item when trying to pick from the query
             try
             {
@@ -66,10 +64,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             }
             catch (ItemAlreadyUpdatedOnServerException)
             {
-                Connection connection = new Connection();
-                connection.Server = Settings.Default.TfsServer;
-                connection.Connect();
-                workItem = connection.WorkItemStore.GetWorkItem(workItem.Id);
+                workItem = Connection.GetConnection().WorkItemStore.GetWorkItem(workItem.Id);
                 workItem.Open();
             }
         }

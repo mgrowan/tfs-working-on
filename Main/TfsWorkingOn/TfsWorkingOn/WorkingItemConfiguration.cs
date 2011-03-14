@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Xml.Serialization;
-using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using Rowan.TfsWorkingOn.Properties;
 using Rowan.TfsWorkingOn.TfsWarehouse;
@@ -28,18 +27,6 @@ namespace Rowan.TfsWorkingOn
                 if (_isDirty == value) return;
                 _isDirty = value;
                 OnPropertyChanged(new PropertyChangedEventArgs(IsDirtyPropertyName));
-            }
-        }
-
-        public const string ConnectionPropertyName = "Connection";
-        private Connection _connection = new Connection();
-        public Connection Connection
-        {
-            get { return _connection; }
-            set
-            {
-                _connection = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(ConnectionPropertyName));
             }
         }
 
@@ -111,8 +98,8 @@ namespace Rowan.TfsWorkingOn
             {
                 if (_warehouseController == null)
                 {
-                    _warehouseController = new ControllerService();
-                    _warehouseController.Url = string.Format("{0}warehouse/v1.0/warehousecontroller.asmx", TeamFoundationServerFactory.GetServer(Connection.Server).Uri.AbsoluteUri);
+                    _warehouseController = new ControllerService(); // TODO Update for TFS 2010
+                    _warehouseController.Url = string.Format("{0}warehouse/v1.0/warehousecontroller.asmx", Connection.GetConnection().TfsTeamProjectCollection.Uri.AbsoluteUri);
                     _warehouseController.UseDefaultCredentials = true;
                 }
                 return _warehouseController;
@@ -123,7 +110,6 @@ namespace Rowan.TfsWorkingOn
 
         public WorkingItemConfiguration()
         {
-            this.Connection.PropertyChanged += new PropertyChangedEventHandler(Connection_PropertyChanged);
             this.PropertyChanged += new PropertyChangedEventHandler(WorkingItemConfiguration_PropertyChanged);
             Settings.Default.PropertyChanged += new PropertyChangedEventHandler(Default_PropertyChanged);
         }
@@ -136,12 +122,6 @@ namespace Rowan.TfsWorkingOn
         void WorkingItemConfiguration_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName != IsDirtyPropertyName) IsDirty = true;
-        }
-
-        void Connection_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == Connection.SelectedProjectPropertyName) SelectedWorkItemType = Connection.SelectedProject.WorkItemTypes[0];
-            OnPropertyChanged(e);
         }
 
         #region INotifyPropertyChanged Members
@@ -177,7 +157,7 @@ namespace Rowan.TfsWorkingOn
         {
             if (HasRequiredPropertiesMissing()) return;
 
-            _filename = string.Format(CultureInfo.InvariantCulture, Resources.ConfigFileName, Connection.ServerInstanceId.ToString("N"), Connection.SelectedProject.Name, SelectedWorkItemType.Name);
+            _filename = string.Format(CultureInfo.InvariantCulture, Resources.ConfigFileName, Connection.GetConnection().TfsTeamProjectCollection.ConfigurationServer.InstanceId.ToString("N"), Connection.GetConnection().SelectedProject.Name, SelectedWorkItemType.Name);
 
             string filePath = Path.Combine(Settings.Default.ConfigurationsPath, _filename);
             if (File.Exists(filePath))
@@ -209,7 +189,7 @@ namespace Rowan.TfsWorkingOn
         }
         private bool HasRequiredPropertiesMissing()
         {
-            return string.IsNullOrEmpty(Connection.Server) || Connection.SelectedProject == null || SelectedWorkItemType == null;
+            return SelectedWorkItemType == null;
         }
         #endregion
 

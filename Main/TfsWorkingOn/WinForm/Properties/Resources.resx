@@ -112,33 +112,19 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="helpImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\help.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="InvalidFields" xml:space="preserve">
-    <value>Invalid fields</value>
-  </data>
-  <data name="Paused" xml:space="preserve">
-    <value>Paused</value>
-  </data>
-  <data name="Resumed" xml:space="preserve">
-    <value>Resumed</value>
-  </data>
-  <data name="DoubleClickToSelect" xml:space="preserve">
-    <value>Double click the work item you are working on...</value>
-  </data>
-  <data name="StartedWorkingOn" xml:space="preserve">
-    <value>Started working on {0}: 
-{1}</value>
+  <data name="ConnectionFailedTitle" xml:space="preserve">
+    <value>Connection Failed</value>
   </data>
   <data name="FailedToConnect" xml:space="preserve">
     <value>Failed to connect: {0}</value>
+  </data>
+  <data name="Start" xml:space="preserve">
+    <value>Start</value>
   </data>
   <data name="HelpActivityMonitor" xml:space="preserve">
     <value>Enabling Monitor User Activity causes an automatic 
@@ -147,92 +133,18 @@ been idle for the time out specified (minutes). When
 user activity begins again, the Start/Resume "working
 on" is triggered.</value>
   </data>
-  <data name="NotifyIconText" xml:space="preserve">
-    <value>TFS Working On...</value>
-  </data>
-  <data name="ItemAlreadyUpdated" xml:space="preserve">
-    <value>Work Item already updated</value>
-  </data>
-  <data name="Stop" xml:space="preserve">
-    <value>Stop</value>
-  </data>
-  <data name="WorkItemTitle" xml:space="preserve">
-    <value>Work Item {0}: {1}</value>
-  </data>
-  <data name="HelpNag" xml:space="preserve">
-    <value>Enabling Nag causes a balloon notification 
-to be displayed at the set interval (minutes)
-if no work item is being worked on. </value>
-  </data>
-  <data name="SearchForWorkItemsIn" xml:space="preserve">
-    <value>Search for Work Items in {0}</value>
-  </data>
-  <data name="ConnectionFailedTitle" xml:space="preserve">
-    <value>Connection Failed</value>
-  </data>
   <data name="MappingPathTitle" xml:space="preserve">
     <value>Set Mapping Path</value>
-  </data>
-  <data name="ResumedWorkingOn" xml:space="preserve">
-    <value>Resumed Working On {0}: {1}</value>
-  </data>
-  <data name="StopWorkingOnWorkItem" xml:space="preserve">
-    <value>Do you wish to stop working on Work Item: {0}?</value>
-  </data>
-  <data name="OutstandingChanges" xml:space="preserve">
-    <value>There are outstanding changes. Would you like to save your changes?</value>
-  </data>
-  <data name="Start" xml:space="preserve">
-    <value>Start</value>
-  </data>
-  <data name="RefreshWorkItem" xml:space="preserve">
-    <value>Do you wish to discard your changes and refresh the work item?</value>
-  </data>
-  <data name="SaveChanges" xml:space="preserve">
-    <value>Save Changes</value>
-  </data>
-  <data name="StoppedWorkingOn" xml:space="preserve">
-    <value>Stopped working on {0}: 
-{1}</value>
-  </data>
-  <data name="PausedWorkingOn" xml:space="preserve">
-    <value>Paused Working On {0}: {1}</value>
   </data>
   <data name="StopCurrentWorkItem" xml:space="preserve">
     <value>Stop current Work Item</value>
   </data>
-  <data name="FollowingFieldsInvalid" xml:space="preserve">
-    <value>The following fields are invalid:</value>
+  <data name="CancelledWorkingOn" xml:space="preserve">
+    <value>Cancelled working on {0}:
+{1}</value>
   </data>
-  <data name="MappingPath" xml:space="preserve">
-    <value>Before configuring the work item type field mappings, please set the Mapping Path.</value>
-  </data>
-  <data name="Selected" xml:space="preserve">
-    <value>Selected: {0}</value>
-  </data>
-  <data name="tfsworkingon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\tfsworkingon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="NagMessage" xml:space="preserve">
-    <value>Please select what you are working on!</value>
-  </data>
-  <data name="Stopwatch_Blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Stopwatch-Blue.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Stopwatch_Green" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Stopwatch-Green.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Stopwatch_Red" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Stopwatch-Red.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="HelpPromptOnResume" xml:space="preserve">
-    <value>When a time out occurs, on resuming, you are prompted 
-if you were working on the work item away from your 
-computer. If so, the inactive time is added to your working 
-on time, otherwise it is removed.</value>
-  </data>
-  <data name="PromptOnResumeCaption" xml:space="preserve">
-    <value>Resume working on...</value>
+  <data name="RefreshWorkItem" xml:space="preserve">
+    <value>Do you wish to discard your changes and refresh the work item?</value>
   </data>
   <data name="PromptOnResumeText" xml:space="preserve">
     <value>Were you working on "{0}: {1}" while you were away from your computer?
@@ -241,11 +153,91 @@ Yes to record the time away and continue
 No to not record the time away and resume
 Cancel to not record the time away and not resume</value>
   </data>
+  <data name="Resumed" xml:space="preserve">
+    <value>Resumed</value>
+  </data>
+  <data name="NotifyIconText" xml:space="preserve">
+    <value>TFS Working On...</value>
+  </data>
   <data name="ErrorCaption" xml:space="preserve">
     <value>Error</value>
   </data>
+  <data name="StopWorkingOnWorkItem" xml:space="preserve">
+    <value>Do you wish to stop working on Work Item: {0}?</value>
+  </data>
   <data name="Version" xml:space="preserve">
     <value>Version {0}</value>
+  </data>
+  <data name="FollowingFieldsInvalid" xml:space="preserve">
+    <value>The following fields are invalid:</value>
+  </data>
+  <data name="HelpNag" xml:space="preserve">
+    <value>Enabling Nag causes a balloon notification 
+to be displayed at the set interval (minutes)
+if no work item is being worked on. </value>
+  </data>
+  <data name="SaveChanges" xml:space="preserve">
+    <value>Save Changes</value>
+  </data>
+  <data name="StartedWorkingOn" xml:space="preserve">
+    <value>Started working on {0}: 
+{1}</value>
+  </data>
+  <data name="InvalidFields" xml:space="preserve">
+    <value>Invalid fields</value>
+  </data>
+  <data name="Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
+  <data name="OutstandingChanges" xml:space="preserve">
+    <value>There are outstanding changes. Would you like to save your changes?</value>
+  </data>
+  <data name="RefreshQueryList" xml:space="preserve">
+    <value>&amp;Refresh</value>
+  </data>
+  <data name="Stop" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="NagMessage" xml:space="preserve">
+    <value>Please select what you are working on!</value>
+  </data>
+  <data name="PausedWorkingOn" xml:space="preserve">
+    <value>Paused Working On {0}: {1}</value>
+  </data>
+  <data name="StoppedWorkingOn" xml:space="preserve">
+    <value>Stopped working on {0}: 
+{1}</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Stopwatch_Red" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Stopwatch-Red.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="MappingPath" xml:space="preserve">
+    <value>Before configuring the work item type field mappings, please set the Mapping Path.</value>
+  </data>
+  <data name="ResumedWorkingOn" xml:space="preserve">
+    <value>Resumed Working On {0}: {1}</value>
+  </data>
+  <data name="PromptOnResumeCaption" xml:space="preserve">
+    <value>Resume working on...</value>
+  </data>
+  <data name="ItemAlreadyUpdated" xml:space="preserve">
+    <value>Work Item already updated</value>
+  </data>
+  <data name="SearchForWorkItemsIn" xml:space="preserve">
+    <value>Search for Work Items in {0}</value>
+  </data>
+  <data name="WorkItemTitle" xml:space="preserve">
+    <value>Work Item {0}: {1}</value>
+  </data>
+  <data name="HelpPromptOnResume" xml:space="preserve">
+    <value>When a time out occurs, on resuming, you are prompted 
+if you were working on the work item away from your 
+computer. If so, the inactive time is added to your working 
+on time, otherwise it is removed.</value>
+  </data>
+  <data name="tfsworkingon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\tfsworkingon.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="HelpMenuQuery" xml:space="preserve">
     <value>The Query selected will be displayed in the system tray 
@@ -254,8 +246,32 @@ shown in a sub menu. This allows fast work item switching
 as a work item can be selected to start working on without 
 going to the find work item search dialog.</value>
   </data>
-  <data name="CancelledWorkingOn" xml:space="preserve">
-    <value>Cancelled working on {0}:
-{1}</value>
+  <data name="helpImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\help.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Stopwatch_Green" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Stopwatch-Green.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Stopwatch_Blue" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Stopwatch-Blue.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Selected" xml:space="preserve">
+    <value>Selected: {0}</value>
+  </data>
+  <data name="DoubleClickToSelect" xml:space="preserve">
+    <value>Double click the work item you are working on...</value>
+  </data>
+  <data name="Refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Refresh.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="ErrorLoadingQuery" xml:space="preserve">
+    <value>Error Loading Query</value>
+  </data>
+  <data name="ThereAreNoEstimatesForTheWorkitem" xml:space="preserve">
+    <value>There are no estimates for the workitem.
+Do you want to add estimates now?</value>
+  </data>
+  <data name="AddEstimates" xml:space="preserve">
+    <value>Add Estimates</value>
   </data>
 </root>

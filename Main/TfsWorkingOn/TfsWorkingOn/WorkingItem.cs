@@ -57,7 +57,7 @@ namespace Rowan.TfsWorkingOn
                 if (_estimates == null)
                 {
                     _estimates = new Estimates();
-                    string filePath = Estimates.GetFilePath(WorkItem.Store.TeamFoundationServer.Uri.Host, WorkItem.Id);
+                    string filePath = Estimates.GetFilePath(WorkItem.Store.TeamProjectCollection.Uri.Host, WorkItem.Id);
                     if (File.Exists(filePath))
                     {
                         _estimates.Load(filePath);
@@ -133,14 +133,12 @@ namespace Rowan.TfsWorkingOn
             WorkItem.History += string.Format(CultureInfo.CurrentCulture, Resources.WorkingOnUpdateStatus, Estimates.RemainingTime, Estimates.ElapsedTime, Estimates.Duration);
 
             WorkItem.Save();
-            Estimates.Save(Estimates.GetFilePath(WorkItem.Store.TeamFoundationServer.Uri.Host, WorkItem.Id));
+            Estimates.Save(Estimates.GetFilePath(WorkItem.Store.TeamProjectCollection.Uri.Host, WorkItem.Id));
         }
 
         private WorkingItemConfiguration LoadWorkItemConfiguration()
         {
             WorkingItemConfiguration workingItemConfiguration = new WorkingItemConfiguration();
-            workingItemConfiguration.Connection.Server = Connection.Server;
-            workingItemConfiguration.Connection.SelectedProject = WorkItem.Project;
             workingItemConfiguration.SelectedWorkItemType = WorkItem.Type;
             workingItemConfiguration.Load();
             return workingItemConfiguration;

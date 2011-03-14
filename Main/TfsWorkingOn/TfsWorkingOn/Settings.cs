@@ -123,22 +123,13 @@ namespace Rowan.TfsWorkingOn
             }
         }
 
-        private const string DefaultTfsServer = "";
-        private string _tfsServer = DefaultConfigurationsPath;
-        [DefaultValue(DefaultTfsServer)]
-        public string TfsServer
+        private const string DefaultTeamProjectCollectionAbsoluteUri = null;
+        private string _teamProjectCollectionAbsoluteUri = DefaultTeamProjectCollectionAbsoluteUri;
+        [DefaultValue(DefaultTeamProjectCollectionAbsoluteUri)]
+        public string TeamProjectCollectionAbsoluteUri
         {
-            get { return _tfsServer; }
-            set { _tfsServer = value; }
-        }
-
-        private const int DefaultSelectedProjectId = -1;
-        private int _selectedProjectId = DefaultSelectedProjectId;
-        [DefaultValue(DefaultSelectedProjectId)]
-        public int SelectedProjectId
-        {
-            get { return _selectedProjectId; }
-            set { _selectedProjectId = value; }
+            get { return _teamProjectCollectionAbsoluteUri; }
+            set { _teamProjectCollectionAbsoluteUri = value; }
         }
 
         private const string DefaultSelectedProjectName = "";

@@ -31,8 +31,8 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormWorkItemConfiguration));
-            this.labelServer = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.workingItemConfigurationBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.buttonCancel = new System.Windows.Forms.Button();
             this.folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
@@ -59,22 +59,15 @@
             this.labelRemaining = new System.Windows.Forms.Label();
             this.labelDuration = new System.Windows.Forms.Label();
             this.comboBoxElapsed = new System.Windows.Forms.ComboBox();
-            this.workingItemConfigurationBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.connectionBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.fieldDefinitionsElapsedBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.selectedWorkItemTypeBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.comboBoxRemaining = new System.Windows.Forms.ComboBox();
             this.fieldDefinitionsRemainingBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.comboBoxDuration = new System.Windows.Forms.ComboBox();
             this.fieldDefinitionsDurationBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.comboBoxTfsServers = new System.Windows.Forms.ComboBox();
             this.labelWorkItemType = new System.Windows.Forms.Label();
-            this.labelProject = new System.Windows.Forms.Label();
             this.comboBoxWorkItemType = new System.Windows.Forms.ComboBox();
             this.workItemTypesBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.projectsBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.buttonConnect = new System.Windows.Forms.Button();
-            this.comboBoxProjects = new System.Windows.Forms.ComboBox();
             this.tabPageUpdateWarehouse = new System.Windows.Forms.TabPage();
             this.labelWarehouseStatus = new System.Windows.Forms.Label();
             this.labelUpdateDataWarehouse = new System.Windows.Forms.Label();
@@ -90,6 +83,7 @@
             this.toolTipHelp = new System.Windows.Forms.ToolTip(this.components);
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.buttonOK = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.workingItemConfigurationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
             this.tabControlConfiguration.SuspendLayout();
             this.tabPageOptions.SuspendLayout();
@@ -100,27 +94,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownNagInterval)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAutoTimeOut)).BeginInit();
             this.tabPageMappings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.workingItemConfigurationBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.connectionBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsElapsedBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectedWorkItemTypeBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsRemainingBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsDurationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.workItemTypesBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.projectsBindingSource)).BeginInit();
             this.tabPageUpdateWarehouse.SuspendLayout();
             this.tabPageAbout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAbout)).BeginInit();
             this.SuspendLayout();
-            // 
-            // labelServer
-            // 
-            this.labelServer.AutoSize = true;
-            this.labelServer.Location = new System.Drawing.Point(48, 9);
-            this.labelServer.Name = "labelServer";
-            this.labelServer.Size = new System.Drawing.Size(41, 13);
-            this.labelServer.TabIndex = 0;
-            this.labelServer.Text = "Server:";
             // 
             // buttonSave
             // 
@@ -133,6 +115,10 @@
             this.buttonSave.Text = "Apply";
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
+            // workingItemConfigurationBindingSource
+            // 
+            this.workingItemConfigurationBindingSource.DataSource = typeof(Rowan.TfsWorkingOn.WorkingItemConfiguration);
             // 
             // settingsBindingSource
             // 
@@ -393,13 +379,8 @@
             this.tabPageMappings.Controls.Add(this.comboBoxElapsed);
             this.tabPageMappings.Controls.Add(this.comboBoxRemaining);
             this.tabPageMappings.Controls.Add(this.comboBoxDuration);
-            this.tabPageMappings.Controls.Add(this.comboBoxTfsServers);
             this.tabPageMappings.Controls.Add(this.labelWorkItemType);
-            this.tabPageMappings.Controls.Add(this.labelProject);
             this.tabPageMappings.Controls.Add(this.comboBoxWorkItemType);
-            this.tabPageMappings.Controls.Add(this.buttonConnect);
-            this.tabPageMappings.Controls.Add(this.comboBoxProjects);
-            this.tabPageMappings.Controls.Add(this.labelServer);
             this.tabPageMappings.Location = new System.Drawing.Point(4, 22);
             this.tabPageMappings.Name = "tabPageMappings";
             this.tabPageMappings.Padding = new System.Windows.Forms.Padding(3);
@@ -442,7 +423,6 @@
             this.comboBoxElapsed.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.comboBoxElapsed.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxElapsed.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.workingItemConfigurationBindingSource, "ElapsedField", true));
-            this.comboBoxElapsed.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.connectionBindingSource, "IsConnected", true));
             this.comboBoxElapsed.DataSource = this.fieldDefinitionsElapsedBindingSource;
             this.comboBoxElapsed.DisplayMember = "ReferenceName";
             this.comboBoxElapsed.FormattingEnabled = true;
@@ -451,15 +431,6 @@
             this.comboBoxElapsed.Size = new System.Drawing.Size(249, 21);
             this.comboBoxElapsed.TabIndex = 27;
             this.comboBoxElapsed.ValueMember = "ReferenceName";
-            // 
-            // workingItemConfigurationBindingSource
-            // 
-            this.workingItemConfigurationBindingSource.DataSource = typeof(Rowan.TfsWorkingOn.WorkingItemConfiguration);
-            // 
-            // connectionBindingSource
-            // 
-            this.connectionBindingSource.DataMember = "Connection";
-            this.connectionBindingSource.DataSource = this.workingItemConfigurationBindingSource;
             // 
             // fieldDefinitionsElapsedBindingSource
             // 
@@ -479,7 +450,6 @@
             this.comboBoxRemaining.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.comboBoxRemaining.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxRemaining.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.workingItemConfigurationBindingSource, "RemainingField", true));
-            this.comboBoxRemaining.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.connectionBindingSource, "IsConnected", true));
             this.comboBoxRemaining.DataSource = this.fieldDefinitionsRemainingBindingSource;
             this.comboBoxRemaining.DisplayMember = "ReferenceName";
             this.comboBoxRemaining.FormattingEnabled = true;
@@ -502,7 +472,6 @@
             this.comboBoxDuration.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
             this.comboBoxDuration.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxDuration.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.workingItemConfigurationBindingSource, "DurationField", true));
-            this.comboBoxDuration.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.connectionBindingSource, "IsConnected", true));
             this.comboBoxDuration.DataSource = this.fieldDefinitionsDurationBindingSource;
             this.comboBoxDuration.DisplayMember = "ReferenceName";
             this.comboBoxDuration.FormattingEnabled = true;
@@ -518,19 +487,6 @@
             this.fieldDefinitionsDurationBindingSource.DataSource = this.selectedWorkItemTypeBindingSource;
             this.fieldDefinitionsDurationBindingSource.Sort = "ReferenceName";
             // 
-            // comboBoxTfsServers
-            // 
-            this.comboBoxTfsServers.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxTfsServers.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.comboBoxTfsServers.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.comboBoxTfsServers.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.workingItemConfigurationBindingSource, "Connection.Server", true));
-            this.comboBoxTfsServers.FormattingEnabled = true;
-            this.comboBoxTfsServers.Location = new System.Drawing.Point(95, 6);
-            this.comboBoxTfsServers.Name = "comboBoxTfsServers";
-            this.comboBoxTfsServers.Size = new System.Drawing.Size(249, 21);
-            this.comboBoxTfsServers.TabIndex = 24;
-            // 
             // labelWorkItemType
             // 
             this.labelWorkItemType.AutoSize = true;
@@ -540,15 +496,6 @@
             this.labelWorkItemType.TabIndex = 22;
             this.labelWorkItemType.Text = "Work Item Type:";
             // 
-            // labelProject
-            // 
-            this.labelProject.AutoSize = true;
-            this.labelProject.Location = new System.Drawing.Point(46, 36);
-            this.labelProject.Name = "labelProject";
-            this.labelProject.Size = new System.Drawing.Size(43, 13);
-            this.labelProject.TabIndex = 20;
-            this.labelProject.Text = "Project:";
-            // 
             // comboBoxWorkItemType
             // 
             this.comboBoxWorkItemType.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
@@ -557,7 +504,6 @@
             this.comboBoxWorkItemType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxWorkItemType.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.workingItemConfigurationBindingSource, "SelectedWorkItemType", true));
             this.comboBoxWorkItemType.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.workingItemConfigurationBindingSource, "SelectedWorkItemTypeName", true));
-            this.comboBoxWorkItemType.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.connectionBindingSource, "IsConnected", true));
             this.comboBoxWorkItemType.DataSource = this.workItemTypesBindingSource;
             this.comboBoxWorkItemType.DisplayMember = "Name";
             this.comboBoxWorkItemType.FormattingEnabled = true;
@@ -566,44 +512,6 @@
             this.comboBoxWorkItemType.Size = new System.Drawing.Size(249, 21);
             this.comboBoxWorkItemType.TabIndex = 23;
             this.comboBoxWorkItemType.ValueMember = "Name";
-            // 
-            // workItemTypesBindingSource
-            // 
-            this.workItemTypesBindingSource.DataMember = "WorkItemTypes";
-            this.workItemTypesBindingSource.DataSource = this.projectsBindingSource;
-            // 
-            // projectsBindingSource
-            // 
-            this.projectsBindingSource.DataMember = "Projects";
-            this.projectsBindingSource.DataSource = this.connectionBindingSource;
-            // 
-            // buttonConnect
-            // 
-            this.buttonConnect.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonConnect.Location = new System.Drawing.Point(350, 4);
-            this.buttonConnect.Name = "buttonConnect";
-            this.buttonConnect.Size = new System.Drawing.Size(75, 23);
-            this.buttonConnect.TabIndex = 19;
-            this.buttonConnect.Text = "Connect";
-            this.buttonConnect.UseVisualStyleBackColor = true;
-            this.buttonConnect.Click += new System.EventHandler(this.buttonConnect_Click);
-            // 
-            // comboBoxProjects
-            // 
-            this.comboBoxProjects.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.comboBoxProjects.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
-            this.comboBoxProjects.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.comboBoxProjects.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.connectionBindingSource, "IsConnected", true));
-            this.comboBoxProjects.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.connectionBindingSource, "SelectedProject", true));
-            this.comboBoxProjects.DataSource = this.projectsBindingSource;
-            this.comboBoxProjects.DisplayMember = "Name";
-            this.comboBoxProjects.FormattingEnabled = true;
-            this.comboBoxProjects.Location = new System.Drawing.Point(95, 33);
-            this.comboBoxProjects.Name = "comboBoxProjects";
-            this.comboBoxProjects.Size = new System.Drawing.Size(249, 21);
-            this.comboBoxProjects.TabIndex = 21;
-            this.comboBoxProjects.ValueMember = "Id";
             // 
             // tabPageUpdateWarehouse
             // 
@@ -703,7 +611,8 @@
             this.pictureBoxAbout.Image = global::Rowan.TfsWorkingOn.WinForm.Properties.Resources.tfsworkingon;
             this.pictureBoxAbout.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxAbout.Name = "pictureBoxAbout";
-            this.pictureBoxAbout.Size = new System.Drawing.Size(434, 137);
+            this.pictureBoxAbout.Size = new System.Drawing.Size(438, 137);
+            this.pictureBoxAbout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBoxAbout.TabIndex = 2;
             this.pictureBoxAbout.TabStop = false;
             // 
@@ -712,10 +621,10 @@
             this.linkLabelAbout.AutoSize = true;
             this.linkLabelAbout.Location = new System.Drawing.Point(114, 157);
             this.linkLabelAbout.Name = "linkLabelAbout";
-            this.linkLabelAbout.Size = new System.Drawing.Size(191, 13);
+            this.linkLabelAbout.Size = new System.Drawing.Size(160, 13);
             this.linkLabelAbout.TabIndex = 1;
             this.linkLabelAbout.TabStop = true;
-            this.linkLabelAbout.Text = "http://matthewrowan.spaces.live.com/";
+            this.linkLabelAbout.Text = "http://mgrowan.wordpress.com/";
             this.linkLabelAbout.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelAbout_LinkClicked);
             // 
             // labelCopyright
@@ -723,14 +632,14 @@
             this.labelCopyright.AutoSize = true;
             this.labelCopyright.Location = new System.Drawing.Point(120, 140);
             this.labelCopyright.Name = "labelCopyright";
-            this.labelCopyright.Size = new System.Drawing.Size(175, 13);
+            this.labelCopyright.Size = new System.Drawing.Size(171, 13);
             this.labelCopyright.TabIndex = 0;
-            this.labelCopyright.Text = "Copyright (C) 2009 Matthew Rowan";
+            this.labelCopyright.Text = "Copyright © 2011 Matthew Rowan";
             // 
             // toolTipHelp
             // 
             this.toolTipHelp.AutoPopDelay = 20000;
-            this.toolTipHelp.InitialDelay = 500;
+            this.toolTipHelp.InitialDelay = 300;
             this.toolTipHelp.IsBalloon = true;
             this.toolTipHelp.ReshowDelay = 100;
             this.toolTipHelp.Tag = "";
@@ -741,8 +650,8 @@
             // 
             this.backgroundWorker.WorkerReportsProgress = true;
             this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
-            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             this.backgroundWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker_ProgressChanged);
+            this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker_RunWorkerCompleted);
             // 
             // buttonOK
             // 
@@ -771,8 +680,9 @@
             this.MinimizeBox = false;
             this.Name = "FormWorkItemConfiguration";
             this.Text = "TFS Working On... Configuration";
-            this.Load += new System.EventHandler(this.FormWorkItemConfiguration_Load);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormWorkItemConfiguration_FormClosing);
+            this.Load += new System.EventHandler(this.FormWorkItemConfiguration_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.workingItemConfigurationBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
             this.tabControlConfiguration.ResumeLayout(false);
             this.tabPageOptions.ResumeLayout(false);
@@ -785,14 +695,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAutoTimeOut)).EndInit();
             this.tabPageMappings.ResumeLayout(false);
             this.tabPageMappings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.workingItemConfigurationBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.connectionBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsElapsedBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.selectedWorkItemTypeBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsRemainingBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsDurationBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.workItemTypesBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.projectsBindingSource)).EndInit();
             this.tabPageUpdateWarehouse.ResumeLayout(false);
             this.tabPageUpdateWarehouse.PerformLayout();
             this.tabPageAbout.ResumeLayout(false);
@@ -804,7 +711,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Label labelServer;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.FolderBrowserDialog folderBrowserDialog;
@@ -813,12 +719,8 @@
         private System.Windows.Forms.TabControl tabControlConfiguration;
         private System.Windows.Forms.TabPage tabPageMappings;
         private System.Windows.Forms.TabPage tabPageOptions;
-        private System.Windows.Forms.ComboBox comboBoxTfsServers;
         private System.Windows.Forms.Label labelWorkItemType;
-        private System.Windows.Forms.Label labelProject;
         private System.Windows.Forms.ComboBox comboBoxWorkItemType;
-        private System.Windows.Forms.Button buttonConnect;
-        private System.Windows.Forms.ComboBox comboBoxProjects;
         private System.Windows.Forms.Label labelElapsed;
         private System.Windows.Forms.Label labelRemaining;
         private System.Windows.Forms.Label labelDuration;
@@ -836,8 +738,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDownAutoTimeOut;
         private System.Windows.Forms.Label labelAutoTimeOut;
         private System.Windows.Forms.BindingSource workingItemConfigurationBindingSource;
-        private System.Windows.Forms.BindingSource connectionBindingSource;
-        private System.Windows.Forms.BindingSource projectsBindingSource;
         private System.Windows.Forms.BindingSource workItemTypesBindingSource;
         private System.Windows.Forms.BindingSource selectedWorkItemTypeBindingSource;
         private System.Windows.Forms.BindingSource fieldDefinitionsDurationBindingSource;

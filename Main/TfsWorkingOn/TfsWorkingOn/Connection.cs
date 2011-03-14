@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Globalization;
-using System.Xml.Serialization;
+using System.Linq;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using Rowan.TfsWorkingOn.Properties;
@@ -11,109 +10,88 @@ namespace Rowan.TfsWorkingOn
     public class Connection : INotifyPropertyChanged
     {
         #region Members
-        private TeamFoundationServer _tfsServer;
+        private TfsTeamProjectCollection _tfsTeamProjectCollection;
+        #endregion
+
+        #region Constructors
+        private Connection() { }
+
+        private static Connection _connection = null;
+        public static Connection GetConnection()
+        {
+            if (_connection == null) _connection = new Connection();
+            return _connection;
+        }
         #endregion
 
         #region Properties
-        public Guid ServerInstanceId
+        public TfsTeamProjectCollection TfsTeamProjectCollection
         {
             get
             {
-                if (_tfsServer == null) Connect();
-                return _tfsServer.InstanceId;
+                if (_tfsTeamProjectCollection == null) Connect();
+                return _tfsTeamProjectCollection;
             }
         }
 
-        public const string ServerPropertyName = "Server";
-        private string _server;
-        public string Server
+        public const string TeamProjectCollectionAbsoluteUriPropertyName = "TeamProjectCollectionAbsoluteUri";
+        private string _teamProjectCollectionAbsoluteUri;
+        public string TeamProjectCollectionAbsoluteUri
         {
-            get { return _server; }
+            get { return _teamProjectCollectionAbsoluteUri; }
             set
             {
-                _server = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(ServerPropertyName));
+                if (value != _teamProjectCollectionAbsoluteUri)
+                {
+                    _teamProjectCollectionAbsoluteUri = value;
+                    Settings.Default.TeamProjectCollectionAbsoluteUri = value;
+                    OnPropertyChanged(new PropertyChangedEventArgs(TeamProjectCollectionAbsoluteUriPropertyName));
+                }
             }
         }
 
-        public const string IsConnectedPropertyName = "IsConnected";
-        private bool _isConnected;
-        [XmlIgnore]
-        public bool IsConnected
-        {
-            get { return _isConnected; }
-            set
-            {
-                _isConnected = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(IsConnectedPropertyName));
-            }
-        }
+        public Uri TeamProjectCollectionUri { get { return new Uri(TeamProjectCollectionAbsoluteUri); } }
 
-        private WorkItemStore _workItemStore;
+        public bool IsConnected { get { return TfsTeamProjectCollection != null; } }
+
+        private static WorkItemStore _workItemStore;
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public WorkItemStore WorkItemStore
         {
             get
             {
-                if (_workItemStore == null)
-                {
-                    try
-                    {
-                        Connect();
-                    }
-                    catch (Exception)
-                    {
-                        return null;
-                    }
-                }
+                if (_workItemStore == null) Connect();
                 return _workItemStore;
             }
         }
 
-        public const string ProjectsPropertyName = "Projects";
-        private ProjectCollection _projects;
-        [XmlIgnore]
-        public ProjectCollection Projects
+        private string _selectedProjectName = string.Empty;
+        public const string SelectedProjectNamePropertyName = "SelectedProjectName";
+        public string SelectedProjectName
         {
-            get { return _projects; }
-            internal set
-            {
-                _projects = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(ProjectsPropertyName));
-            }
-        }
-
-        public int SelectedProjectId { get; set; }
-        public string SelectedProjectName { get; set; }
-        public const string SelectedProjectPropertyName = "SelectedProject";
-        private Project _selectedProject;
-        [XmlIgnore]
-        public Project SelectedProject
-        {
-            get
-            {
-                if (_selectedProject == null && string.IsNullOrEmpty(SelectedProjectName))
-                    return _workItemStore.Projects[0];
-                else if (_selectedProject == null)
-                    return _workItemStore.Projects[SelectedProjectName];
-                else
-                    return _selectedProject;
-            }
+            get { return _selectedProjectName; }
             set
             {
-                if (_selectedProject != value)
+                if (_selectedProjectName != value)
                 {
-                    _selectedProject = value;
-                    SelectedProjectName = value.Name;
-                    SelectedProjectId = value.Id;
-                    OnPropertyChanged(new PropertyChangedEventArgs(SelectedProjectPropertyName));
+                    _selectedProjectName = value;
+                    Settings.Default.SelectedProjectName = value;
+                    OnPropertyChanged(new PropertyChangedEventArgs(SelectedProjectNamePropertyName));
                 }
             }
         }
 
-        public string AuthenticatedUserName
+        private Project _selectedProject = null;
+        public Project SelectedProject
         {
-            get { return _tfsServer.AuthenticatedUserName; }
+            get
+            {
+                if (_selectedProject == null)
+                {
+                    _selectedProject = WorkItemStore.Projects.OfType<Project>().FirstOrDefault(p => p.Name == SelectedProjectName);
+                }
+                return _selectedProject;
+            }
         }
         #endregion Properties
 
@@ -123,35 +101,21 @@ namespace Rowan.TfsWorkingOn
         /// </summary>
         public void Connect()
         {
-            #region Parameter Check
-            if (string.IsNullOrEmpty(Server))
-            {
-                throw new ArgumentNullException(Resources.Server, Resources.ServerRequired);
-            }
-            #endregion
+            if (TeamProjectCollectionAbsoluteUri == null) throw new ArgumentNullException(Resources.Server, Resources.ServerRequired);
 
             try
             {
-                _tfsServer = TeamFoundationServerFactory.GetServer(Server, new UICredentialsProvider());
-                _tfsServer.EnsureAuthenticated();
-
-                _workItemStore = _tfsServer.GetService(typeof(WorkItemStore)) as WorkItemStore;
-                Projects = _workItemStore.Projects;
-
-                IsConnected = true;
+                if (_tfsTeamProjectCollection == null)
+                {
+                    _tfsTeamProjectCollection = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(TeamProjectCollectionUri, new UICredentialsProvider());
+                    _tfsTeamProjectCollection.EnsureAuthenticated();
+                }
+                _workItemStore = _tfsTeamProjectCollection.GetService(typeof(WorkItemStore)) as WorkItemStore;
             }
             catch (Exception)
             {
-                IsConnected = false;
-                if (Projects != null) Projects = null;
                 throw;
             }
-        }
-
-        public void Disconnect()
-        {
-            Server = string.Empty;
-            IsConnected = false;
         }
         #endregion Public Methods
 
