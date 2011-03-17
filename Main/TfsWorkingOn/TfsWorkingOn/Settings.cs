@@ -109,10 +109,12 @@ namespace Rowan.TfsWorkingOn
 
         #region Settings
 
-        private const string DefaultConfigurationsPath = "";
+    
+
+        private static readonly string DefaultConfigurationsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TfsWorkingOn");
         public const string ConfigurationsPathPropertyName = "ConfigurationsPath";
         private string _configurationsPath = DefaultConfigurationsPath;
-        [DefaultValue(DefaultConfigurationsPath)]
+        [DefaultValue("%APPDATA%\\TfsWorkingOn")]
         public string ConfigurationsPath
         {
             get { return _configurationsPath; }
@@ -222,7 +224,7 @@ namespace Rowan.TfsWorkingOn
         }
 
         public const string SelectedQueryPropertyName = "SelectedQuery";
-        private Guid _selectedQuery;
+        private Guid _selectedQuery = Guid.Empty;
         public Guid SelectedQuery
         {
             get { return _selectedQuery; }
