@@ -23,8 +23,11 @@ namespace Rowan.TfsWorkingOn.WinForm
             workingItemConfigurationBindingSource.DataSource = workingItemConfiguration;
             settingsBindingSource.DataSource = Settings.Default;
 
-            comboBoxMenuQuery.DataSource = Connection.GetConnection().WorkItemStore.Projects[Settings.Default.SelectedProjectName].QueryHierarchy;
-            comboBoxMenuQuery.SelectedValue = Settings.Default.SelectedQuery;
+            comboBoxMenuQuery.DataSource = Connection.GetConnection().WorkItemStore.Projects[Settings.Default.SelectedProjectName].QueryHierarchy.
+                ToList();
+
+            //TODO:  This is throwing a null reference exception, 
+            // comboBoxMenuQuery.SelectedValue = Settings.Default.SelectedQuery;
 
             toolTipHelp.SetToolTip(pictureBoxHelpUserActivity, Resources.HelpActivityMonitor);
             toolTipHelp.SetToolTip(pictureBoxHelpPromptOnResume, Resources.HelpPromptOnResume);
@@ -201,5 +204,6 @@ namespace Rowan.TfsWorkingOn.WinForm
             progressBarWarehouse.MarqueeAnimationSpeed = 0;
         }
         #endregion Async Data Warehouse Processing
+
     }
 }
