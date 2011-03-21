@@ -28,7 +28,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             try
             {
                 // Dirty hack - this will continue to work as long as the TFS control has not been updated by Microsoft.
-                ((ListView)pickWorkItemsControl.Controls[0].Controls[9]).ContextMenuStrip = workitemMenuStrip;
+                ((DataGridView)(pickWorkItemsControl.Controls[0].Controls[9].Controls[0])).MouseUp += new MouseEventHandler(FormSearchWorkItems_MouseUp);
             }
             catch (Exception)
             {
@@ -39,6 +39,13 @@ namespace Rowan.TfsWorkingOn.WinForm
             Controls.Add(pickWorkItemsControl);
             SetClientSizeCore(pickWorkItemsControl.PreferredSize.Width, pickWorkItemsControl.PreferredSize.Height);
             Text = string.Format(CultureInfo.CurrentCulture, Resources.SearchForWorkItemsIn, projectName);
+        }
+
+        void FormSearchWorkItems_MouseUp(object sender, MouseEventArgs e)
+        {
+            // Show context menu when right clicking items in the grid.
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+                workitemMenuStrip.Show(Cursor.Position);
         }
 
         void pickWorkItemsControl_PickWorkItemsListViewDoubleClicked(object sender, EventArgs e)
