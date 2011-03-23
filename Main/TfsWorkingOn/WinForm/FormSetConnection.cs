@@ -97,8 +97,11 @@ namespace Rowan.TfsWorkingOn.WinForm
                     _connection.TeamProjectCollectionAbsoluteUri = _teamProjectPicker.SelectedTeamProjectCollection.Uri.AbsoluteUri;
                     _connection.SelectedProjectName = _teamProjectPicker.SelectedProjects[0].Name;
                     Settings.Default.Save();
-
+                    _connection.Connect();
                     ShowSearchForm();
+                    break;
+                case DialogResult.Cancel:
+                    if (!_connection.IsConnected) SafeShutdown();
                     break;
                 default:
                     ShowTeamProjectPicker(); // TODO Allow an Application Exit
@@ -216,19 +219,6 @@ namespace Rowan.TfsWorkingOn.WinForm
         {
             notifyIcon.BalloonTipText = Resources.NagMessage;
             notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private void buttonConnect_Click(object sender, EventArgs e) // NOCOMMIT Move catch around TfsTeamProjectCollection call
-        {
-            try
-            {
-                _connection.Connect();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Resources.FailedToConnect, ex.Message), Resources.ConnectionFailedTitle, MessageBoxButtons.OK, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
-            }
         }
 
         private void FormSetConnection_FormClosing(object sender, FormClosingEventArgs e)

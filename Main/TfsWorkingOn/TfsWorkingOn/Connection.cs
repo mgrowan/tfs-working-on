@@ -60,7 +60,7 @@ namespace Rowan.TfsWorkingOn
         {
             get
             {
-                if (_workItemStore == null) Connect();
+                if (_tfsTeamProjectCollection == null) Connect();
                 return _workItemStore;
             }
         }
@@ -105,11 +105,8 @@ namespace Rowan.TfsWorkingOn
 
             try
             {
-                if (_tfsTeamProjectCollection == null)
-                {
-                    _tfsTeamProjectCollection = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(TeamProjectCollectionUri, new UICredentialsProvider());
-                    _tfsTeamProjectCollection.EnsureAuthenticated();
-                }
+                _tfsTeamProjectCollection = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(TeamProjectCollectionUri, new UICredentialsProvider());
+                _tfsTeamProjectCollection.EnsureAuthenticated();
                 _workItemStore = _tfsTeamProjectCollection.GetService(typeof(WorkItemStore)) as WorkItemStore;
             }
             catch (Exception)
