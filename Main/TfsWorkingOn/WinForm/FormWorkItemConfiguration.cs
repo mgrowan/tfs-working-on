@@ -6,12 +6,16 @@ using System.Web.Services.Protocols;
 using System.Windows.Forms;
 using Rowan.TfsWorkingOn.TfsWarehouse;
 using Rowan.TfsWorkingOn.WinForm.Properties;
+using Microsoft.TeamFoundation.WorkItemTracking.Client;
+using System.Linq.Expressions;
 
 namespace Rowan.TfsWorkingOn.WinForm
 {
     public partial class FormWorkItemConfiguration : Form
     {
-        private WorkingItemConfiguration workingItemConfiguration = new WorkingItemConfiguration();
+        private WorkingItemConfiguration _workingItemConfiguration = new WorkingItemConfiguration();
+        private dynamic _queryPickerControl;
+        private Type _queryPickerControlType;
 
         public FormWorkItemConfiguration()
         {
@@ -20,14 +24,35 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void FormWorkItemConfiguration_Load(object sender, EventArgs e)
         {
-            workingItemConfigurationBindingSource.DataSource = workingItemConfiguration;
+            workingItemConfigurationBindingSource.DataSource = _workingItemConfiguration;
             settingsBindingSource.DataSource = Settings.Default;
 
-            comboBoxMenuQuery.DataSource = Connection.GetConnection().WorkItemStore.Projects[Settings.Default.SelectedProjectName].QueryHierarchy.
-                ToList();
+            _queryPickerControl = Activator.CreateInstance("Microsoft.TeamFoundation.Common.Library, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "Microsoft.TeamFoundation.Controls.QueryPickerControl").Unwrap();
+            tabPageOptions.Controls.Add(_queryPickerControl);
+            _queryPickerControl.Location = new System.Drawing.Point(94, 115);
+            _queryPickerControl.AutoSize = false;
+            _queryPickerControl.Size = new System.Drawing.Size(240, 21);
+            _queryPickerControl.TabIndex = 21;
+            // Can't use QueryPickerControl Methods or Properties with dynamic, since they are from an "internal" type. Only the "public" base type is exposed.
+            // http://www.heartysoft.com/post/2010/05/26/anonymous-types-c-sharp-4-dynamic.aspx
+            _queryPickerControlType = ((object)_queryPickerControl).GetType();
+            //_queryPickerControl.Initialize(Connection.GetConnection().SelectedProject, null, 0);            
+            _queryPickerControlType.GetMethod("Initialize", new Type[] { typeof(Project), typeof(QueryItem), Type.GetType("Microsoft.TeamFoundation.Controls.QueryPickerType, Microsoft.TeamFoundation.Common.Library, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a") })
+                .Invoke(_queryPickerControl, new object[] { Connection.GetConnection().SelectedProject, null, 0 });
+            //_queryPickerControl.SelectedItemId = Settings.Default.SelectedQuery;
+            try
+            {
+                _queryPickerControlType.GetProperty("SelectedItemId").SetValue(_queryPickerControl, Settings.Default.SelectedQuery, null);
+            }
+            catch (Exception)
+            {
+                Settings.Default.SelectedQuery = null;
+            }
 
-            //TODO:  This is throwing a null reference exception, 
-            // comboBoxMenuQuery.SelectedValue = Settings.Default.SelectedQuery;
+            //_queryPickerControl.SelectedQueryItemChanged += new EventHandler(QueryPickerControl_OnSelectedQueryItemChanged);
+            Type eventHandlerType = Type.GetType("Microsoft.TeamFoundation.Controls.SelectedQueryItemChangedEventHandler, Microsoft.TeamFoundation.Common.Library, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
+            EventInfo eventInfo = _queryPickerControlType.GetEvent("SelectedQueryItemChanged", BindingFlags.Instance | BindingFlags.Public);
+            eventInfo.AddEventHandler(_queryPickerControl, Create(eventInfo, QueryPickerControl_OnSelectedQueryItemChanged));
 
             toolTipHelp.SetToolTip(pictureBoxHelpUserActivity, Resources.HelpActivityMonitor);
             toolTipHelp.SetToolTip(pictureBoxHelpPromptOnResume, Resources.HelpPromptOnResume);
@@ -37,8 +62,27 @@ namespace Rowan.TfsWorkingOn.WinForm
             labelVersion.Text = Assembly.GetExecutingAssembly().GetCustomAttributes(true).OfType<AssemblyInformationalVersionAttribute>().FirstOrDefault().InformationalVersion;
 
             backgroundWorker.WorkerSupportsCancellation = true;
-            workingItemConfiguration.WarehouseController.GetWarehouseStatusCompleted += new GetWarehouseStatusCompletedEventHandler(WarehouseController_GetWarehouseStatusCompleted);
-            workingItemConfiguration.WarehouseController.RunCompleted += new RunCompletedEventHandler(WarehouseController_RunCompleted);
+            _workingItemConfiguration.WarehouseController.GetWarehouseStatusCompleted += new GetWarehouseStatusCompletedEventHandler(WarehouseController_GetWarehouseStatusCompleted);
+            _workingItemConfiguration.WarehouseController.RunCompleted += new RunCompletedEventHandler(WarehouseController_RunCompleted);
+        }
+
+        // http://stackoverflow.com/questions/45779/c-dynamic-event-subscription
+        private static Delegate Create(EventInfo evt, Action d)
+        {
+            var handlerType = evt.EventHandlerType;
+            var eventParams = handlerType.GetMethod("Invoke").GetParameters();
+            //lambda: (object x0, EventArgs x1) => d()      
+            var parameters = eventParams.Select(p => Expression.Parameter(p.ParameterType, "x"));
+            // - assumes void method with no arguments but can be        
+            //   changed to accomodate any supplied method      
+            var body = Expression.Call(Expression.Constant(d), d.GetType().GetMethod("Invoke"));
+            var lambda = Expression.Lambda(body, parameters.ToArray());
+            return Delegate.CreateDelegate(handlerType, lambda.Compile(), "Invoke", false);
+        }
+
+        protected void QueryPickerControl_OnSelectedQueryItemChanged()
+        {
+            Settings.Default.SelectedQuery = _queryPickerControlType.GetProperty("SelectedItemId").GetValue(_queryPickerControl, null);
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -49,7 +93,7 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            workingItemConfiguration.Save();
+            _workingItemConfiguration.Save();
             Settings.Default.Save();
         }
 
@@ -68,7 +112,7 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void FormWorkItemConfiguration_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (Settings.Default.IsDirty || workingItemConfiguration.IsDirty)
+            if (Settings.Default.IsDirty || _workingItemConfiguration.IsDirty)
             {
                 DialogResult result = MessageBox.Show(Resources.OutstandingChanges, Resources.SaveChanges, MessageBoxButtons.YesNoCancel);
                 switch (result)
@@ -77,7 +121,7 @@ namespace Rowan.TfsWorkingOn.WinForm
                         buttonSave_Click(sender, e);
                         break;
                     case DialogResult.No:
-                        workingItemConfiguration.Load();
+                        _workingItemConfiguration.Load();
                         Settings.Reload();
                         break;
                     default:
@@ -105,7 +149,7 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void GetWarehouseStatus()
         {
-            workingItemConfiguration.WarehouseController.GetWarehouseStatusAsync();
+            _workingItemConfiguration.WarehouseController.GetWarehouseStatusAsync();
         }
 
         private void buttonRefreshWarehouseStatus_Click(object sender, EventArgs e)
@@ -162,7 +206,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             try
             {
                 _idle = false;
-                workingItemConfiguration.WarehouseController.RunAsync();
+                _workingItemConfiguration.WarehouseController.RunAsync();
                 backgroundWorker.RunWorkerAsync();
             }
             catch (Exception ex)

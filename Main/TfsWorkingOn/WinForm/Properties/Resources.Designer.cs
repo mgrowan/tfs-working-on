@@ -447,12 +447,12 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to There are no estimates for the workitem.
+        ///   Looks up a localized string similar to There are no estimates for the work item.
         ///Do you want to add estimates now?.
         /// </summary>
-        internal static string ThereAreNoEstimatesForTheWorkitem {
+        internal static string ThereAreNoEstimatesForTheWorkItem {
             get {
-                return ResourceManager.GetString("ThereAreNoEstimatesForTheWorkitem", resourceCulture);
+                return ResourceManager.GetString("ThereAreNoEstimatesForTheWorkItem", resourceCulture);
             }
         }
         

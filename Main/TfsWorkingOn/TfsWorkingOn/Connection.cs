@@ -9,10 +9,6 @@ namespace Rowan.TfsWorkingOn
 {
     public class Connection : INotifyPropertyChanged
     {
-        #region Members
-        private TfsTeamProjectCollection _tfsTeamProjectCollection;
-        #endregion
-
         #region Constructors
         private Connection() { }
 
@@ -25,6 +21,7 @@ namespace Rowan.TfsWorkingOn
         #endregion
 
         #region Properties
+        private TfsTeamProjectCollection _tfsTeamProjectCollection;
         public TfsTeamProjectCollection TfsTeamProjectCollection
         {
             get
@@ -44,7 +41,6 @@ namespace Rowan.TfsWorkingOn
                 if (value != _teamProjectCollectionAbsoluteUri)
                 {
                     _teamProjectCollectionAbsoluteUri = value;
-                    Settings.Default.TeamProjectCollectionAbsoluteUri = value;
                     OnPropertyChanged(new PropertyChangedEventArgs(TeamProjectCollectionAbsoluteUriPropertyName));
                 }
             }
@@ -54,7 +50,7 @@ namespace Rowan.TfsWorkingOn
 
         public bool IsConnected { get { return TfsTeamProjectCollection != null; } }
 
-        private static WorkItemStore _workItemStore;
+        private WorkItemStore _workItemStore;
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public WorkItemStore WorkItemStore
         {
@@ -75,7 +71,6 @@ namespace Rowan.TfsWorkingOn
                 if (_selectedProjectName != value)
                 {
                     _selectedProjectName = value;
-                    Settings.Default.SelectedProjectName = value;
                     OnPropertyChanged(new PropertyChangedEventArgs(SelectedProjectNamePropertyName));
                 }
             }
@@ -99,15 +94,18 @@ namespace Rowan.TfsWorkingOn
         /// <summary>
         /// Connects to Server and populates to Project list
         /// </summary>
-        public void Connect()
+        public static void Connect()
         {
-            if (TeamProjectCollectionAbsoluteUri == null) throw new ArgumentNullException(Resources.Server, Resources.ServerRequired);
-
+            if (Settings.Default.TeamProjectCollectionAbsoluteUri == null) throw new ArgumentNullException(Resources.Server, Resources.ServerRequired);
+            // Discard previous connection and reconnect
+            _connection = null;
+            GetConnection().TeamProjectCollectionAbsoluteUri = Settings.Default.TeamProjectCollectionAbsoluteUri;
+            _connection._selectedProjectName = Settings.Default.SelectedProjectName;
             try
             {
-                _tfsTeamProjectCollection = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(TeamProjectCollectionUri, new UICredentialsProvider());
-                _tfsTeamProjectCollection.EnsureAuthenticated();
-                _workItemStore = _tfsTeamProjectCollection.GetService(typeof(WorkItemStore)) as WorkItemStore;
+                _connection._tfsTeamProjectCollection = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(_connection.TeamProjectCollectionUri, new UICredentialsProvider());
+                _connection._tfsTeamProjectCollection.EnsureAuthenticated();
+                _connection._workItemStore = _connection.TfsTeamProjectCollection.GetService(typeof(WorkItemStore)) as WorkItemStore;
             }
             catch (Exception)
             {

@@ -267,8 +267,8 @@ going to the find work item search dialog.</value>
   <data name="ErrorLoadingQuery" xml:space="preserve">
     <value>Error Loading Query</value>
   </data>
-  <data name="ThereAreNoEstimatesForTheWorkitem" xml:space="preserve">
-    <value>There are no estimates for the workitem.
+  <data name="ThereAreNoEstimatesForTheWorkItem" xml:space="preserve">
+    <value>There are no estimates for the work item.
 Do you want to add estimates now?</value>
   </data>
   <data name="AddEstimates" xml:space="preserve">
