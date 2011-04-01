@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
 using System.Web.Services.Protocols;
 using System.Windows.Forms;
+using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using Rowan.TfsWorkingOn.TfsWarehouse;
 using Rowan.TfsWorkingOn.WinForm.Properties;
-using Microsoft.TeamFoundation.WorkItemTracking.Client;
-using System.Linq.Expressions;
 
 namespace Rowan.TfsWorkingOn.WinForm
 {
@@ -25,6 +25,9 @@ namespace Rowan.TfsWorkingOn.WinForm
         private void FormWorkItemConfiguration_Load(object sender, EventArgs e)
         {
             workingItemConfigurationBindingSource.DataSource = _workingItemConfiguration;
+            comboBoxWorkItemType.DataSource = _workingItemConfiguration.WorkItemTypes.ToList();
+            comboBoxWorkItemType.DisplayMember = "Name";
+            comboBoxWorkItemType.ValueMember = "Name";
             settingsBindingSource.DataSource = Settings.Default;
 
             _queryPickerControl = Activator.CreateInstance("Microsoft.TeamFoundation.Common.Library, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "Microsoft.TeamFoundation.Controls.QueryPickerControl").Unwrap();

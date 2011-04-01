@@ -109,8 +109,6 @@ namespace Rowan.TfsWorkingOn
 
         #region Settings
 
-
-
         private static readonly string DefaultConfigurationsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TfsWorkingOn");
         public const string ConfigurationsPathPropertyName = "ConfigurationsPath";
         private string _configurationsPath = DefaultConfigurationsPath;

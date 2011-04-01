@@ -66,7 +66,6 @@
             this.fieldDefinitionsDurationBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.labelWorkItemType = new System.Windows.Forms.Label();
             this.comboBoxWorkItemType = new System.Windows.Forms.ComboBox();
-            this.workItemTypesBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.tabPageUpdateWarehouse = new System.Windows.Forms.TabPage();
             this.labelWarehouseStatus = new System.Windows.Forms.Label();
             this.labelUpdateDataWarehouse = new System.Windows.Forms.Label();
@@ -97,7 +96,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.selectedWorkItemTypeBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsRemainingBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsDurationBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.workItemTypesBindingSource)).BeginInit();
             this.tabPageUpdateWarehouse.SuspendLayout();
             this.tabPageAbout.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxAbout)).BeginInit();
@@ -489,14 +487,11 @@
             this.comboBoxWorkItemType.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.comboBoxWorkItemType.DataBindings.Add(new System.Windows.Forms.Binding("SelectedItem", this.workingItemConfigurationBindingSource, "SelectedWorkItemType", true));
             this.comboBoxWorkItemType.DataBindings.Add(new System.Windows.Forms.Binding("SelectedValue", this.workingItemConfigurationBindingSource, "SelectedWorkItemTypeName", true));
-            this.comboBoxWorkItemType.DataSource = this.workItemTypesBindingSource;
-            this.comboBoxWorkItemType.DisplayMember = "Name";
             this.comboBoxWorkItemType.FormattingEnabled = true;
             this.comboBoxWorkItemType.Location = new System.Drawing.Point(95, 60);
             this.comboBoxWorkItemType.Name = "comboBoxWorkItemType";
             this.comboBoxWorkItemType.Size = new System.Drawing.Size(249, 21);
             this.comboBoxWorkItemType.TabIndex = 23;
-            this.comboBoxWorkItemType.ValueMember = "Name";
             // 
             // tabPageUpdateWarehouse
             // 
@@ -684,7 +679,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.selectedWorkItemTypeBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsRemainingBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.fieldDefinitionsDurationBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.workItemTypesBindingSource)).EndInit();
             this.tabPageUpdateWarehouse.ResumeLayout(false);
             this.tabPageUpdateWarehouse.PerformLayout();
             this.tabPageAbout.ResumeLayout(false);
@@ -723,7 +717,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDownAutoTimeOut;
         private System.Windows.Forms.Label labelAutoTimeOut;
         private System.Windows.Forms.BindingSource workingItemConfigurationBindingSource;
-        private System.Windows.Forms.BindingSource workItemTypesBindingSource;
         private System.Windows.Forms.BindingSource selectedWorkItemTypeBindingSource;
         private System.Windows.Forms.BindingSource fieldDefinitionsDurationBindingSource;
         private System.Windows.Forms.BindingSource fieldDefinitionsRemainingBindingSource;

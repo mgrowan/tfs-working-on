@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using Rowan.TfsWorkingOn.Properties;
@@ -28,6 +30,11 @@ namespace Rowan.TfsWorkingOn
                 _isDirty = value;
                 OnPropertyChanged(new PropertyChangedEventArgs(IsDirtyPropertyName));
             }
+        }
+
+        public IEnumerable<WorkItemType> WorkItemTypes
+        {
+            get { return Connection.GetConnection().SelectedProject.WorkItemTypes.Cast<WorkItemType>(); }
         }
 
         public string SelectedWorkItemTypeName { get; set; }
