@@ -14,7 +14,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             
-            FormSetConnection formSetConnection = new FormSetConnection();
+            FormNotificationTray formSetConnection = new FormNotificationTray();
             Application.Run();
         }
     }

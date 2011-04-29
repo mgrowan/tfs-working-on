@@ -11,7 +11,7 @@ using Rowan.TfsWorkingOn.WinForm.Properties;
 
 namespace Rowan.TfsWorkingOn.WinForm
 {
-    public partial class FormSetConnection : Form
+    public partial class FormNotificationTray : Form
     {
         private WorkingItem _workingItem;
         private Nag _nag = new Nag();
@@ -19,7 +19,7 @@ namespace Rowan.TfsWorkingOn.WinForm
         private bool _exiting;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        public FormSetConnection()
+        public FormNotificationTray()
         {
             InitializeComponent();
             Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
@@ -320,16 +320,34 @@ namespace Rowan.TfsWorkingOn.WinForm
                 Dictionary<string, string> parameters = new Dictionary<string, string>(2);
                 parameters.Add("me", Connection.GetConnection().TfsTeamProjectCollection.AuthorizedIdentity.DisplayName);
                 parameters.Add("project", Settings.Default.SelectedProjectName);
-                WorkItemCollection workItems = Connection.GetConnection().WorkItemStore.Query(Connection.GetConnection().WorkItemStore.GetQueryDefinition(Settings.Default.SelectedQuery.Value).QueryText, parameters);
+                Query query = new Query(Connection.GetConnection().WorkItemStore, Connection.GetConnection().WorkItemStore.GetQueryDefinition(Settings.Default.SelectedQuery.Value).QueryText, parameters);
 
-                foreach (WorkItem workItem in workItems)
+                if (query.IsLinkQuery)
                 {
-                    ToolStripItem wi = new ToolStripMenuItem();
-                    wi.Tag = workItem.Id;
-                    wi.ToolTipText = string.Format(CultureInfo.CurrentCulture, "{0}: {1}", workItem.Id, workItem.Title);
-                    wi.Text = GetStringWithEllipsis(wi.ToolTipText, 60);
-                    wi.Click += ToolStripWorkItem_Click;
-                    workItemToolStripItems.Add(wi);
+                    WorkItemLinkInfo[] workItemLinkInfos = query.RunLinkQuery();
+                    Stack<int> parents = new Stack<int>();
+                    int previous = 0;
+                    foreach (WorkItemLinkInfo wiLinkInfo in workItemLinkInfos)
+                    {
+                        // Build indented query result tree
+                        if (parents.Count == 0) parents.Push(wiLinkInfo.SourceId);
+                        if (parents.Peek() != wiLinkInfo.SourceId && previous == wiLinkInfo.SourceId) parents.Push(wiLinkInfo.SourceId);
+                        else
+                        {
+                            while (wiLinkInfo.SourceId != parents.Peek()) parents.Pop();
+                        }
+                        previous = wiLinkInfo.TargetId;
+
+                        WorkItem wi = Connection.GetConnection().WorkItemStore.GetWorkItem(wiLinkInfo.TargetId);
+                        workItemToolStripItems.Add(AddQueryMenuWorkItem(wi, parents.Count));
+                    }
+                }
+                else
+                {
+                    foreach (WorkItem workItem in query.RunQuery())
+                    {
+                        workItemToolStripItems.Add(AddQueryMenuWorkItem(workItem));
+                    }
                 }
                 queryListToolStripMenuItem.DropDownItems.AddRange(workItemToolStripItems.ToArray());
             }
@@ -340,6 +358,16 @@ namespace Rowan.TfsWorkingOn.WinForm
                 MessageBox.Show(ex.Message, Resources.ErrorLoadingQuery, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (ArgumentException) { } // remove with WI #13244 
+        }
+
+        private ToolStripItem AddQueryMenuWorkItem(WorkItem workItem, int indentLevel = 0)
+        {
+            ToolStripItem wi = new ToolStripMenuItem();
+            wi.Tag = workItem.Id;
+            wi.ToolTipText = string.Format(CultureInfo.CurrentCulture, "{0," + indentLevel * 4 + "}: {1}", workItem.Id, workItem.Title);
+            wi.Text = GetStringWithEllipsis(wi.ToolTipText, 60);
+            wi.Click += ToolStripWorkItem_Click;
+            return wi;
         }
 
         private void refreshQueryToolStripItem_Click(object sender, EventArgs e)

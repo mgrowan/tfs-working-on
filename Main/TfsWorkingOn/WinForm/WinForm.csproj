@@ -154,8 +154,8 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormSetConnection.resx">
-      <DependentUpon>FormSetConnection.cs</DependentUpon>
+    <EmbeddedResource Include="FormNotificationTray.resx">
+      <DependentUpon>FormNotificationTray.cs</DependentUpon>
     </EmbeddedResource>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -172,11 +172,11 @@
     <None Include="Properties\DataSources\Rowan.TfsWorkingOn.Settings.datasource" />
     <None Include="Properties\DataSources\Rowan.TfsWorkingOn.WorkingItem.datasource" />
     <None Include="Properties\DataSources\Rowan.TfsWorkingOn.WorkingItemConfiguration.datasource" />
-    <Compile Include="FormSetConnection.cs">
+    <Compile Include="FormNotificationTray.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormSetConnection.Designer.cs">
-      <DependentUpon>FormSetConnection.cs</DependentUpon>
+    <Compile Include="FormNotificationTray.Designer.cs">
+      <DependentUpon>FormNotificationTray.cs</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

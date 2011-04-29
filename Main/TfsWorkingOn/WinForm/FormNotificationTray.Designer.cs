@@ -1,6 +1,6 @@
 ﻿namespace Rowan.TfsWorkingOn.WinForm
 {
-    partial class FormSetConnection
+    partial class FormNotificationTray
     {
         /// <summary>
         /// Required designer variable.
@@ -30,7 +30,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormSetConnection));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormNotificationTray));
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.notifyMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
