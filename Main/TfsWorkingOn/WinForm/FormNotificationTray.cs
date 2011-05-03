@@ -364,8 +364,10 @@ namespace Rowan.TfsWorkingOn.WinForm
         {
             ToolStripItem wi = new ToolStripMenuItem();
             wi.Tag = workItem.Id;
-            wi.ToolTipText = string.Format(CultureInfo.CurrentCulture, "{0," + indentLevel * 4 + "}: {1}", workItem.Id, workItem.Title);
-            wi.Text = GetStringWithEllipsis(wi.ToolTipText, 60);
+            string text = string.Format(CultureInfo.CurrentCulture, "{0," + indentLevel * 4 + "}: {1}", workItem.Id, workItem.Title);
+            wi.Text = GetStringWithEllipsis(text, 60);
+            // Only show tooltip if string is truncated on the Text field with an ellipsis. To help minimize occurance of #13457.
+            if (text != wi.Text) wi.ToolTipText = string.Format(CultureInfo.CurrentCulture, "{0}: {1}", workItem.Id, workItem.Title);
             wi.Click += ToolStripWorkItem_Click;
             return wi;
         }
