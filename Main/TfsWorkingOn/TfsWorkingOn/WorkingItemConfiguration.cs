@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using Microsoft.TeamFoundation.VersionControl.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using Rowan.TfsWorkingOn.Properties;
 using Rowan.TfsWorkingOn.TfsWarehouse;
@@ -13,10 +14,6 @@ namespace Rowan.TfsWorkingOn
 {
     public class WorkingItemConfiguration : INotifyPropertyChanged, IDisposable
     {
-        #region Members
-        private string _filename = string.Empty;
-        #endregion
-
         #region Properties
         private const string IsDirtyPropertyName = "IsDirty";
         private bool _isDirty;
@@ -147,17 +144,51 @@ namespace Rowan.TfsWorkingOn
         #endregion
 
         #region Public Methods
+        private string _filename = string.Empty;
+
         public void Save()
         {
             if (!HasNoFileContents())
             {
-                using (FileStream fs = new FileStream(Path.Combine(Settings.Default.ConfigurationsPath, _filename), FileMode.Create))
+                string filePath = Path.Combine(Settings.Default.ConfigurationsPath, _filename);
+                if (Settings.Default.SourceControlPath)
                 {
-                    XmlSerializer xs = new XmlSerializerFactory().CreateSerializer(this.GetType());
-                    xs.Serialize(fs, this);
+                    VersionControlServer versionControlServer = Connection.GetConnection().TfsTeamProjectCollection.GetService<VersionControlServer>();
+
+                    Workspace ws = versionControlServer.QueryWorkspaces(null, Connection.GetConnection().TfsTeamProjectCollection.ConfigurationServer.AuthorizedIdentity.DisplayName, Environment.MachineName, WorkspacePermissions.CheckIn).FirstOrDefault();
+                    if (ws == null) // Create Temp Workspace
+                    {
+                        ws = versionControlServer.CreateWorkspace("TFS Working On - Mappings", Connection.GetConnection().TfsTeamProjectCollection.ConfigurationServer.AuthorizedIdentity.DisplayName, "Automatic Workspace to manage work item field mappings",
+                            new WorkingFolder[] { new WorkingFolder(Settings.Default.ConfigurationsPath, Settings.SettingsFolderPath, WorkingFolderType.Map, RecursionType.OneLevel) });
+                    }
+                    GetStatus gs = ws.Get(new string[] { Settings.Default.ConfigurationsPath }, VersionSpec.Latest, RecursionType.OneLevel, GetOptions.None);
+                    if (gs.NoActionNeeded)
+                    {
+                        WorkingFolder wf = ws.GetWorkingFolderForServerItem(filePath);
+                        SaveFile(wf.LocalItem);
+                        int pendingStatus = versionControlServer.ServerItemExists(wf.ServerItem, ItemType.File) ? ws.PendEdit(wf.ServerItem) : ws.PendAdd(wf.ServerItem);
+                        int checkInStatus = ws.CheckIn(ws.GetPendingChanges(wf.ServerItem), "Updated TFS Working On settings file");
+                    }
+                    else { } // TODO Error Saving
+                }
+                else
+                {
+                    SaveFile(filePath);
                 }
             }
+
             IsDirty = false;
+        }
+
+        private void SaveFile(string filePath)
+        {
+            if (!Directory.GetParent(filePath).Exists) Directory.GetParent(filePath).Create();
+            else if (File.Exists(filePath) && File.GetAttributes(filePath).HasFlag(FileAttributes.ReadOnly)) File.SetAttributes(filePath, FileAttributes.Normal);
+            using (FileStream fs = new FileStream(filePath, FileMode.Create))
+            {
+                XmlSerializer xs = new XmlSerializerFactory().CreateSerializer(this.GetType());
+                xs.Serialize(fs, this);
+            }
         }
 
         public void Load()
@@ -167,6 +198,27 @@ namespace Rowan.TfsWorkingOn
             _filename = string.Format(CultureInfo.InvariantCulture, Resources.ConfigFileName, Connection.GetConnection().TfsTeamProjectCollection.ConfigurationServer.InstanceId.ToString("N"), Connection.GetConnection().SelectedProject.Name, SelectedWorkItemType.Name);
 
             string filePath = Path.Combine(Settings.Default.ConfigurationsPath, _filename);
+
+            if (Settings.Default.SourceControlPath) // TFS Source Control Path
+            {
+                try
+                {
+                    string tempFilePath = Path.Combine(Settings.SettingsFolderPath, _filename);
+                    VersionControlServer versionControlServer = Connection.GetConnection().TfsTeamProjectCollection.GetService<VersionControlServer>();
+                    versionControlServer.DownloadFile(filePath, tempFilePath);
+                    OpenFile(tempFilePath);
+                }
+                catch (Exception) { } // TODO Catch proper exception
+            }
+            else
+            {
+                OpenFile(filePath);
+            }
+            IsDirty = false;
+        }
+
+        private void OpenFile(string filePath)
+        {
             if (File.Exists(filePath))
             {
                 using (FileStream fs = new FileStream(filePath, FileMode.Open))
@@ -185,7 +237,6 @@ namespace Rowan.TfsWorkingOn
             {
                 this.DurationField = this.RemainingField = this.ElapsedField = string.Empty;
             }
-            IsDirty = false;
         }
         #endregion
 

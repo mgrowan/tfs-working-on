@@ -105,7 +105,7 @@ namespace Rowan.TfsWorkingOn
             {
                 _connection._tfsTeamProjectCollection = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(_connection.TeamProjectCollectionUri, new UICredentialsProvider());
                 _connection._tfsTeamProjectCollection.EnsureAuthenticated();
-                _connection._workItemStore = _connection.TfsTeamProjectCollection.GetService(typeof(WorkItemStore)) as WorkItemStore;
+                _connection._workItemStore = _connection.TfsTeamProjectCollection.GetService<WorkItemStore>();
             }
             catch (Exception)
             {

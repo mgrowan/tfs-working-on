@@ -50,6 +50,7 @@ namespace Rowan.TfsWorkingOn
 
         public void Save()
         {
+            if (!Directory.GetParent(SettingsFilePath).Exists) Directory.GetParent(SettingsFilePath).Create();
             using (FileStream fs = new FileStream(SettingsFilePath, FileMode.Create))
             {
                 XmlSerializer xs = new XmlSerializerFactory().CreateSerializer(this.GetType());
@@ -72,10 +73,15 @@ namespace Rowan.TfsWorkingOn
             {
                 if (_settingsFilePath == null)
                 {
-                    _settingsFilePath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + typeof(Settings).Assembly.GetName().Name + " Settings.xml";
+                    _settingsFilePath = SettingsFolderPath + "Settings.xml";
                 }
                 return _settingsFilePath;
             }
+        }
+
+        public static string SettingsFolderPath
+        {
+            get { return Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\" + typeof(Settings).Assembly.GetName().Name + @"\"; }
         }
 
         public const string IsDirtyPropertyName = "IsDirty";
@@ -122,6 +128,7 @@ namespace Rowan.TfsWorkingOn
                 OnPropertyChanged(new PropertyChangedEventArgs(ConfigurationsPathPropertyName));
             }
         }
+        public bool SourceControlPath { get { return ConfigurationsPath.StartsWith("$"); } }
 
         private const string DefaultTeamProjectCollectionAbsoluteUri = null;
         private string _teamProjectCollectionAbsoluteUri = DefaultTeamProjectCollectionAbsoluteUri;
@@ -234,5 +241,6 @@ namespace Rowan.TfsWorkingOn
         }
 
         #endregion Settings
+
     }
 }
