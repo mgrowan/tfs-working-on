@@ -235,12 +235,12 @@ namespace Rowan.TfsWorkingOn.WinForm
                     _workingItem.Connection = Connection.GetConnection();
                     _workingItem.UserActivityMonitor.MonitorTriggeredEvent += new EventHandler<MonitorEventArgs>(_userActivity_MonitorTriggeredEvent);
 
-                    AskForEstimates();
-
                     selectedToolStripMenuItem.Text = string.Format(CultureInfo.CurrentCulture, Resources.Selected, _workingItem.WorkItem.Id);
                     selectedToolStripMenuItem.ToolTipText = _workingItem.WorkItem.Title;
                     selectedToolStripMenuItem.Enabled = true;
                     StartStop();
+
+                    AskForEstimates();
                 }
             }
         }

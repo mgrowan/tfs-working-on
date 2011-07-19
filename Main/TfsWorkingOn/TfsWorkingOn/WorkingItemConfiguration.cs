@@ -155,10 +155,10 @@ namespace Rowan.TfsWorkingOn
                 {
                     VersionControlServer versionControlServer = Connection.GetConnection().TfsTeamProjectCollection.GetService<VersionControlServer>();
 
-                    Workspace ws = versionControlServer.QueryWorkspaces(null, Connection.GetConnection().TfsTeamProjectCollection.ConfigurationServer.AuthorizedIdentity.DisplayName, Environment.MachineName, WorkspacePermissions.CheckIn).FirstOrDefault();
+                    Workspace ws = versionControlServer.QueryWorkspaces(null, versionControlServer.AuthorizedUser, Environment.MachineName, WorkspacePermissions.CheckIn).FirstOrDefault();
                     if (ws == null) // Create Temp Workspace
                     {
-                        ws = versionControlServer.CreateWorkspace("TFS Working On - Mappings", Connection.GetConnection().TfsTeamProjectCollection.ConfigurationServer.AuthorizedIdentity.DisplayName, "Automatic Workspace to manage work item field mappings",
+                        ws = versionControlServer.CreateWorkspace(Resources.WorkspaceName, versionControlServer.AuthorizedUser, Resources.AutomaticWorkspaceToManageWorkItemFieldMappings,
                             new WorkingFolder[] { new WorkingFolder(Settings.Default.ConfigurationsPath, Settings.SettingsFolderPath, WorkingFolderType.Map, RecursionType.OneLevel) });
                     }
                     GetStatus gs = ws.Get(new string[] { Settings.Default.ConfigurationsPath }, VersionSpec.Latest, RecursionType.OneLevel, GetOptions.None);
@@ -167,7 +167,7 @@ namespace Rowan.TfsWorkingOn
                         WorkingFolder wf = ws.GetWorkingFolderForServerItem(filePath);
                         SaveFile(wf.LocalItem);
                         int pendingStatus = versionControlServer.ServerItemExists(wf.ServerItem, ItemType.File) ? ws.PendEdit(wf.ServerItem) : ws.PendAdd(wf.ServerItem);
-                        int checkInStatus = ws.CheckIn(ws.GetPendingChanges(wf.ServerItem), "Updated TFS Working On settings file");
+                        int checkInStatus = ws.CheckIn(ws.GetPendingChanges(wf.ServerItem), Resources.SettingsFileCheckInComment);
                     }
                     else { } // TODO Error Saving
                 }
@@ -208,7 +208,7 @@ namespace Rowan.TfsWorkingOn
                     versionControlServer.DownloadFile(filePath, tempFilePath);
                     OpenFile(tempFilePath);
                 }
-                catch (Exception) { } // TODO Catch proper exception
+                catch (Exception) { } // VersionControlException - File Does not exist - Ignore
             }
             else
             {

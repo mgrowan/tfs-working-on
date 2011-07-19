@@ -112,10 +112,10 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ConfigFileName" xml:space="preserve">
     <value>{0} - {1} - {2}.WorkingItemConfig</value>
@@ -167,5 +167,14 @@
   </data>
   <data name="WorkingOnUpdateStatus" xml:space="preserve">
     <value>Remaining: {0,-4:F} Elapsed: {1,-4:F} Duration: {2,-4:F}</value>
+  </data>
+  <data name="AutomaticWorkspaceToManageWorkItemFieldMappings" xml:space="preserve">
+    <value>Automatic Workspace to manage work item field mappings</value>
+  </data>
+  <data name="WorkspaceName" xml:space="preserve">
+    <value>TFS Working On - Mappings</value>
+  </data>
+  <data name="SettingsFileCheckInComment" xml:space="preserve">
+    <value>Updated TFS Working On settings file</value>
   </data>
 </root>
