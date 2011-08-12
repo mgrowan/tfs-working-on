@@ -63,10 +63,6 @@ namespace Rowan.TfsWorkingOn.WinForm
             toolTipHelp.SetToolTip(pictureBoxHelpMenuQuery, Resources.HelpMenuQuery);
 
             labelVersion.Text = Assembly.GetExecutingAssembly().GetCustomAttributes(true).OfType<AssemblyInformationalVersionAttribute>().FirstOrDefault().InformationalVersion;
-
-            backgroundWorker.WorkerSupportsCancellation = true;
-            _workingItemConfiguration.WarehouseController.GetWarehouseStatusCompleted += new GetWarehouseStatusCompletedEventHandler(WarehouseController_GetWarehouseStatusCompleted);
-            _workingItemConfiguration.WarehouseController.RunCompleted += new RunCompletedEventHandler(WarehouseController_RunCompleted);
         }
 
         // http://stackoverflow.com/questions/45779/c-dynamic-event-subscription
@@ -147,110 +143,6 @@ namespace Rowan.TfsWorkingOn.WinForm
                 tabControlConfiguration.SelectedTab = tabPageOptions;
             }
         }
-
-        #region Data Warehouse Processing
-
-        private void GetWarehouseStatus()
-        {
-            _workingItemConfiguration.WarehouseController.GetWarehouseStatusAsync();
-        }
-
-        private void buttonRefreshWarehouseStatus_Click(object sender, EventArgs e)
-        {
-            GetWarehouseStatus();
-        }
-
-        private void WarehouseController_GetWarehouseStatusCompleted(object sender, GetWarehouseStatusCompletedEventArgs e)
-        {
-            if (e.Error != null &&
-                e.Error is SoapException &&
-                e.Error.Message.Contains("Attempted to perform an unauthorized operation"))
-            {
-
-                MessageBox.Show("You do not have the correct permissions to view the warehouse status.",
-                    "Permission Denied",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return;
-            }
-
-            textBoxWarehouseStatus.Text = e.Result.ToString();
-            _idle = (e.Result == WarehouseStatus.Idle);
-
-        }
-
-        /// <summary>
-        /// Handles the async 'Warehouse Update' web service call back.
-        /// If there has been an error, it needs to be trapped and displayed to the user.
-        /// </summary>
-        private void WarehouseController_RunCompleted(object sender, RunCompletedEventArgs e)
-        {
-            _idle = true;
-            backgroundWorker.CancelAsync();
-
-            if (e.Error != null &&
-                e.Error is SoapException &&
-                e.Error.Message.Contains("Attempted to perform an unauthorized operation"))
-            {
-
-                MessageBox.Show("You do not have the correct permissions to view the warehouse status.",
-                    "Permission Denied",
-                    MessageBoxButtons.OK,
-                    MessageBoxIcon.Error);
-                return;
-            }
-        }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-        private void buttonUpdateWarehouse_Click(object sender, EventArgs e)
-        {
-            progressBarWarehouse.MarqueeAnimationSpeed = 1;
-            buttonUpdateWarehouse.Enabled = false;
-            try
-            {
-                _idle = false;
-                _workingItemConfiguration.WarehouseController.RunAsync();
-                backgroundWorker.RunWorkerAsync();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, Resources.ErrorCaption, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                buttonUpdateWarehouse.Enabled = true;
-                progressBarWarehouse.MarqueeAnimationSpeed = 0;
-            }
-        }
-
-        private bool _idle;
-        private void backgroundWorker_DoWork(object sender, System.ComponentModel.DoWorkEventArgs e)
-        {
-            while (!_idle)
-            {
-                Thread.Sleep(1000);
-
-                if (backgroundWorker.CancellationPending)
-                {
-                    e.Cancel = true;
-                    return;
-                }
-                backgroundWorker.ReportProgress(1);
-            }
-            backgroundWorker.ReportProgress(100);
-        }
-
-        private void backgroundWorker_ProgressChanged(object sender, System.ComponentModel.ProgressChangedEventArgs e)
-        {
-            GetWarehouseStatus();
-        }
-
-        private void backgroundWorker_RunWorkerCompleted(object sender, System.ComponentModel.RunWorkerCompletedEventArgs e)
-        {
-            if (e.Cancelled != true)
-                GetWarehouseStatus();
-
-            buttonUpdateWarehouse.Enabled = true;
-            progressBarWarehouse.MarqueeAnimationSpeed = 0;
-        }
-        #endregion Async Data Warehouse Processing
 
     }
 }
