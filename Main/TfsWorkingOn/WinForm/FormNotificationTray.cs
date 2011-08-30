@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Globalization;
+using System.Linq;
 using System.Windows.Forms;
 using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
@@ -13,10 +15,17 @@ namespace Rowan.TfsWorkingOn.WinForm
 {
     public partial class FormNotificationTray : Form
     {
+        #region Fields
+
         private WorkingItem _workingItem;
         private Nag _nag = new Nag();
 
         private bool _exiting;
+
+        private ToolStripMenuItem refreshQueryListItem;
+        private Image stationaryRefreshGif;
+
+        #endregion
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public FormNotificationTray()
@@ -58,6 +67,16 @@ namespace Rowan.TfsWorkingOn.WinForm
             {
                 ShowTeamProjectPicker();
             }
+
+            /* keep the refresh item separated from the refresh process so that it can remain within the menu upon refresh
+            and not cause an apparent closure on items.Clear(). set the menu query dropdown to not auto close so that explicit calls can handle closure */
+            refreshQueryListItem = new ToolStripMenuItem(Resources.RefreshQueryList, Resources.Refresh, refreshQueryToolStripItem_Click);
+
+            stationaryRefreshGif = Resources.Refresh.GetThumbnailImage(Resources.Refresh.Width,
+                                                             Resources.Refresh.Height, null,
+                                                             (IntPtr)0);
+
+            refreshQueryListItem.Image = stationaryRefreshGif;
         }
 
         private void ShowSearchForm()
@@ -164,6 +183,119 @@ namespace Rowan.TfsWorkingOn.WinForm
             notifyIcon.Dispose();
         }
 
+        /// <summary>
+        /// Refreshes the query list.
+        /// </summary>
+        private void RefreshQueryList()
+        {
+            // disregard repeated clicks, currently no reason to implement cancel
+            if (refreshingWorkItemsWorker.IsBusy) return;
+
+            foreach (var itm in GetMenuQueryToolStripItems())
+            {
+                itm.Enabled = false;
+            }
+
+            refreshQueryListItem.Image = Resources.Refresh;
+
+            refreshingWorkItemsWorker.RunWorkerAsync();
+        }
+
+        /// <summary>
+        /// Cleans the menu query drop down.
+        /// </summary>
+        private void CleanMenuQueryDropDown()
+        {
+            if (queryListToolStripMenuItem.DropDownItems.Contains(workItemsToolStripMenuItem))
+            {
+                queryListToolStripMenuItem.DropDownItems.Clear();
+                queryListToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { refreshQueryListItem, new ToolStripSeparator() });
+            }
+            else
+            {
+                foreach (var itm in GetMenuQueryToolStripItems())
+                {
+                    itm.Click -= ToolStripWorkItem_Click;
+                    queryListToolStripMenuItem.DropDownItems.Remove(itm);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Creates the new menu query items.
+        /// </summary>
+        /// <returns>All of the new menu query items.</returns>
+        private IEnumerable<ToolStripMenuItem> CreateNewMenuQueryItems()
+        {
+            List<ToolStripMenuItem> workItemToolStripItems = new List<ToolStripMenuItem>();
+
+            Dictionary<string, string> parameters = new Dictionary<string, string>(2);
+            parameters.Add("me", Connection.GetConnection().TfsTeamProjectCollection.AuthorizedIdentity.DisplayName);
+            parameters.Add("project", Settings.Default.SelectedProjectName);
+            Query query = new Query(Connection.GetConnection().WorkItemStore, Connection.GetConnection().WorkItemStore.GetQueryDefinition(Settings.Default.SelectedQuery.Value).QueryText, parameters);
+
+            if (query.IsLinkQuery)
+            {
+                WorkItemLinkInfo[] workItemLinkInfos = query.RunLinkQuery();
+                Stack<int> parents = new Stack<int>();
+                int previous = 0;
+                foreach (WorkItemLinkInfo wiLinkInfo in workItemLinkInfos)
+                {
+                    // Build indented query result tree
+                    if (parents.Count == 0) parents.Push(wiLinkInfo.SourceId);
+                    if (parents.Peek() != wiLinkInfo.SourceId && previous == wiLinkInfo.SourceId) parents.Push(wiLinkInfo.SourceId);
+                    else
+                    {
+                        while (wiLinkInfo.SourceId != parents.Peek()) parents.Pop();
+                    }
+                    previous = wiLinkInfo.TargetId;
+
+                    WorkItem wi = Connection.GetConnection().WorkItemStore.GetWorkItem(wiLinkInfo.TargetId);
+                    workItemToolStripItems.Add(CreateNewMenuQueryItem(wi, parents.Count));
+                }
+            }
+            else
+            {
+                foreach (WorkItem workItem in query.RunQuery())
+                {
+                    workItemToolStripItems.Add(CreateNewMenuQueryItem(workItem));
+                }
+            }
+
+            return workItemToolStripItems;
+        }
+
+        /// <summary>
+        /// Creates the new menu query item.
+        /// </summary>
+        /// <param name="workItem">The work item.</param>
+        /// <param name="indentLevel">The indent level.</param>
+        /// <returns>A new menu query item.</returns>
+        private ToolStripMenuItem CreateNewMenuQueryItem(WorkItem workItem, int indentLevel = 0)
+        {
+            ToolStripMenuItem wi = new ToolStripMenuItem
+                                       {
+                                           Tag = workItem.Id,
+                                           Name = Resources.QueryItemName + workItem.Id
+                                       };
+
+            string text = string.Format(CultureInfo.CurrentCulture, "{0," + indentLevel * 4 + "}: {1}", workItem.Id, workItem.Title);
+            wi.Text = GetStringWithEllipsis(text, 60);
+            // Only show tooltip if string is truncated on the Text field with an ellipsis. To help minimize occurrence of #13457.
+            if (text != wi.Text) wi.ToolTipText = string.Format(CultureInfo.CurrentCulture, "{0}: {1}", workItem.Id, workItem.Title);
+            wi.Click += ToolStripWorkItem_Click;
+            return wi;
+        }
+
+        /// <summary>
+        /// Gets the menu query tool strip items.
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerable<ToolStripMenuItem> GetMenuQueryToolStripItems()
+        {
+            return queryListToolStripMenuItem.DropDown.Items.OfType<ToolStripMenuItem>().Where(x => x.Name.StartsWith(Resources.QueryItemName)).ToList();
+        }
+
         #region Events
         private static readonly object _userActivityMutex = new object();
         private static bool _userActivityTriggeredCurrentlyProcessing;
@@ -264,12 +396,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             {
                 SetMenuQuery();
 
-                foreach (ToolStripItem tsi in queryListToolStripMenuItem.DropDownItems)
-                {
-                    tsi.Click -= ToolStripWorkItem_Click;
-                }
-                queryListToolStripMenuItem.DropDownItems.Clear();
-                queryListToolStripMenuItem.DropDownItems.Add(workItemsToolStripMenuItem);
+                RefreshQueryList();
             }
         }
 
@@ -282,6 +409,53 @@ namespace Rowan.TfsWorkingOn.WinForm
         {
             SafeShutdown();
         }
+
+        private void queryListToolStripMenuItemDropDown_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+        {
+            e.Cancel = e.CloseReason == ToolStripDropDownCloseReason.ItemClicked;
+        }
+
+        private void notifyMenu_Closing(object sender, ToolStripDropDownClosingEventArgs e)
+        {
+            e.Cancel = e.CloseReason == ToolStripDropDownCloseReason.AppClicked;
+        }
+
+        private void refreshingWorkItemsWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var currentWorkItems = new List<ToolStripMenuItem>();
+
+            currentWorkItems.AddRange(CreateNewMenuQueryItems());
+
+            e.Result = currentWorkItems;
+        }
+
+        private void refreshingWorkItemsWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            CleanMenuQueryDropDown();
+
+            if (e.Error != null)
+            {
+                if (e.Error is UnauthorizedAccessException)
+                {
+                    // The message is informative, using this in the message box.
+                    MessageBox.Show(e.Error.Message, Resources.ErrorLoadingQuery, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (e.Error is ArgumentException)
+                {
+                    return;
+                }
+
+                throw e.Error; // remove with WI #13244 
+            }
+
+            var items = (List<ToolStripMenuItem>)e.Result;
+            queryListToolStripMenuItem.DropDownItems.AddRange(items.ToArray());
+
+            refreshQueryListItem.Image = stationaryRefreshGif;
+        }
+
         #endregion events
 
         #region System Tray Menu Clicks
@@ -302,83 +476,27 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void queryListToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            if (queryListToolStripMenuItem.DropDownItems.Count > 1 || !Settings.Default.SelectedQuery.HasValue) return;
+            if (queryListToolStripMenuItem.DropDownItems.Count > 1 || !Settings.Default.SelectedQuery.HasValue)
+            {
+                return;
+            }
+            
             RefreshQueryList();
-        }
-
-        private void RefreshQueryList()
-        {
-            queryListToolStripMenuItem.DropDownItems.Clear();
-
-            List<ToolStripItem> workItemToolStripItems = new List<ToolStripItem>();
-            ToolStripItem refreshQueryList = new ToolStripMenuItem(Resources.RefreshQueryList, Resources.Refresh, refreshQueryToolStripItem_Click);
-            workItemToolStripItems.Add(refreshQueryList);
-            workItemToolStripItems.Add(new ToolStripSeparator());
-
-            try
-            {
-                Dictionary<string, string> parameters = new Dictionary<string, string>(2);
-                parameters.Add("me", Connection.GetConnection().TfsTeamProjectCollection.AuthorizedIdentity.DisplayName);
-                parameters.Add("project", Settings.Default.SelectedProjectName);
-                Query query = new Query(Connection.GetConnection().WorkItemStore, Connection.GetConnection().WorkItemStore.GetQueryDefinition(Settings.Default.SelectedQuery.Value).QueryText, parameters);
-
-                if (query.IsLinkQuery)
-                {
-                    WorkItemLinkInfo[] workItemLinkInfos = query.RunLinkQuery();
-                    Stack<int> parents = new Stack<int>();
-                    int previous = 0;
-                    foreach (WorkItemLinkInfo wiLinkInfo in workItemLinkInfos)
-                    {
-                        // Build indented query result tree
-                        if (parents.Count == 0) parents.Push(wiLinkInfo.SourceId);
-                        if (parents.Peek() != wiLinkInfo.SourceId && previous == wiLinkInfo.SourceId) parents.Push(wiLinkInfo.SourceId);
-                        else
-                        {
-                            while (wiLinkInfo.SourceId != parents.Peek()) parents.Pop();
-                        }
-                        previous = wiLinkInfo.TargetId;
-
-                        WorkItem wi = Connection.GetConnection().WorkItemStore.GetWorkItem(wiLinkInfo.TargetId);
-                        workItemToolStripItems.Add(AddQueryMenuWorkItem(wi, parents.Count));
-                    }
-                }
-                else
-                {
-                    foreach (WorkItem workItem in query.RunQuery())
-                    {
-                        workItemToolStripItems.Add(AddQueryMenuWorkItem(workItem));
-                    }
-                }
-                queryListToolStripMenuItem.DropDownItems.AddRange(workItemToolStripItems.ToArray());
-            }
-            catch (System.UnauthorizedAccessException ex)
-            {
-                queryListToolStripMenuItem.DropDownItems.Clear();
-                // The message is informative, using this in the msgbox.
-                MessageBox.Show(ex.Message, Resources.ErrorLoadingQuery, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (ArgumentException) { } // remove with WI #13244 
-        }
-
-        private ToolStripItem AddQueryMenuWorkItem(WorkItem workItem, int indentLevel = 0)
-        {
-            ToolStripItem wi = new ToolStripMenuItem();
-            wi.Tag = workItem.Id;
-            string text = string.Format(CultureInfo.CurrentCulture, "{0," + indentLevel * 4 + "}: {1}", workItem.Id, workItem.Title);
-            wi.Text = GetStringWithEllipsis(text, 60);
-            // Only show tooltip if string is truncated on the Text field with an ellipsis. To help minimize occurance of #13457.
-            if (text != wi.Text) wi.ToolTipText = string.Format(CultureInfo.CurrentCulture, "{0}: {1}", workItem.Id, workItem.Title);
-            wi.Click += ToolStripWorkItem_Click;
-            return wi;
         }
 
         private void refreshQueryToolStripItem_Click(object sender, EventArgs e)
         {
-            if (!Settings.Default.SelectedQuery.HasValue) configureToolStripMenuItem_Click(sender, e); // Open Configuration
-            else RefreshQueryList();
+            if (!Settings.Default.SelectedQuery.HasValue) 
+            {
+                configureToolStripMenuItem_Click(sender, e); // Open Configuration
+            }
+            else
+            {
+                RefreshQueryList();
+            }
         }
 
-        void ToolStripWorkItem_Click(object sender, EventArgs e)
+        private void ToolStripWorkItem_Click(object sender, EventArgs e)
         {
             if (_workingItem != null && _workingItem.Started)
             {
@@ -397,6 +515,10 @@ namespace Rowan.TfsWorkingOn.WinForm
                 ShowTeamProjectPicker();
                 return;
             }
+
+            // explicitly close the context menus on refresh button click
+            queryListToolStripMenuItem.DropDown.Close();
+            notifyMenu.Close();
 
             _workingItem = new WorkingItem();
             _workingItem.PropertyChanged += new PropertyChangedEventHandler(WorkingItem_PropertyChanged);
@@ -451,6 +573,5 @@ namespace Rowan.TfsWorkingOn.WinForm
             }
         }
         #endregion
-
     }
 }

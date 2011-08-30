@@ -48,6 +48,7 @@
             this.configureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshingWorkItemsWorker = new System.ComponentModel.BackgroundWorker();
             this.notifyMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,6 +77,7 @@
             this.exitToolStripMenuItem});
             this.notifyMenu.Name = "notifyMenu";
             this.notifyMenu.Size = new System.Drawing.Size(173, 198);
+            this.notifyMenu.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(this.notifyMenu_Closing);
             // 
             // startToolStripMenuItem
             // 
@@ -105,10 +107,12 @@
             this.queryListToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.queryListToolStripMenuItem.Text = "Query List";
             this.queryListToolStripMenuItem.DropDownOpening += new System.EventHandler(this.queryListToolStripMenuItem_DropDownOpening);
+            this.queryListToolStripMenuItem.DropDown.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(queryListToolStripMenuItemDropDown_Closing);
             // 
             // workItemsToolStripMenuItem
             // 
-            this.workItemsToolStripMenuItem.Image = global::Rowan.TfsWorkingOn.WinForm.Properties.Resources.Refresh;
+            this.workItemsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("workItemsToolStripMenuItem.Image")));
+            this.workItemsToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.White;
             this.workItemsToolStripMenuItem.Name = "workItemsToolStripMenuItem";
             this.workItemsToolStripMenuItem.Size = new System.Drawing.Size(392, 22);
             this.workItemsToolStripMenuItem.Text = "Set Menu Query in Configuration for quick work item access";
@@ -183,7 +187,12 @@
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // FormSetConnection
+            // refreshingWorkItemsWorker
+            // 
+            this.refreshingWorkItemsWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.refreshingWorkItemsWorker_DoWork);
+            this.refreshingWorkItemsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.refreshingWorkItemsWorker_RunWorkerCompleted);
+            // 
+            // FormNotificationTray
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -191,7 +200,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FormSetConnection";
+            this.Name = "FormNotificationTray";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Set Connection";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormSetConnection_FormClosing);
@@ -219,6 +228,7 @@
         private System.Windows.Forms.ToolStripMenuItem workItemsToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem cancelToolStripMenuItem;
+        private System.ComponentModel.BackgroundWorker refreshingWorkItemsWorker;
 
     }
 }

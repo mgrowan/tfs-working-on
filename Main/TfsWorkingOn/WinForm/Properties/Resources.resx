@@ -261,9 +261,6 @@ going to the find work item search dialog.</value>
   <data name="DoubleClickToSelect" xml:space="preserve">
     <value>Double click the work item you are working on...</value>
   </data>
-  <data name="Refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Refresh.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="ErrorLoadingQuery" xml:space="preserve">
     <value>Error Loading Query</value>
   </data>
@@ -273,5 +270,11 @@ Do you want to add estimates now?</value>
   </data>
   <data name="AddEstimates" xml:space="preserve">
     <value>Add Estimates</value>
+  </data>
+  <data name="Refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\refresh.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="QueryItemName" xml:space="preserve">
+    <value>Item</value>
   </data>
 </root>

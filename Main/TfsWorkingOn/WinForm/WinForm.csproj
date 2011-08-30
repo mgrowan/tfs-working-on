@@ -208,7 +208,7 @@
     <None Include="Resources\Stopwatch-Green.ico" />
     <None Include="Resources\Stopwatch-Red.ico" />
     <None Include="Resources\Stopwatch-Blue.ico" />
-    <None Include="Resources\Refresh.png" />
+    <Content Include="Resources\Refresh.gif" />
     <Content Include="WorkingOn.ico" />
   </ItemGroup>
   <ItemGroup>
