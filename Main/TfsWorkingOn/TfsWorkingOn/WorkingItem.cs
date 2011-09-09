@@ -211,13 +211,13 @@ namespace Rowan.TfsWorkingOn
         public void Pause(string reason)
         {
             Paused = true;
-            StopTime = DateTime.Now.Subtract(new TimeSpan(0, Settings.Default.UserActivityIdleTimeoutMinutes, 0));
-            if (!Settings.Default.PromptOnResume) UpdateEstimates(reason);
+            StopTime = DateTime.Now.Subtract(new TimeSpan(0, Settings.DefaultUserActivityIdleTimeoutMinutes, 0));
+            if (!Settings.DefaultPromptOnResume) UpdateEstimates(reason);
         }
 
         public void Resume(bool record)
         {
-            if (Settings.Default.PromptOnResume && !record)
+            if (Settings.DefaultPromptOnResume && !record)
             {
                 UpdateEstimates(string.Format(CultureInfo.CurrentCulture, Resources.UserActivityMonitorTriggeredEventIdleReason, UserActivityMonitor.IdleThreshold / 1000));
             }

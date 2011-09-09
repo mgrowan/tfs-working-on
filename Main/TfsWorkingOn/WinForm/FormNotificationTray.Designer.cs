@@ -1,4 +1,6 @@
-﻿namespace Rowan.TfsWorkingOn.WinForm
+﻿using Rowan.TfsWorkingOn.WinForm.Properties;
+
+namespace Rowan.TfsWorkingOn.WinForm
 {
     partial class FormNotificationTray
     {
@@ -105,13 +107,11 @@
             this.workItemsToolStripMenuItem});
             this.queryListToolStripMenuItem.Name = "queryListToolStripMenuItem";
             this.queryListToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.queryListToolStripMenuItem.Text = "Query List";
+            this.queryListToolStripMenuItem.Text = Resources.QueryListDefaultText;
             this.queryListToolStripMenuItem.DropDownOpening += new System.EventHandler(this.queryListToolStripMenuItem_DropDownOpening);
-            this.queryListToolStripMenuItem.DropDown.Closing += new System.Windows.Forms.ToolStripDropDownClosingEventHandler(queryListToolStripMenuItemDropDown_Closing);
             // 
             // workItemsToolStripMenuItem
             // 
-            this.workItemsToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("workItemsToolStripMenuItem.Image")));
             this.workItemsToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.White;
             this.workItemsToolStripMenuItem.Name = "workItemsToolStripMenuItem";
             this.workItemsToolStripMenuItem.Size = new System.Drawing.Size(392, 22);
@@ -133,26 +133,26 @@
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
-            this.viewToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.viewToolStripMenuItem.Text = "&View";
             this.viewToolStripMenuItem.Click += new System.EventHandler(this.viewToolStripMenuItem_Click);
             // 
             // modifyEstimatesToolStripMenuItem
             // 
             this.modifyEstimatesToolStripMenuItem.Name = "modifyEstimatesToolStripMenuItem";
-            this.modifyEstimatesToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.modifyEstimatesToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.modifyEstimatesToolStripMenuItem.Text = "&Estimates";
             this.modifyEstimatesToolStripMenuItem.Click += new System.EventHandler(this.modifyEstimatesToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(121, 6);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(149, 6);
             // 
             // cancelToolStripMenuItem
             // 
             this.cancelToolStripMenuItem.Name = "cancelToolStripMenuItem";
-            this.cancelToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
+            this.cancelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.cancelToolStripMenuItem.Text = "&Cancel";
             this.cancelToolStripMenuItem.Click += new System.EventHandler(this.cancelToolStripMenuItem_Click);
             // 
@@ -189,6 +189,7 @@
             // 
             // refreshingWorkItemsWorker
             // 
+            this.refreshingWorkItemsWorker.WorkerSupportsCancellation = true;
             this.refreshingWorkItemsWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.refreshingWorkItemsWorker_DoWork);
             this.refreshingWorkItemsWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.refreshingWorkItemsWorker_RunWorkerCompleted);
             // 

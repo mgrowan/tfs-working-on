@@ -9,6 +9,7 @@ using Microsoft.TeamFoundation.Client;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
 using Microsoft.Win32;
 using Rowan.TfsWorkingOn.Monitor;
+using Rowan.TfsWorkingOn.UserHistory;
 using Rowan.TfsWorkingOn.WinForm.Properties;
 
 namespace Rowan.TfsWorkingOn.WinForm
@@ -18,72 +19,110 @@ namespace Rowan.TfsWorkingOn.WinForm
         #region Fields
 
         private WorkingItem _workingItem;
-        private Nag _nag = new Nag();
+        private readonly Nag _nag = new Nag();
 
         private bool _exiting;
 
-        private ToolStripMenuItem refreshQueryListItem;
-        private Image stationaryRefreshGif;
+        private readonly ToolStripMenuItem _refreshQueryListItem;
+        private readonly Image _stationaryRefreshGif;
+
+        private static readonly TeamProjectPicker ProjectPicker = new TeamProjectPicker();
+        private static FormSearchWorkItems _formSearchWorkItems;
+        private static FormWorkItemConfiguration _formItemConfiguration;
+
+        // initial load of the settings
+        private readonly Settings _currentSettings = Settings.Default;
 
         #endregion
 
+        #region Constructor
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public FormNotificationTray()
         {
             InitializeComponent();
+
+            queryListToolStripMenuItem.DropDown.Closing += new ToolStripDropDownClosingEventHandler(queryListToolStripMenuItemDropDown_Closing);
             Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
             SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
-            Settings.Default.PropertyChanged += new PropertyChangedEventHandler(Settings_PropertyChanged);
-
+            Connection.GetConnection().PropertyChanged += new PropertyChangedEventHandler(Connection_PropertyChanged);
+            
             _nag.MonitorTriggeredEvent += new EventHandler<MonitorEventArgs>(_nag_MonitorTriggeredEvent);
             components.Add(_nag);
             _nag.Start();
-            try
+
+            /* keep the refresh item separated from the refresh process so that it can remain within the menu upon refresh
+            and not cause an apparent closure on items.Clear(). set the menu query dropdown to not auto close so that explicit calls can handle closure */
+            this._refreshQueryListItem = new ToolStripMenuItem(Resources.RefreshQueryList, Resources.Refresh, refreshQueryToolStripItem_Click);
+
+            this._stationaryRefreshGif = Resources.Refresh.GetThumbnailImage(Resources.Refresh.Width,
+                                                                       Resources.Refresh.Height,
+                                                                       null,
+                                                                       (IntPtr)0);
+
+            this._refreshQueryListItem.Image = this._stationaryRefreshGif;
+            this.workItemsToolStripMenuItem.Image = this._stationaryRefreshGif;
+
+            Hide(); // TODO Don't ever show this form -- CB: remove form inheritance and lose nice development/design gui?
+
+            if (_currentSettings.LastProjectCollectionWorkedOn != null)
             {
-                if (Settings.Default.TeamProjectCollectionAbsoluteUri != null)
+                try
                 {
+                    Connection.GetConnection().TeamProjectCollectionAbsoluteUri = _currentSettings.LastProjectCollectionWorkedOn.TeamProjectCollectionAbsoluteUri;
+                    Connection.GetConnection().SelectedProjectName = _currentSettings.LastProjectCollectionWorkedOn.LastProjectWorkedOn.ProjectName;
                     Connection.Connect();
                 }
-                else
+                catch (Exception)
                 {
-                    ShowTeamProjectPicker();
-                    return;
+                    ShowTeamProjectPicker(); // TODO: check for errors occurring here when no settings 
                 }
-            }
-            catch (Exception)
-            {
-                ShowTeamProjectPicker();
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(Settings.Default.SelectedProjectName))
-            {
-                Connection.GetConnection().SelectedProjectName = Settings.Default.SelectedProjectName;
-                Hide(); // TODO Don't ever show this form
-                ShowSearchForm();
-                SetMenuQuery();
             }
             else
             {
                 ShowTeamProjectPicker();
             }
 
-            /* keep the refresh item separated from the refresh process so that it can remain within the menu upon refresh
-            and not cause an apparent closure on items.Clear(). set the menu query dropdown to not auto close so that explicit calls can handle closure */
-            refreshQueryListItem = new ToolStripMenuItem(Resources.RefreshQueryList, Resources.Refresh, refreshQueryToolStripItem_Click);
+            if (_currentSettings.LastProjectCollectionWorkedOn != null)
+            {
+                if (this._currentSettings.LastProjectCollectionWorkedOn.LastProjectWorkedOn.LastQueryWorkedOn.HasValue)
+                {
+                    this.SetMenuQuery();
+                }
+                else
+                {
+                    this.ShowSearchForm();
+                }
+            }
 
-            stationaryRefreshGif = Resources.Refresh.GetThumbnailImage(Resources.Refresh.Width,
-                                                             Resources.Refresh.Height, null,
-                                                             (IntPtr)0);
+            SetUserOptionAccess();
+        }
+        #endregion
 
-            refreshQueryListItem.Image = stationaryRefreshGif;
+        #region Class Methods
+        private static string GetStringWithEllipsis(string text, int length)
+        {
+            return text.Length > length ? string.Concat(text.Substring(0, length - 3), "...") : text;
         }
 
+        private static void ShowTeamProjectPicker()
+        {
+            switch (ProjectPicker.ShowDialog())
+            {
+                case DialogResult.OK:
+                    Connection.GetConnection().TeamProjectCollectionAbsoluteUri = ProjectPicker.SelectedTeamProjectCollection.Uri.AbsoluteUri;
+                    Connection.GetConnection().SelectedProjectName = ProjectPicker.SelectedProjects[0].Name;
+                    Connection.Connect();
+                    break;
+            }
+        }
+        #endregion
+
+        #region Instance Methods
         private void ShowSearchForm()
         {
             if (_workingItem != null && _workingItem.Started)
             {
-                if (MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Resources.StopWorkingOnWorkItem, _workingItem.WorkItem.Title), Resources.StopCurrentWorkItem, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
+                if (MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Resources.StopWorkingOnWorkItem, _workingItem.WorkItem.Title), Resources.StopCurrentWorkItem, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     StartStop();
                 }
@@ -93,46 +132,29 @@ namespace Rowan.TfsWorkingOn.WinForm
                 }
             }
 
-            if (!Connection.GetConnection().IsConnected)
+            if (_formSearchWorkItems != null)
             {
-                ShowTeamProjectPicker();
+                _formSearchWorkItems.Focus();
                 return;
             }
 
-            FormSearchWorkItems formSearchWorkItems = new FormSearchWorkItems(Connection.GetConnection().WorkItemStore, Connection.GetConnection().SelectedProjectName);
-            formSearchWorkItems.WorkingItem.PropertyChanged += new PropertyChangedEventHandler(WorkingItem_PropertyChanged);
-            formSearchWorkItems.Show();
+            _formSearchWorkItems = new FormSearchWorkItems(Connection.GetConnection().WorkItemStore, Connection.GetConnection().SelectedProjectName);
+            _formSearchWorkItems.WorkingItem.PropertyChanged += new PropertyChangedEventHandler(WorkingItem_PropertyChanged);
+            _formSearchWorkItems.ShowDialog();
+
+            _formSearchWorkItems = null;
         }
 
-        private static TeamProjectPicker _teamProjectPicker = new TeamProjectPicker();
-        private void ShowTeamProjectPicker()
+        private void SetCurrentWorkItem(int itemId)
         {
-            switch (_teamProjectPicker.ShowDialog())
-            {
-                case DialogResult.OK:
-                    Settings.Default.TeamProjectCollectionAbsoluteUri = _teamProjectPicker.SelectedTeamProjectCollection.Uri.AbsoluteUri;
-                    Settings.Default.SelectedProjectName = _teamProjectPicker.SelectedProjects[0].Name;
-                    Settings.Default.Save();
-                    Connection.Connect();
-                    ShowSearchForm();
-                    break;
-                case DialogResult.Cancel:
-                    if (!Connection.GetConnection().IsConnected) SafeShutdown();
-                    break;
-                default:
-                    ShowTeamProjectPicker(); // TODO Allow an Application Exit
-                    break;
-            }
+            _workingItem = new WorkingItem();
+            _workingItem.PropertyChanged += new PropertyChangedEventHandler(WorkingItem_PropertyChanged);
+            _workingItem.WorkItem = Connection.GetConnection().WorkItemStore.GetWorkItem(itemId);
+            _workingItem.WorkItem.Open();
         }
 
         private void StartStop()
         {
-            if (_workingItem == null)
-            {
-                ShowSearchForm();
-                return;
-            }
-
             if (_workingItem.Started) // Stop
             {
                 _nag.Start();
@@ -150,36 +172,42 @@ namespace Rowan.TfsWorkingOn.WinForm
                     _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture), GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
                 notifyIcon.Icon = Resources.Stopwatch_Green;
             }
+
             _workingItem.StartStop();
-            notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
+
+            notifyIcon.ShowBalloonTip(_currentSettings.BalloonTipTimeoutSeconds * 1000);
         }
 
+        /// <summary>
+        /// Sets the menu query.
+        /// </summary>
         private void SetMenuQuery()
-        {
-            if (Settings.Default.SelectedQuery.HasValue)
+        {           
+            try
             {
-                try
-                {
-                    QueryDefinition query = Connection.GetConnection().WorkItemStore.GetQueryDefinition(Settings.Default.SelectedQuery.Value);
-                    queryListToolStripMenuItem.Text = GetStringWithEllipsis(query.Name, 30);
-                    queryListToolStripMenuItem.ToolTipText = query.Name;
-                }
-                catch (UnauthorizedAccessException)
-                {
-                    Settings.Default.SelectedQuery = null;
-                }
-                catch (ArgumentException) { } // remove with WI #13244 
+                QueryDefinition query =
+                    Connection.GetConnection().WorkItemStore.GetQueryDefinition(this._currentSettings.LastProjectCollectionWorkedOn.LastProjectWorkedOn.LastQueryWorkedOn.Value);
+                queryListToolStripMenuItem.Text = GetStringWithEllipsis(query.Name, 30);
+                queryListToolStripMenuItem.ToolTipText = query.Name;
+
+                this.RefreshQueryList();
             }
+            catch (UnauthorizedAccessException)
+            {
+                this._currentSettings.LastProjectCollectionWorkedOn.LastProjectWorkedOn.LastQueryWorkedOn = null;
+            }
+            catch (ArgumentException)
+            {
+            } // remove with WI #13244 
         }
 
-        private static string GetStringWithEllipsis(string text, int length)
-        {
-            return text.Length > length ? string.Concat(text.Substring(0, length - 3), "...") : text;
-        }
-
+        /// <summary>
+        /// Performs a safe shutdown.
+        /// </summary>
         private void SafeShutdown()
         {
             if (_workingItem != null && _workingItem.Started) _workingItem.StartStop();
+            _currentSettings.Save();
             notifyIcon.Dispose();
         }
 
@@ -188,15 +216,17 @@ namespace Rowan.TfsWorkingOn.WinForm
         /// </summary>
         private void RefreshQueryList()
         {
-            // disregard repeated clicks, currently no reason to implement cancel
-            if (refreshingWorkItemsWorker.IsBusy) return;
+            if (refreshingWorkItemsWorker.IsBusy)
+            {
+                return;
+            }
 
             foreach (var itm in GetMenuQueryToolStripItems())
             {
                 itm.Enabled = false;
             }
 
-            refreshQueryListItem.Image = Resources.Refresh;
+            this._refreshQueryListItem.Image = Resources.Refresh;
 
             refreshingWorkItemsWorker.RunWorkerAsync();
         }
@@ -206,10 +236,14 @@ namespace Rowan.TfsWorkingOn.WinForm
         /// </summary>
         private void CleanMenuQueryDropDown()
         {
-            if (queryListToolStripMenuItem.DropDownItems.Contains(workItemsToolStripMenuItem))
+            if (!_currentSettings.LastProjectCollectionWorkedOn.LastProjectWorkedOn.LastQueryWorkedOn.HasValue)
+            {
+                SetMenuQueryToDefault();
+            }
+            else if (queryListToolStripMenuItem.DropDownItems.Contains(workItemsToolStripMenuItem))
             {
                 queryListToolStripMenuItem.DropDownItems.Clear();
-                queryListToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { refreshQueryListItem, new ToolStripSeparator() });
+                queryListToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { this._refreshQueryListItem, new ToolStripSeparator() });
             }
             else
             {
@@ -222,6 +256,26 @@ namespace Rowan.TfsWorkingOn.WinForm
         }
 
         /// <summary>
+        /// Sets the menu query to default.
+        /// </summary>
+        private void SetMenuQueryToDefault()
+        {
+            queryListToolStripMenuItem.DropDownItems.Clear();
+            queryListToolStripMenuItem.DropDownItems.Add(workItemsToolStripMenuItem);
+            queryListToolStripMenuItem.Text = Resources.QueryListDefaultText;
+            queryListToolStripMenuItem.ToolTipText = string.Empty;
+        }
+
+        /// <summary>
+        /// Sets the menu selected item to default.
+        /// </summary>
+        private void SetMenuSelectedItemToDefault()
+        {
+            selectedToolStripMenuItem.Text = string.Format(Resources.Selected, string.Empty);
+            selectedToolStripMenuItem.ToolTipText = string.Empty;
+        }
+
+        /// <summary>
         /// Creates the new menu query items.
         /// </summary>
         /// <returns>All of the new menu query items.</returns>
@@ -231,8 +285,8 @@ namespace Rowan.TfsWorkingOn.WinForm
 
             Dictionary<string, string> parameters = new Dictionary<string, string>(2);
             parameters.Add("me", Connection.GetConnection().TfsTeamProjectCollection.AuthorizedIdentity.DisplayName);
-            parameters.Add("project", Settings.Default.SelectedProjectName);
-            Query query = new Query(Connection.GetConnection().WorkItemStore, Connection.GetConnection().WorkItemStore.GetQueryDefinition(Settings.Default.SelectedQuery.Value).QueryText, parameters);
+            parameters.Add("project", _currentSettings.LastProjectCollectionWorkedOn.LastProjectWorkedOn.ProjectName);
+            Query query = new Query(Connection.GetConnection().WorkItemStore, Connection.GetConnection().WorkItemStore.GetQueryDefinition(this._currentSettings.LastProjectCollectionWorkedOn.LastProjectWorkedOn.LastQueryWorkedOn.Value).QueryText, parameters);
 
             if (query.IsLinkQuery)
             {
@@ -256,10 +310,8 @@ namespace Rowan.TfsWorkingOn.WinForm
             }
             else
             {
-                foreach (WorkItem workItem in query.RunQuery())
-                {
-                    workItemToolStripItems.Add(CreateNewMenuQueryItem(workItem));
-                }
+                workItemToolStripItems.AddRange(from WorkItem workItem in query.RunQuery()
+                                                select CreateNewMenuQueryItem(workItem));
             }
 
             return workItemToolStripItems;
@@ -296,6 +348,38 @@ namespace Rowan.TfsWorkingOn.WinForm
             return queryListToolStripMenuItem.DropDown.Items.OfType<ToolStripMenuItem>().Where(x => x.Name.StartsWith(Resources.QueryItemName)).ToList();
         }
 
+        /// <summary>
+        /// Sets the user option access.
+        /// </summary>
+        private void SetUserOptionAccess()
+        {
+            // TODO: decision to either restrict access (disable as below) or get connection
+
+            bool hasProject = !string.IsNullOrEmpty(Connection.GetConnection().SelectedProjectName);
+
+            selectWorkItemToolStripMenuItem.Enabled = hasProject;
+            queryListToolStripMenuItem.Enabled = hasProject;
+            configureToolStripMenuItem.Enabled = hasProject;
+
+            bool hasWorkItem = _workingItem != null;
+
+            selectedToolStripMenuItem.Enabled = hasWorkItem;
+            startToolStripMenuItem.Enabled = hasWorkItem;
+        }
+
+        private void AskForEstimates()
+        {
+            if (_workingItem.Estimates.Duration != 0 || _workingItem.Estimates.ElapsedTime != 0) return;
+
+            // If no estimates, then ask user add some
+            if (MessageBox.Show(Resources.ThereAreNoEstimatesForTheWorkItem, Resources.AddEstimates, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                FormEstimates formEstimates = new FormEstimates(_workingItem);
+                formEstimates.ShowDialog(this);
+            }
+        }
+        #endregion
+
         #region Events
         private static readonly object _userActivityMutex = new object();
         private static bool _userActivityTriggeredCurrentlyProcessing;
@@ -316,12 +400,12 @@ namespace Rowan.TfsWorkingOn.WinForm
                     _workingItem.Pause(e.Reason);
                     notifyIcon.Text = GetStringWithEllipsis(string.Format(CultureInfo.CurrentCulture, "{0} {1}{2}\n{3}", Resources.Paused, Resources.NotifyIconText, _workingItem.WorkItem.Id, _workingItem.WorkItem.Title), 63);
                     notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.PausedWorkingOn, _workingItem.WorkItem.Id, GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
-                    notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
+                    notifyIcon.ShowBalloonTip(_currentSettings.BalloonTipTimeoutSeconds * 1000);
                 }
                 else if (userActivity.UserActiveState == UserActivityState.Active)
                 {
                     bool record = false;
-                    if (Settings.Default.PromptOnResume)
+                    if (_currentSettings.PromptOnResume)
                     {
                         DialogResult dialogResult = MessageBox.Show(string.Format(CultureInfo.CurrentCulture, Resources.PromptOnResumeText, _workingItem.WorkItem.Id, _workingItem.WorkItem.Title),
                             Resources.PromptOnResumeCaption, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1);
@@ -340,15 +424,15 @@ namespace Rowan.TfsWorkingOn.WinForm
                     notifyIcon.Text = GetStringWithEllipsis(string.Format(CultureInfo.CurrentCulture, "{0} {1}{2}\n{3}", Resources.Resumed, Resources.NotifyIconText, _workingItem.WorkItem.Id, _workingItem.WorkItem.Title), 63);
                     notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.ResumedWorkingOn, _workingItem.WorkItem.Id, GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
                 }
-                notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
+                notifyIcon.ShowBalloonTip(_currentSettings.BalloonTipTimeoutSeconds * 1000);
             }
             _userActivityTriggeredCurrentlyProcessing = false;
         }
 
-        void _nag_MonitorTriggeredEvent(object sender, MonitorEventArgs e)
+        private void _nag_MonitorTriggeredEvent(object sender, MonitorEventArgs e)
         {
             notifyIcon.BalloonTipText = Resources.NagMessage;
-            notifyIcon.ShowBalloonTip(Settings.Default.BalloonTipTimeoutSeconds * 1000);
+            notifyIcon.ShowBalloonTip(_currentSettings.BalloonTipTimeoutSeconds * 1000);
         }
 
         private void FormSetConnection_FormClosing(object sender, FormClosingEventArgs e)
@@ -359,53 +443,36 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void WorkingItem_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == WorkingItem.WorkItemPropertyName)
+            if (e.PropertyName != WorkingItem.WorkItemPropertyName) return;
+
+            _workingItem = sender as WorkingItem;
+
+            bool hasWorkItem = _workingItem != null;
+
+            this.selectedToolStripMenuItem.Enabled = hasWorkItem;
+            this.startToolStripMenuItem.Enabled = hasWorkItem;
+
+            if (_workingItem == null)
             {
-                _workingItem = sender as WorkingItem;
-                if (_workingItem != null)
-                {
-                    _workingItem.Connection = Connection.GetConnection();
-                    _workingItem.UserActivityMonitor.MonitorTriggeredEvent += new EventHandler<MonitorEventArgs>(_userActivity_MonitorTriggeredEvent);
-
-                    selectedToolStripMenuItem.Text = string.Format(CultureInfo.CurrentCulture, Resources.Selected, _workingItem.WorkItem.Id);
-                    selectedToolStripMenuItem.ToolTipText = _workingItem.WorkItem.Title;
-                    selectedToolStripMenuItem.Enabled = true;
-                    StartStop();
-
-                    AskForEstimates();
-                }
+                return;
             }
+
+            _workingItem.Connection = Connection.GetConnection();
+            _workingItem.UserActivityMonitor.MonitorTriggeredEvent += new EventHandler<MonitorEventArgs>(_userActivity_MonitorTriggeredEvent);
+
+            selectedToolStripMenuItem.Text = string.Format(CultureInfo.CurrentCulture, Resources.Selected, _workingItem.WorkItem.Id);
+            selectedToolStripMenuItem.ToolTipText = _workingItem.WorkItem.Title;
+            StartStop();
+
+            AskForEstimates();
         }
 
-        private void AskForEstimates()
+        private void Application_ApplicationExit(object sender, EventArgs e)
         {
-            // If no estimates, then ask user add some
-            if (_workingItem.Estimates.Duration == 0 && _workingItem.Estimates.ElapsedTime == 0)
-            {
-                if (MessageBox.Show(Resources.ThereAreNoEstimatesForTheWorkItem, Resources.AddEstimates, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    FormEstimates formEstimates = new FormEstimates(_workingItem);
-                    formEstimates.ShowDialog(this);
-                }
-            }
+            this.SafeShutdown();
         }
 
-        void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if (e.PropertyName == Settings.SelectedQueryPropertyName && Settings.Default.SelectedQuery != Guid.Empty)
-            {
-                SetMenuQuery();
-
-                RefreshQueryList();
-            }
-        }
-
-        void Application_ApplicationExit(object sender, EventArgs e)
-        {
-            SafeShutdown();
-        }
-
-        void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
+        private void SystemEvents_SessionEnding(object sender, SessionEndingEventArgs e)
         {
             SafeShutdown();
         }
@@ -442,26 +509,74 @@ namespace Rowan.TfsWorkingOn.WinForm
                     return;
                 }
 
-                if (e.Error is ArgumentException)
+                if (e.Error is ArgumentException) // remove with WI #13244 
                 {
                     return;
                 }
 
-                throw e.Error; // remove with WI #13244 
+                throw e.Error;
             }
 
             var items = (List<ToolStripMenuItem>)e.Result;
             queryListToolStripMenuItem.DropDownItems.AddRange(items.ToArray());
 
-            refreshQueryListItem.Image = stationaryRefreshGif;
+            _refreshQueryListItem.Image = _stationaryRefreshGif;
         }
 
+        private void ProjectWorkedOn_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName != ProjectWorkedOn.LastQueryWorkedOnFieldName)
+                return;
+
+            if (_currentSettings.LastProjectCollectionWorkedOn.LastProjectWorkedOn.LastQueryWorkedOn != null)
+            {
+                this.SetMenuQuery();
+            }
+            else
+            {
+                this.CleanMenuQueryDropDown();
+            }
+        }
+
+        private void Connection_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            this._workingItem = null;
+            this.SetMenuSelectedItemToDefault();
+
+            switch (e.PropertyName)
+            {
+                case Connection.TeamProjectCollectionAbsoluteUriPropertyName:
+                    _currentSettings.SetCollectionLastWorkedOn(Connection.GetConnection().TeamProjectCollectionAbsoluteUri);
+                    break;
+                case Connection.SelectedProjectNamePropertyName:
+                    _currentSettings.LastProjectCollectionWorkedOn.SetProjectLastWorkedOn(Connection.GetConnection().SelectedProjectName);
+                    _currentSettings.LastProjectCollectionWorkedOn.LastProjectWorkedOn.PropertyChanged += new PropertyChangedEventHandler(ProjectWorkedOn_PropertyChanged);
+                    break;
+            }
+
+            SetUserOptionAccess();
+        }
         #endregion events
 
         #region System Tray Menu Clicks
         private void toolStripConnect_Click(object sender, EventArgs e)
         {
+            string initialProjectName = Connection.GetConnection().SelectedProjectName;
+
             ShowTeamProjectPicker();
+
+            if (Connection.GetConnection().SelectedProjectName == initialProjectName) return;
+            
+            CleanMenuQueryDropDown();
+
+            if (_currentSettings.LastProjectCollectionWorkedOn.LastProjectWorkedOn.LastQueryWorkedOn.HasValue)
+            {
+                this.SetMenuQuery();
+            }
+            else
+            {
+                ShowSearchForm();
+            }
         }
 
         private void selectWorkItemToolStripMenuItem_Click(object sender, EventArgs e)
@@ -476,7 +591,8 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void queryListToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
-            if (queryListToolStripMenuItem.DropDownItems.Count > 1 || !Settings.Default.SelectedQuery.HasValue)
+            if (queryListToolStripMenuItem.DropDownItems.Contains(workItemsToolStripMenuItem)
+                || queryListToolStripMenuItem.DropDownItems.Count > 2)
             {
                 return;
             }
@@ -486,13 +602,13 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void refreshQueryToolStripItem_Click(object sender, EventArgs e)
         {
-            if (!Settings.Default.SelectedQuery.HasValue) 
+            if (!this._currentSettings.LastProjectCollectionWorkedOn.LastProjectWorkedOn.LastQueryWorkedOn.HasValue) 
             {
-                configureToolStripMenuItem_Click(sender, e); // Open Configuration
+                this.configureToolStripMenuItem_Click(sender, e); // Open Configuration
             }
             else
             {
-                RefreshQueryList();
+                this.RefreshQueryList();
             }
         }
 
@@ -510,20 +626,16 @@ namespace Rowan.TfsWorkingOn.WinForm
                 }
             }
 
-            if (!Connection.GetConnection().IsConnected)
-            {
-                ShowTeamProjectPicker();
-                return;
-            }
-
             // explicitly close the context menus on refresh button click
             queryListToolStripMenuItem.DropDown.Close();
             notifyMenu.Close();
 
-            _workingItem = new WorkingItem();
-            _workingItem.PropertyChanged += new PropertyChangedEventHandler(WorkingItem_PropertyChanged);
-            _workingItem.WorkItem = Connection.GetConnection().WorkItemStore.GetWorkItem((int)(sender as ToolStripItem).Tag);
-            _workingItem.WorkItem.Open();
+            var tsItem = sender as ToolStripItem;
+
+            if (tsItem != null)
+            {
+                SetCurrentWorkItem((int)tsItem.Tag);
+            }
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -550,8 +662,15 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void configureToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormWorkItemConfiguration formWorkItemConfiguration = new FormWorkItemConfiguration();
-            formWorkItemConfiguration.Show();
+            if (_formItemConfiguration != null)
+            {
+                _formItemConfiguration.Focus();
+                return;
+            }
+
+            _formItemConfiguration = new FormWorkItemConfiguration();
+            _formItemConfiguration.ShowDialog(); // TODO: have the config setup for a given project
+            _formItemConfiguration = null;
         }
 
         private void modifyEstimatesToolStripMenuItem_Click(object sender, EventArgs e)

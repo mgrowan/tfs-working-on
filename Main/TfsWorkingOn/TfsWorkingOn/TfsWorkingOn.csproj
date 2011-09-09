@@ -115,6 +115,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="UserHistory\ProjectCollectionWorkedOn.cs" />
+    <Compile Include="UserHistory\ProjectWorkedOn.cs" />
+    <Compile Include="UserHistory\UserWorkedOnItem.cs" />
     <Compile Include="Web References\TfsWarehouse\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

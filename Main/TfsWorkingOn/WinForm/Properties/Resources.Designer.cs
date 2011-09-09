@@ -301,6 +301,15 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
             }
         }
         
+        /// <summary>
+        ///   Looks up a localized string similar to Query List.
+        /// </summary>
+        internal static string QueryListDefaultText {
+            get {
+                return ResourceManager.GetString("QueryListDefaultText", resourceCulture);
+            }
+        }
+        
         internal static System.Drawing.Bitmap Refresh {
             get {
                 object obj = ResourceManager.GetObject("Refresh", resourceCulture);
@@ -363,7 +372,7 @@ namespace Rowan.TfsWorkingOn.WinForm.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Selected: {0}.
+        ///   Looks up a localized string similar to S&amp;elected: {0}.
         /// </summary>
         internal static string Selected {
             get {

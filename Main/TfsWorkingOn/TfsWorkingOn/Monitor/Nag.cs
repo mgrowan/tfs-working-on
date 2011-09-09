@@ -15,7 +15,7 @@ namespace Rowan.TfsWorkingOn.Monitor
         /// Constructs a new timer to track the idle/activity status of the user.
         /// Defaults to 60-second idle threshold in a disabled state
         /// </summary>
-        public Nag() : this(Settings.Default.NagIntervalMinutes * 60000) { }
+        public Nag() : this(Settings.DefaultNagIntervalMinutes * 60000) { }
 
         /// <summary>
         /// Constructs a new timer to track the idle/activity status of the user.
@@ -28,7 +28,7 @@ namespace Rowan.TfsWorkingOn.Monitor
 
             // Create underlying timer
             _nagIntervalTimer = new Timer(new TimerCallback(RaiseNag), null, Timeout.Infinite, Timeout.Infinite);
-            Enabled = Settings.Default.NagEnabled;
+            Enabled = Settings.DefaultNagEnabled;
             Started = false;
 
             Settings.Default.PropertyChanged += new PropertyChangedEventHandler(Default_PropertyChanged);
@@ -38,12 +38,12 @@ namespace Rowan.TfsWorkingOn.Monitor
         {
             if (e.PropertyName == Settings.NagEnabledPropertyName)
             {
-                Enabled = Settings.Default.NagEnabled;
+                Enabled = Settings.DefaultNagEnabled;
                 if (!Enabled) Stop();
             }
             else if (e.PropertyName == Settings.NagIntervalMinutesPropertyName)
             {
-                Interval = Settings.Default.NagIntervalMinutes * 60000;
+                Interval = Settings.DefaultNagIntervalMinutes * 60000;
                 Stop();
                 Start();
             }

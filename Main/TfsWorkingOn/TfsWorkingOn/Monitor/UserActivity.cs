@@ -62,7 +62,7 @@ namespace Rowan.TfsWorkingOn.Monitor
         /// Constructs a new timer to track the idle/activity status of the user.
         /// Defaults to 60-second idle threshold in a disabled state
         /// </summary>
-        public UserActivity() : this(Settings.Default.UserActivityIdleTimeoutMinutes * 60000) { }
+        public UserActivity() : this(Settings.DefaultUserActivityIdleTimeoutMinutes * 60000) { }
 
         /// <summary>
         /// Constructs a new timer to track the idle/activity status of the user.
@@ -80,7 +80,7 @@ namespace Rowan.TfsWorkingOn.Monitor
             // Create underlying timer
             _activityCheckerTimer = new Timer(new TimerCallback(GetLastInput), null, Timeout.Infinite, Timeout.Infinite);
             LastResetTime = DateTime.Now;
-            Enabled = Settings.Default.MonitorUserActivity;
+            Enabled = Settings.DefaultMonitorUserActivity;
             Started = false;
 
             Settings.Default.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(Default_PropertyChanged);
@@ -90,12 +90,12 @@ namespace Rowan.TfsWorkingOn.Monitor
         {
             if (e.PropertyName == Settings.MonitorUserActivityPropertyName)
             {
-                Enabled = Settings.Default.MonitorUserActivity;
+                Enabled = Settings.DefaultMonitorUserActivity;
                 if (!Enabled) Stop();
             }
             else if (e.PropertyName == Settings.UserActivityIdleTimeoutMinutesPropertyName)
             {
-                IdleThreshold = Settings.Default.UserActivityIdleTimeoutMinutes * 60000;
+                IdleThreshold = Settings.DefaultUserActivityIdleTimeoutMinutes * 60000;
             }
         }
         #endregion Constructors

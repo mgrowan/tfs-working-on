@@ -1,13 +1,64 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
+using Rowan.TfsWorkingOn.UserHistory;
 
 namespace Rowan.TfsWorkingOn
 {
     [Serializable]
     public class Settings : INotifyPropertyChanged
     {
+        #region Constants
+
+        public const string MonitorUserActivityPropertyName = "MonitorUserActivity";
+        public const string NagEnabledPropertyName = "NagEnabled";
+        public const string NagIntervalMinutesPropertyName = "NagIntervalMinutes";
+        public const string PromptOnResumePropertyName = "PromptOnResume";
+        public const string UserActivityIdleTimeoutMinutesPropertyName = "UserActivityIdleTimeoutMinutes";
+        public const string ProjectCollectionHistoryPropertyName = "ProjectCollectionHistory";
+        
+        private const int MaxCollectionCount = 5;
+
+        public const int DefaultBalloonTipTimeoutSeconds = 5;
+        public const bool DefaultMonitorUserActivity = true;
+
+        public const bool DefaultNagEnabled = true;
+        public const int DefaultNagIntervalMinutes = 5;
+        public const bool DefaultPromptOnResume = false;
+
+        public const string DefaultSelectedProjectName = "";
+        public const string DefaultTeamProjectCollectionAbsoluteUri = null;
+        public const int DefaultUserActivityIdleTimeoutMinutes = 10;
+
+        #endregion
+
+        #region Fields
+
+        private int _balloonTipTimeoutSeconds = DefaultBalloonTipTimeoutSeconds;
+        private bool _monitorUserActivity = DefaultMonitorUserActivity;
+        private bool _nagEnabled = DefaultNagEnabled;
+        private int _nagIntervalMinutes = DefaultNagIntervalMinutes;
+        private bool _promptOnResume;
+        private int _userActivityIdleTimeoutMinutes = DefaultUserActivityIdleTimeoutMinutes;
+
+        #endregion
+
+        #region Constructor
+
+        public Settings()
+        {
+            ProjectCollectionHistory.ListChanged += new ListChangedEventHandler(ProjectCollectionHistory_ListChanged);
+        }
+
+        #endregion
+
+        private void ProjectCollectionHistory_ListChanged(object sender, ListChangedEventArgs e)
+        {
+            OnPropertyChanged(new PropertyChangedEventArgs(ProjectCollectionHistoryPropertyName));
+        }
+
         #region Settings Management
         private static Settings _defaultInstance;
         [XmlIgnore]
@@ -30,7 +81,7 @@ namespace Rowan.TfsWorkingOn
                     using (FileStream fs = new FileStream(SettingsFilePath, FileMode.OpenOrCreate))
                     {
                         XmlSerializer xs = new XmlSerializerFactory().CreateSerializer(typeof(Settings));
-                        _defaultInstance = xs.Deserialize(fs) as Settings;
+                        if (xs != null) _defaultInstance = xs.Deserialize(fs) as Settings;
                     }
                 }
                 catch (Exception) { /* Swallowed, not found or load error, just use defaults */ }
@@ -54,7 +105,7 @@ namespace Rowan.TfsWorkingOn
             using (FileStream fs = new FileStream(SettingsFilePath, FileMode.Create))
             {
                 XmlSerializer xs = new XmlSerializerFactory().CreateSerializer(this.GetType());
-                xs.Serialize(fs, this);
+                if (xs != null) xs.Serialize(fs, this);
             }
             IsDirty = false;
         }
@@ -69,14 +120,7 @@ namespace Rowan.TfsWorkingOn
         private static string _settingsFilePath;
         private static string SettingsFilePath
         {
-            get
-            {
-                if (_settingsFilePath == null)
-                {
-                    _settingsFilePath = SettingsFolderPath + "Settings.xml";
-                }
-                return _settingsFilePath;
-            }
+            get { return _settingsFilePath ?? (_settingsFilePath = SettingsFolderPath + "Settings.xml"); }
         }
 
         public static string SettingsFolderPath
@@ -99,20 +143,6 @@ namespace Rowan.TfsWorkingOn
         }
         #endregion Settings Management
 
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(PropertyChangedEventArgs e)
-        {
-            var handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, e);
-            }
-        }
-        #endregion
-
         #region Settings
 
         private static readonly string DefaultConfigurationsPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "TfsWorkingOn");
@@ -128,29 +158,7 @@ namespace Rowan.TfsWorkingOn
                 OnPropertyChanged(new PropertyChangedEventArgs(ConfigurationsPathPropertyName));
             }
         }
-        public bool SourceControlPath { get { return ConfigurationsPath.StartsWith("$"); } }
 
-        private const string DefaultTeamProjectCollectionAbsoluteUri = null;
-        private string _teamProjectCollectionAbsoluteUri = DefaultTeamProjectCollectionAbsoluteUri;
-        [DefaultValue(DefaultTeamProjectCollectionAbsoluteUri)]
-        public string TeamProjectCollectionAbsoluteUri
-        {
-            get { return _teamProjectCollectionAbsoluteUri; }
-            set { _teamProjectCollectionAbsoluteUri = value; }
-        }
-
-        private const string DefaultSelectedProjectName = "";
-        private string _selectedProjectName = DefaultSelectedProjectName;
-        [DefaultValue(DefaultSelectedProjectName)]
-        public string SelectedProjectName
-        {
-            get { return _selectedProjectName; }
-            set { _selectedProjectName = value; }
-        }
-
-        private const int DefaultUserActivityIdleTimeoutMinutes = 10;
-        public const string UserActivityIdleTimeoutMinutesPropertyName = "UserActivityIdleTimeoutMinutes";
-        private int _userActivityIdleTimeoutMinutes = DefaultUserActivityIdleTimeoutMinutes;
         [DefaultValue(DefaultUserActivityIdleTimeoutMinutes)]
         public int UserActivityIdleTimeoutMinutes
         {
@@ -162,9 +170,8 @@ namespace Rowan.TfsWorkingOn
             }
         }
 
-        private const bool DefaultMonitorUserActivity = true;
-        public const string MonitorUserActivityPropertyName = "MonitorUserActivity";
-        private bool _monitorUserActivity = DefaultMonitorUserActivity;
+
+
         [DefaultValue(DefaultMonitorUserActivity)]
         public bool MonitorUserActivity
         {
@@ -172,14 +179,15 @@ namespace Rowan.TfsWorkingOn
             set
             {
                 _monitorUserActivity = value;
-                if (!value) PromptOnResume = value;
+                if (!value)
+                {
+                    PromptOnResume = value;
+                }
+
                 OnPropertyChanged(new PropertyChangedEventArgs(MonitorUserActivityPropertyName));
             }
         }
 
-        private const bool DefaultPromptOnResume = false;
-        public const string PromptOnResumePropertyName = "PromptOnResume";
-        private bool _promptOnResume;
         [DefaultValue(DefaultPromptOnResume)]
         public bool PromptOnResume
         {
@@ -191,18 +199,13 @@ namespace Rowan.TfsWorkingOn
             }
         }
 
-        private const int DefaultBalloonTipTimeoutSeconds = 5;
-        private int _balloonTipTimeoutSeconds = DefaultBalloonTipTimeoutSeconds;
+
         [DefaultValue(DefaultBalloonTipTimeoutSeconds)]
         public int BalloonTipTimeoutSeconds
         {
             get { return _balloonTipTimeoutSeconds; }
             set { _balloonTipTimeoutSeconds = value; }
         }
-
-        private const int DefaultNagIntervalMinutes = 5;
-        public const string NagIntervalMinutesPropertyName = "NagIntervalMinutes";
-        private int _nagIntervalMinutes = DefaultNagIntervalMinutes;
         [DefaultValue(DefaultNagIntervalMinutes)]
         public int NagIntervalMinutes
         {
@@ -214,9 +217,6 @@ namespace Rowan.TfsWorkingOn
             }
         }
 
-        private const bool DefaultNagEnabled = true;
-        public const string NagEnabledPropertyName = "NagEnabled";
-        private bool _nagEnabled = DefaultNagEnabled;
         [DefaultValue(DefaultNagEnabled)]
         public bool NagEnabled
         {
@@ -228,19 +228,67 @@ namespace Rowan.TfsWorkingOn
             }
         }
 
-        public const string SelectedQueryPropertyName = "SelectedQuery";
-        private Guid? _selectedQuery = null;
-        public Guid? SelectedQuery
+        #endregion
+
+        #region History
+        
+        [XmlIgnore]
+        public ProjectCollectionWorkedOn LastProjectCollectionWorkedOn
         {
-            get { return _selectedQuery; }
+            get { return ProjectCollectionHistory.Count == 0 ? null : ProjectCollectionHistory.OrderByDescending(x => x.LastAccessed).First(); }
+        }
+
+        private BindingList<ProjectCollectionWorkedOn> _projectCollectionHistory;
+
+        public BindingList<ProjectCollectionWorkedOn> ProjectCollectionHistory
+        {
+            get { return _projectCollectionHistory ?? (_projectCollectionHistory = new BindingList<ProjectCollectionWorkedOn>()); }
             set
             {
-                _selectedQuery = value;
-                OnPropertyChanged(new PropertyChangedEventArgs(SelectedQueryPropertyName));
+                    _projectCollectionHistory = value;
             }
         }
 
+        #region Instance Methods
+
+        public void SetCollectionLastWorkedOn(string uri)
+        {
+            var project = (from pr in ProjectCollectionHistory
+                           where pr.TeamProjectCollectionAbsoluteUri == uri
+                           select pr).FirstOrDefault();
+
+            if (project != null)
+            {
+                project.LastAccessed = DateTime.Now;
+            }
+            else
+            {
+                if (ProjectCollectionHistory.Count == MaxCollectionCount)
+                {
+                    var oldestProject = (from pr in ProjectCollectionHistory
+                                         orderby pr.LastAccessed ascending
+                                         select pr).First();
+
+                    ProjectCollectionHistory.Remove(oldestProject);
+                }
+
+                ProjectCollectionHistory.Add(new ProjectCollectionWorkedOn(uri));
+            }
+        }
+
+        #endregion
+
         #endregion Settings
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged(PropertyChangedEventArgs e)
+        {
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, e);
+            }
+        }
     }
 }

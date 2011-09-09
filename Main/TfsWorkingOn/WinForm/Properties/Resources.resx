@@ -256,7 +256,7 @@ going to the find work item search dialog.</value>
     <value>..\Resources\Stopwatch-Blue.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Selected" xml:space="preserve">
-    <value>Selected: {0}</value>
+    <value>S&amp;elected: {0}</value>
   </data>
   <data name="DoubleClickToSelect" xml:space="preserve">
     <value>Double click the work item you are working on...</value>
@@ -276,5 +276,8 @@ Do you want to add estimates now?</value>
   </data>
   <data name="QueryItemName" xml:space="preserve">
     <value>Item</value>
+  </data>
+  <data name="QueryListDefaultText" xml:space="preserve">
+    <value>Query List</value>
   </data>
 </root>

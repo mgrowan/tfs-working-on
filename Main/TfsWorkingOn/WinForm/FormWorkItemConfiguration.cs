@@ -2,11 +2,8 @@
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Threading;
-using System.Web.Services.Protocols;
 using System.Windows.Forms;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
-using Rowan.TfsWorkingOn.TfsWarehouse;
 using Rowan.TfsWorkingOn.WinForm.Properties;
 
 namespace Rowan.TfsWorkingOn.WinForm
@@ -32,7 +29,7 @@ namespace Rowan.TfsWorkingOn.WinForm
 
             _queryPickerControl = Activator.CreateInstance("Microsoft.TeamFoundation.Common.Library, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "Microsoft.TeamFoundation.Controls.QueryPickerControl").Unwrap();
             tabPageOptions.Controls.Add(_queryPickerControl);
-            _queryPickerControl.Location = new System.Drawing.Point(94, 115);
+            _queryPickerControl.Location = new System.Drawing.Point(91, 123);
             _queryPickerControl.AutoSize = false;
             _queryPickerControl.Size = new System.Drawing.Size(240, 21);
             _queryPickerControl.TabIndex = 21;
@@ -45,11 +42,11 @@ namespace Rowan.TfsWorkingOn.WinForm
             //_queryPickerControl.SelectedItemId = Settings.Default.SelectedQuery;
             try
             {
-                _queryPickerControlType.GetProperty("SelectedItemId").SetValue(_queryPickerControl, Settings.Default.SelectedQuery, null);
+                _queryPickerControlType.GetProperty("SelectedItemId").SetValue(_queryPickerControl, Settings.Default.LastProjectCollectionWorkedOn.LastProjectWorkedOn.LastQueryWorkedOn.Value, null);
             }
             catch (Exception)
             {
-                Settings.Default.SelectedQuery = null;
+                Settings.Default.LastProjectCollectionWorkedOn.LastProjectWorkedOn.LastQueryWorkedOn = null;
             }
 
             //_queryPickerControl.SelectedQueryItemChanged += new EventHandler(QueryPickerControl_OnSelectedQueryItemChanged);
@@ -73,7 +70,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             //lambda: (object x0, EventArgs x1) => d()      
             var parameters = eventParams.Select(p => Expression.Parameter(p.ParameterType, "x"));
             // - assumes void method with no arguments but can be        
-            //   changed to accomodate any supplied method      
+            //   changed to accommodate any supplied method      
             var body = Expression.Call(Expression.Constant(d), d.GetType().GetMethod("Invoke"));
             var lambda = Expression.Lambda(body, parameters.ToArray());
             return Delegate.CreateDelegate(handlerType, lambda.Compile(), "Invoke", false);
@@ -81,7 +78,7 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         protected void QueryPickerControl_OnSelectedQueryItemChanged()
         {
-            Settings.Default.SelectedQuery = _queryPickerControlType.GetProperty("SelectedItemId").GetValue(_queryPickerControl, null);
+            Settings.Default.LastProjectCollectionWorkedOn.LastProjectWorkedOn.LastQueryWorkedOn = this._queryPickerControlType.GetProperty("SelectedItemId").GetValue(_queryPickerControl, null);
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -111,6 +108,8 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void FormWorkItemConfiguration_FormClosing(object sender, FormClosingEventArgs e)
         {
+            // TODO: Settings.Default.IsDirty is set to dirty when you press cancel?!?!
+
             if (Settings.Default.IsDirty || _workingItemConfiguration.IsDirty)
             {
                 DialogResult result = MessageBox.Show(Resources.OutstandingChanges, Resources.SaveChanges, MessageBoxButtons.YesNoCancel);
@@ -135,6 +134,11 @@ namespace Rowan.TfsWorkingOn.WinForm
             System.Diagnostics.Process.Start(linkLabelAbout.Text);
         }
 
+        /// <summary>
+        /// Handles the Selecting event of the tabControlConfiguration control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Forms.TabControlCancelEventArgs"/> instance containing the event data.</param>
         private void tabControlConfiguration_Selecting(object sender, TabControlCancelEventArgs e)
         {
             if (e.TabPage == tabPageMappings && string.IsNullOrEmpty(Settings.Default.ConfigurationsPath))
@@ -143,6 +147,5 @@ namespace Rowan.TfsWorkingOn.WinForm
                 tabControlConfiguration.SelectedTab = tabPageOptions;
             }
         }
-
     }
 }

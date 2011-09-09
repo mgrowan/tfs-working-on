@@ -46,7 +46,13 @@ namespace Rowan.TfsWorkingOn
             }
         }
 
-        public Uri TeamProjectCollectionUri { get { return new Uri(TeamProjectCollectionAbsoluteUri); } }
+        private Uri TeamProjectCollectionUri
+        {
+            get
+            {
+                return new Uri(TeamProjectCollectionAbsoluteUri);
+            }
+        }
 
         public bool IsConnected { get { return TfsTeamProjectCollection != null; } }
 
@@ -68,24 +74,18 @@ namespace Rowan.TfsWorkingOn
             get { return _selectedProjectName; }
             set
             {
-                if (_selectedProjectName != value)
-                {
-                    _selectedProjectName = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs(SelectedProjectNamePropertyName));
-                }
+                if (_selectedProjectName == value) return;
+                _selectedProjectName = value;
+                OnPropertyChanged(new PropertyChangedEventArgs(SelectedProjectNamePropertyName));
             }
         }
 
         private Project _selectedProject = null;
         public Project SelectedProject
         {
-            get
+            get 
             {
-                if (_selectedProject == null)
-                {
-                    _selectedProject = WorkItemStore.Projects.OfType<Project>().FirstOrDefault(p => p.Name == SelectedProjectName);
-                }
-                return _selectedProject;
+                return _selectedProject ?? (_selectedProject = WorkItemStore.Projects.OfType<Project>().FirstOrDefault(p => p.Name == SelectedProjectName));
             }
         }
         #endregion Properties
@@ -96,21 +96,23 @@ namespace Rowan.TfsWorkingOn
         /// </summary>
         public static void Connect()
         {
-            if (Settings.Default.TeamProjectCollectionAbsoluteUri == null) throw new ArgumentNullException(Resources.Server, Resources.ServerRequired);
+            if (_connection.TeamProjectCollectionAbsoluteUri == null) throw new ArgumentNullException(Resources.Server, Resources.ServerRequired);
+
+            string collectionUri = _connection.TeamProjectCollectionAbsoluteUri;
+            string projectName = _connection.SelectedProjectName;
+            PropertyChangedEventHandler _propertyChanged = _connection.PropertyChanged;
+
             // Discard previous connection and reconnect
             _connection = null;
-            GetConnection().TeamProjectCollectionAbsoluteUri = Settings.Default.TeamProjectCollectionAbsoluteUri;
-            _connection._selectedProjectName = Settings.Default.SelectedProjectName;
-            try
-            {
-                _connection._tfsTeamProjectCollection = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(_connection.TeamProjectCollectionUri, new UICredentialsProvider());
-                _connection._tfsTeamProjectCollection.EnsureAuthenticated();
-                _connection._workItemStore = _connection.TfsTeamProjectCollection.GetService<WorkItemStore>();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            GetConnection();
+
+            _connection._tfsTeamProjectCollection = TfsTeamProjectCollectionFactory.GetTeamProjectCollection(new Uri(collectionUri), new UICredentialsProvider());
+            _connection._tfsTeamProjectCollection.EnsureAuthenticated();
+            _connection._workItemStore = _connection.TfsTeamProjectCollection.GetService<WorkItemStore>();
+
+            _connection.PropertyChanged = _propertyChanged;
+            _connection.TeamProjectCollectionAbsoluteUri = collectionUri;
+            _connection.SelectedProjectName = projectName;
         }
         #endregion Public Methods
 

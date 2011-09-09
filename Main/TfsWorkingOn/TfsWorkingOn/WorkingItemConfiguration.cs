@@ -151,7 +151,7 @@ namespace Rowan.TfsWorkingOn
             if (!HasNoFileContents())
             {
                 string filePath = Path.Combine(Settings.Default.ConfigurationsPath, _filename);
-                if (Settings.Default.SourceControlPath)
+                if (Settings.Default.ConfigurationsPath.StartsWith("$"))
                 {
                     VersionControlServer versionControlServer = Connection.GetConnection().TfsTeamProjectCollection.GetService<VersionControlServer>();
 
@@ -199,7 +199,7 @@ namespace Rowan.TfsWorkingOn
 
             string filePath = Path.Combine(Settings.Default.ConfigurationsPath, _filename);
 
-            if (Settings.Default.SourceControlPath) // TFS Source Control Path
+            if (Settings.Default.ConfigurationsPath.StartsWith("$")) // TFS Source Control Path
             {
                 try
                 {
