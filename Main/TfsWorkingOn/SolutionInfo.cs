@@ -12,7 +12,7 @@ using System;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Matthew Rowan")]
 [assembly: AssemblyProduct("TFS Working On")]
-[assembly: AssemblyCopyright("Copyright ©  2011")]
+[assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguageAttribute("en")]
@@ -32,5 +32,5 @@ using System;
 //
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
-[assembly: AssemblyVersion("1.3.*")]
-[assembly: AssemblyInformationalVersion("1.3.0.3")]
+[assembly: AssemblyVersion("1.4.*")]
+[assembly: AssemblyInformationalVersion("1.4.0.0")]

@@ -27,7 +27,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             comboBoxWorkItemType.ValueMember = "Name";
             settingsBindingSource.DataSource = Settings.Default;
 
-            _queryPickerControl = Activator.CreateInstance("Microsoft.TeamFoundation.Common.Library, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "Microsoft.TeamFoundation.Controls.QueryPickerControl").Unwrap();
+            _queryPickerControl = Activator.CreateInstance("Microsoft.TeamFoundation.WorkItemTracking.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", "Microsoft.TeamFoundation.WorkItemTracking.Controls.QueryPickerControl").Unwrap();
             tabPageOptions.Controls.Add(_queryPickerControl);
             _queryPickerControl.Location = new System.Drawing.Point(91, 123);
             _queryPickerControl.AutoSize = false;
@@ -37,7 +37,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             // http://www.heartysoft.com/post/2010/05/26/anonymous-types-c-sharp-4-dynamic.aspx
             _queryPickerControlType = ((object)_queryPickerControl).GetType();
             //_queryPickerControl.Initialize(Connection.GetConnection().SelectedProject, null, 0);            
-            _queryPickerControlType.GetMethod("Initialize", new Type[] { typeof(Project), typeof(QueryItem), Type.GetType("Microsoft.TeamFoundation.Controls.QueryPickerType, Microsoft.TeamFoundation.Common.Library, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a") })
+            _queryPickerControlType.GetMethod("Initialize", new Type[] { typeof(Project), typeof(QueryItem), Type.GetType("Microsoft.TeamFoundation.WorkItemTracking.Controls.QueryPickerType, Microsoft.TeamFoundation.WorkItemTracking.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a") })
                 .Invoke(_queryPickerControl, new object[] { Connection.GetConnection().SelectedProject, null, 0 });
             //_queryPickerControl.SelectedItemId = Settings.Default.SelectedQuery;
             try

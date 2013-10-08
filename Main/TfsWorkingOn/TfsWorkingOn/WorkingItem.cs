@@ -127,11 +127,6 @@ namespace Rowan.TfsWorkingOn
             if (Estimates.RemainingTime < 0) Estimates.RemainingTime = 0d;
 
             UpdateWorkItem(false);
-            WorkItem.History = Resources.WorkingOnUpdate;
-            if (!string.IsNullOrEmpty(reason)) WorkItem.History += reason + "<br/>";
-            WorkItem.History += string.Format(CultureInfo.CurrentCulture, Resources.WorkingOnUpdateInterval, interval.Hours, interval.Minutes);
-            WorkItem.History += string.Format(CultureInfo.CurrentCulture, Resources.WorkingOnUpdateStatus, Estimates.RemainingTime, Estimates.ElapsedTime, Estimates.Duration);
-
             WorkItem.Save();
             Estimates.Save(Estimates.GetFilePath(WorkItem.Store.TeamProjectCollection.Uri.Host, WorkItem.Id));
         }

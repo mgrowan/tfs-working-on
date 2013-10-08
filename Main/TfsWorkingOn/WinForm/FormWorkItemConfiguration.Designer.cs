@@ -68,10 +68,10 @@
             this.tabPageAbout = new System.Windows.Forms.TabPage();
             this.linkLabelAbout = new System.Windows.Forms.LinkLabel();
             this.labelCopyright = new System.Windows.Forms.Label();
+            this.pictureBoxAbout = new System.Windows.Forms.PictureBox();
             this.labelVersion = new System.Windows.Forms.Label();
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.pictureBoxAbout = new System.Windows.Forms.PictureBox();
             this.buttonOK = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.workingItemConfigurationBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
@@ -144,10 +144,10 @@
             this.tabPageMappings.Controls.Add(this.comboBoxDuration);
             this.tabPageMappings.Controls.Add(this.labelWorkItemType);
             this.tabPageMappings.Controls.Add(this.comboBoxWorkItemType);
-            this.tabPageMappings.Location = new System.Drawing.Point(4, 25);
+            this.tabPageMappings.Location = new System.Drawing.Point(4, 22);
             this.tabPageMappings.Name = "tabPageMappings";
             this.tabPageMappings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageMappings.Size = new System.Drawing.Size(434, 159);
+            this.tabPageMappings.Size = new System.Drawing.Size(434, 157);
             this.tabPageMappings.TabIndex = 0;
             this.tabPageMappings.Text = "Mappings";
             this.tabPageMappings.UseVisualStyleBackColor = true;
@@ -267,10 +267,10 @@
             this.tabPageOptions.Controls.Add(this.labelConfigurationPath);
             this.tabPageOptions.Controls.Add(this.buttonSetDirectory);
             this.tabPageOptions.Controls.Add(this.textBoxCurrentDirectory);
-            this.tabPageOptions.Location = new System.Drawing.Point(4, 25);
+            this.tabPageOptions.Location = new System.Drawing.Point(4, 22);
             this.tabPageOptions.Name = "tabPageOptions";
             this.tabPageOptions.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageOptions.Size = new System.Drawing.Size(434, 159);
+            this.tabPageOptions.Size = new System.Drawing.Size(434, 157);
             this.tabPageOptions.TabIndex = 1;
             this.tabPageOptions.Text = "Options";
             this.tabPageOptions.UseVisualStyleBackColor = true;
@@ -459,14 +459,13 @@
             this.tabControlConfiguration.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabControlConfiguration.Appearance = System.Windows.Forms.TabAppearance.FlatButtons;
             this.tabControlConfiguration.Controls.Add(this.tabPageOptions);
             this.tabControlConfiguration.Controls.Add(this.tabPageMappings);
             this.tabControlConfiguration.Controls.Add(this.tabPageAbout);
             this.tabControlConfiguration.Location = new System.Drawing.Point(1, 2);
             this.tabControlConfiguration.Name = "tabControlConfiguration";
             this.tabControlConfiguration.SelectedIndex = 0;
-            this.tabControlConfiguration.Size = new System.Drawing.Size(442, 188);
+            this.tabControlConfiguration.Size = new System.Drawing.Size(442, 183);
             this.tabControlConfiguration.TabIndex = 19;
             this.tabControlConfiguration.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.tabControlConfiguration_Selecting);
             // 
@@ -474,11 +473,12 @@
             // 
             this.tabPageAbout.Controls.Add(this.linkLabelAbout);
             this.tabPageAbout.Controls.Add(this.labelCopyright);
+            this.tabPageAbout.Controls.Add(this.pictureBoxAbout);
             this.tabPageAbout.Controls.Add(this.labelVersion);
-            this.tabPageAbout.Location = new System.Drawing.Point(4, 25);
+            this.tabPageAbout.Location = new System.Drawing.Point(4, 22);
             this.tabPageAbout.Name = "tabPageAbout";
             this.tabPageAbout.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageAbout.Size = new System.Drawing.Size(434, 159);
+            this.tabPageAbout.Size = new System.Drawing.Size(434, 157);
             this.tabPageAbout.TabIndex = 2;
             this.tabPageAbout.Text = "About";
             this.tabPageAbout.UseVisualStyleBackColor = true;
@@ -487,7 +487,7 @@
             // 
             this.linkLabelAbout.AutoSize = true;
             this.linkLabelAbout.BackColor = System.Drawing.SystemColors.Control;
-            this.linkLabelAbout.Location = new System.Drawing.Point(144, 57);
+            this.linkLabelAbout.Location = new System.Drawing.Point(136, 102);
             this.linkLabelAbout.Name = "linkLabelAbout";
             this.linkLabelAbout.Size = new System.Drawing.Size(155, 13);
             this.linkLabelAbout.TabIndex = 5;
@@ -498,26 +498,36 @@
             // 
             this.labelCopyright.AutoSize = true;
             this.labelCopyright.BackColor = System.Drawing.SystemColors.Control;
-            this.labelCopyright.Location = new System.Drawing.Point(135, 44);
+            this.labelCopyright.Location = new System.Drawing.Point(127, 89);
             this.labelCopyright.Name = "labelCopyright";
             this.labelCopyright.Size = new System.Drawing.Size(171, 13);
             this.labelCopyright.TabIndex = 4;
-            this.labelCopyright.Text = "Copyright © 2011 Matthew Rowan";
+            this.labelCopyright.Text = "Copyright © 2013 Matthew Rowan";
+            // 
+            // pictureBoxAbout
+            // 
+            this.pictureBoxAbout.Image = global::Rowan.TfsWorkingOn.WinForm.Properties.Resources.tfsworkingon;
+            this.pictureBoxAbout.Location = new System.Drawing.Point(0, -7);
+            this.pictureBoxAbout.Name = "pictureBoxAbout";
+            this.pictureBoxAbout.Size = new System.Drawing.Size(443, 74);
+            this.pictureBoxAbout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxAbout.TabIndex = 2;
+            this.pictureBoxAbout.TabStop = false;
             // 
             // labelVersion
             // 
             this.labelVersion.AutoSize = true;
-            this.labelVersion.Location = new System.Drawing.Point(196, 70);
+            this.labelVersion.Location = new System.Drawing.Point(188, 115);
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(40, 13);
             this.labelVersion.TabIndex = 6;
-            this.labelVersion.Text = "1.0.0.0";
+            this.labelVersion.Text = "1.4.0.0";
             // 
             // buttonSave
             // 
             this.buttonSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonSave.DataBindings.Add(new System.Windows.Forms.Binding("Enabled", this.workingItemConfigurationBindingSource, "IsDirty", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.buttonSave.Location = new System.Drawing.Point(360, 267);
+            this.buttonSave.Location = new System.Drawing.Point(360, 191);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 14;
@@ -529,7 +539,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(277, 267);
+            this.buttonCancel.Location = new System.Drawing.Point(277, 191);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(77, 23);
             this.buttonCancel.TabIndex = 15;
@@ -537,21 +547,10 @@
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
-            // pictureBoxAbout
-            // 
-            this.pictureBoxAbout.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.pictureBoxAbout.Image = global::Rowan.TfsWorkingOn.WinForm.Properties.Resources.tfsworkingon;
-            this.pictureBoxAbout.Location = new System.Drawing.Point(1, 189);
-            this.pictureBoxAbout.Name = "pictureBoxAbout";
-            this.pictureBoxAbout.Size = new System.Drawing.Size(443, 74);
-            this.pictureBoxAbout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxAbout.TabIndex = 2;
-            this.pictureBoxAbout.TabStop = false;
-            // 
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(196, 267);
+            this.buttonOK.Location = new System.Drawing.Point(196, 191);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 20;
@@ -564,10 +563,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(444, 298);
+            this.ClientSize = new System.Drawing.Size(444, 222);
             this.Controls.Add(this.buttonOK);
             this.Controls.Add(this.tabControlConfiguration);
-            this.Controls.Add(this.pictureBoxAbout);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonCancel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -632,7 +630,6 @@
         private System.Windows.Forms.TabControl tabControlConfiguration;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.PictureBox pictureBoxAbout;
         private System.Windows.Forms.Button buttonOK;
         private System.Windows.Forms.Label labelElapsed;
         private System.Windows.Forms.Label labelRemaining;
@@ -646,6 +643,7 @@
         private System.Windows.Forms.LinkLabel linkLabelAbout;
         private System.Windows.Forms.Label labelCopyright;
         private System.Windows.Forms.Label labelVersion;
+        private System.Windows.Forms.PictureBox pictureBoxAbout;
     }
 }
 
