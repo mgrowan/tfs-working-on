@@ -28,7 +28,7 @@ namespace Rowan.TfsWorkingOn.Monitor
 
             // Create underlying timer
             _nagIntervalTimer = new Timer(new TimerCallback(RaiseNag), null, Timeout.Infinite, Timeout.Infinite);
-            Enabled = Settings.DefaultNagEnabled;
+            Enabled = Settings.Default.NagEnabled;
             Started = false;
 
             Settings.Default.PropertyChanged += new PropertyChangedEventHandler(Default_PropertyChanged);
@@ -38,7 +38,7 @@ namespace Rowan.TfsWorkingOn.Monitor
         {
             if (e.PropertyName == Settings.NagEnabledPropertyName)
             {
-                Enabled = Settings.DefaultNagEnabled;
+                Enabled = Settings.Default.NagEnabled;
                 if (!Enabled) Stop();
             }
             else if (e.PropertyName == Settings.NagIntervalMinutesPropertyName)

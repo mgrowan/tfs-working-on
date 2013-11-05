@@ -41,4 +41,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(NDepend) = preSolution
+		Project = ".\TfsWorkingOn.ndproj"
+	EndGlobalSection
 EndGlobal

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<InfoWarnings>
+  <Info>11/05/2013 15:02:37 Begin full analysis with NDepend v5.0.0.8085</Info>
+  <Info>No Baseline for Comparison loaded.</Info>
+  <Warning>Can't load the assembly {Microsoft.TeamFoundation.Client}:
+Can't find the .NET assembly {Microsoft.TeamFoundation.Client} in specified folders. 
+Has it been compiled properly? 
+Is the NDepend project missing the containing folder of the .NET assembly?</Warning>
+  <Warning>Can't load the assembly {Microsoft.TeamFoundation.WorkItemTracking.Client}:
+Can't find the .NET assembly {Microsoft.TeamFoundation.WorkItemTracking.Client} in specified folders. 
+Has it been compiled properly? 
+Is the NDepend project missing the containing folder of the .NET assembly?</Warning>
+  <Warning>Can't load the assembly {Microsoft.TeamFoundation.VersionControl.Client}:
+Can't find the .NET assembly {Microsoft.TeamFoundation.VersionControl.Client} in specified folders. 
+Has it been compiled properly? 
+Is the NDepend project missing the containing folder of the .NET assembly?</Warning>
+  <Warning>Can't load the assembly {Microsoft.TeamFoundation.WorkItemTracking.Controls}:
+Can't find the .NET assembly {Microsoft.TeamFoundation.WorkItemTracking.Controls} in specified folders. 
+Has it been compiled properly? 
+Is the NDepend project missing the containing folder of the .NET assembly?</Warning>
+  <Info>Concurrent mode</Info>
+  <Info>.NET Assembly loaded from {C:\CodePlex\TFSWorkingOn\Main\TfsWorkingOn\TfsWorkingOn\bin\Debug} 
+   Rowan.TfsWorkingOn.dll   v1.3.5029.15445</Info>
+  <Info>.NET Assembly loaded from {C:\CodePlex\TFSWorkingOn\Main\TfsWorkingOn\WinForm\bin\Debug} 
+   TfsWorkingOn.exe   v1.3.5029.15447</Info>
+  <Info>.NET Assemblies loaded from {C:\Windows\Microsoft.NET\Framework\v4.0.30319} 
+   mscorlib.dll   v4.0.0.0
+   System.dll   v4.0.0.0
+   System.Web.Services.dll   v4.0.0.0
+   System.Xml.dll   v4.0.0.0
+   System.Core.dll   v4.0.0.0
+   System.Windows.Forms.dll   v4.0.0.0
+   System.Drawing.dll   v4.0.0.0
+   Microsoft.CSharp.dll   v4.0.0.0</Info>
+  <Warning>No application or third party assembly found in folder {C:\Windows\Microsoft.NET\Framework\v4.0.30319\WPF}</Warning>
+  <Warning>Assembly {Microsoft.TeamFoundation.WorkItemTracking.Controls} is referenced by {TfsWorkingOn} but is not found.</Warning>
+  <Warning>Assembly {Microsoft.TeamFoundation.WorkItemTracking.Client} is referenced by {TfsWorkingOn} but is not found.</Warning>
+  <Warning>Assembly {Microsoft.TeamFoundation.Client} is referenced by {TfsWorkingOn} but is not found.</Warning>
+  <Warning>Assembly {Microsoft.TeamFoundation.Client} is referenced by {Rowan.TfsWorkingOn} but is not found.</Warning>
+  <Warning>Assembly {Microsoft.TeamFoundation.WorkItemTracking.Client} is referenced by {Rowan.TfsWorkingOn} but is not found.</Warning>
+  <Warning>Assembly {Microsoft.TeamFoundation.VersionControl.Client} is referenced by {Rowan.TfsWorkingOn} but is not found.</Warning>
+  <Warning>The source file {c:\CodePlex\TFSWorkingOn\Main\TfsWorkingOn\WinForm\FormWorkItemConfiguration.cs} (last modified 8/10/2013 9:11:55 AM) and the PDB file of the assembly {TfsWorkingOn} (last modified 8/10/2013 8:34:55 AM) are not in-sync.</Warning>
+  <Warning>The source file {c:\CodePlex\TFSWorkingOn\Main\TfsWorkingOn\WinForm\FormWorkItemConfiguration.Designer.cs} (last modified 8/10/2013 9:11:55 AM) and the PDB file of the assembly {TfsWorkingOn} (last modified 8/10/2013 8:34:55 AM) are not in-sync.</Warning>
+  <Warning>The source file {c:\CodePlex\TFSWorkingOn\Main\TfsWorkingOn\SolutionInfo.cs} (last modified 8/10/2013 9:00:15 AM) and the PDB file of the assembly {TfsWorkingOn} (last modified 8/10/2013 8:34:55 AM) are not in-sync.</Warning>
+  <Warning>The source file {c:\CodePlex\TFSWorkingOn\Main\TfsWorkingOn\TfsWorkingOn\WorkingItem.cs} (last modified 8/10/2013 9:24:28 AM) and the PDB file of the assembly {Rowan.TfsWorkingOn} (last modified 8/10/2013 8:34:51 AM) are not in-sync.</Warning>
+  <Warning>The source file {c:\CodePlex\TFSWorkingOn\Main\TfsWorkingOn\SolutionInfo.cs} (last modified 8/10/2013 9:00:15 AM) and the PDB file of the assembly {Rowan.TfsWorkingOn} (last modified 8/10/2013 8:34:51 AM) are not in-sync.</Warning>
+  <Info>30 source files parsed ; all source files found ; 5 source files not in-sync with PDB</Info>
+  <Info>0 code rule has been extracted from code.</Info>
+  <Info>No dependency cycle detected in assemblies referencement graph.</Info>
+  <Info>11/05/2013 15:02:37 Analyse dependencies of your application.</Info>
+  <Info>11/05/2013 15:02:38 Building the report (standard).</Info>
+  <Warning>3 critical rules are violated.
+  - Avoid namespaces mutually dependent
+  - Potentially dead Methods
+  - Don't assign a field from many methods</Warning>
+  <Info>11/05/2013 15:02:40 Log trend metrics values.</Info>
+</InfoWarnings>
