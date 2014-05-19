@@ -49,7 +49,7 @@ namespace Rowan.TfsWorkingOn
 
         public Settings()
         {
-            ProjectCollectionHistory.ListChanged += new ListChangedEventHandler(ProjectCollectionHistory_ListChanged);
+            ProjectCollectionHistory.ListChanged += ProjectCollectionHistory_ListChanged;
         }
 
         #endregion
@@ -78,9 +78,9 @@ namespace Rowan.TfsWorkingOn
             {
                 try
                 {
-                    using (FileStream fs = new FileStream(SettingsFilePath, FileMode.OpenOrCreate))
+                    using (var fs = new FileStream(SettingsFilePath, FileMode.OpenOrCreate))
                     {
-                        XmlSerializer xs = new XmlSerializerFactory().CreateSerializer(typeof(Settings));
+                        var xs = new XmlSerializerFactory().CreateSerializer(typeof(Settings));
                         if (xs != null) _defaultInstance = xs.Deserialize(fs) as Settings;
                     }
                 }
@@ -91,7 +91,7 @@ namespace Rowan.TfsWorkingOn
             {
                 _defaultInstance = new Settings();
             }
-            _defaultInstance.PropertyChanged += new PropertyChangedEventHandler(_defaultInstance_PropertyChanged);
+            _defaultInstance.PropertyChanged += _defaultInstance_PropertyChanged;
         }
 
         static void _defaultInstance_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -114,6 +114,7 @@ namespace Rowan.TfsWorkingOn
         {
             _defaultInstance = null;
             Load();
+            if (_defaultInstance == null) return;
             _defaultInstance.IsDirty = false;
         }
 
@@ -181,7 +182,7 @@ namespace Rowan.TfsWorkingOn
                 _monitorUserActivity = value;
                 if (!value)
                 {
-                    PromptOnResume = value;
+                    PromptOnResume = false;
                 }
 
                 OnPropertyChanged(new PropertyChangedEventArgs(MonitorUserActivityPropertyName));

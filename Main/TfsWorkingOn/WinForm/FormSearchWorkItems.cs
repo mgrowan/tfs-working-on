@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Windows.Forms;
 using Microsoft.TeamFoundation.WorkItemTracking.Client;
@@ -12,23 +13,25 @@ namespace Rowan.TfsWorkingOn.WinForm
         private PickWorkItemsControl pickWorkItemsControl;
         public WorkingItem WorkingItem { get; private set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
+        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public FormSearchWorkItems(WorkItemStore workItemStore, string projectName)
         {
             InitializeComponent();
 
             WorkingItem = new WorkingItem();
 
-            pickWorkItemsControl = new PickWorkItemsControl(workItemStore, false);
-            pickWorkItemsControl.Dock = DockStyle.Fill;
-            pickWorkItemsControl.PortfolioDisplayName = projectName;
-            pickWorkItemsControl.PickWorkItemsDoubleClicked += new PickWorkItemsDoubleClickedEventHandler(pickWorkItemsControl_PickWorkItemsListViewDoubleClicked);
+            pickWorkItemsControl = new PickWorkItemsControl(workItemStore, false)
+            {
+                Dock = DockStyle.Fill,
+                PortfolioDisplayName = projectName
+            };
+            pickWorkItemsControl.PickWorkItemsDoubleClicked += pickWorkItemsControl_PickWorkItemsListViewDoubleClicked;
 
             // Add context menu to view the work item when trying to pick from the query
             try
             {
                 // Dirty hack - this will continue to work as long as the TFS control has not been updated by Microsoft.
-                ((DataGridView)(pickWorkItemsControl.Controls[0].Controls[9].Controls[0])).MouseUp += new MouseEventHandler(FormSearchWorkItems_MouseUp);
+                pickWorkItemsControl.Controls[0].Controls[9].Controls[0].MouseUp += FormSearchWorkItems_MouseUp;
             }
             catch (Exception)
             {
@@ -44,19 +47,19 @@ namespace Rowan.TfsWorkingOn.WinForm
         void FormSearchWorkItems_MouseUp(object sender, MouseEventArgs e)
         {
             // Show context menu when right clicking items in the grid.
-            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            if (e.Button == MouseButtons.Right)
                 workitemMenuStrip.Show(Cursor.Position);
         }
 
         void pickWorkItemsControl_PickWorkItemsListViewDoubleClicked(object sender, EventArgs e)
         {
-            PickWorkItem((pickWorkItemsControl.SelectedWorkItems()[0] as WorkItem));
+            PickWorkItem(pickWorkItemsControl.SelectedWorkItems()[0]);
             Close();
         }
 
         private void selectToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PickWorkItem((pickWorkItemsControl.SelectedWorkItems()[0] as WorkItem));
+            PickWorkItem(pickWorkItemsControl.SelectedWorkItems()[0]);
             Close();
         }
 
@@ -80,8 +83,8 @@ namespace Rowan.TfsWorkingOn.WinForm
         {
             if (pickWorkItemsControl.SelectedWorkItems().Count > 0)
             {
-                var workItem = (pickWorkItemsControl.SelectedWorkItems()[0] as WorkItem);
-                FormWorkItem formWorkItem = new FormWorkItem(workItem);
+                var workItem = pickWorkItemsControl.SelectedWorkItems()[0];
+                var formWorkItem = new FormWorkItem(workItem);
                 formWorkItem.ShowDialog(this);
             }
             else
@@ -93,7 +96,7 @@ namespace Rowan.TfsWorkingOn.WinForm
         private void FormSearchWorkItems_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == (Char)Keys.Escape)
-                this.Close();
+                Close();
         }
     }
 }

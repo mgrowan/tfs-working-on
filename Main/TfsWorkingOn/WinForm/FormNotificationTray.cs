@@ -41,12 +41,12 @@ namespace Rowan.TfsWorkingOn.WinForm
         {
             InitializeComponent();
 
-            queryListToolStripMenuItem.DropDown.Closing += new ToolStripDropDownClosingEventHandler(queryListToolStripMenuItemDropDown_Closing);
-            Application.ApplicationExit += new EventHandler(Application_ApplicationExit);
-            SystemEvents.SessionEnding += new SessionEndingEventHandler(SystemEvents_SessionEnding);
-            Connection.GetConnection().PropertyChanged += new PropertyChangedEventHandler(Connection_PropertyChanged);
+            queryListToolStripMenuItem.DropDown.Closing += queryListToolStripMenuItemDropDown_Closing;
+            Application.ApplicationExit += Application_ApplicationExit;
+            SystemEvents.SessionEnding += SystemEvents_SessionEnding;
+            Connection.GetConnection().PropertyChanged += Connection_PropertyChanged;
             
-            _nag.MonitorTriggeredEvent += new EventHandler<MonitorEventArgs>(_nag_MonitorTriggeredEvent);
+            _nag.MonitorTriggeredEvent += _nag_MonitorTriggeredEvent;
             components.Add(_nag);
             _nag.Start();
 
@@ -139,7 +139,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             }
 
             _formSearchWorkItems = new FormSearchWorkItems(Connection.GetConnection().WorkItemStore, Connection.GetConnection().SelectedProjectName);
-            _formSearchWorkItems.WorkingItem.PropertyChanged += new PropertyChangedEventHandler(WorkingItem_PropertyChanged);
+            _formSearchWorkItems.WorkingItem.PropertyChanged += WorkingItem_PropertyChanged;
             _formSearchWorkItems.ShowDialog();
 
             _formSearchWorkItems = null;
@@ -148,7 +148,7 @@ namespace Rowan.TfsWorkingOn.WinForm
         private void SetCurrentWorkItem(int itemId)
         {
             _workingItem = new WorkingItem();
-            _workingItem.PropertyChanged += new PropertyChangedEventHandler(WorkingItem_PropertyChanged);
+            _workingItem.PropertyChanged += WorkingItem_PropertyChanged;
             _workingItem.WorkItem = Connection.GetConnection().WorkItemStore.GetWorkItem(itemId);
             _workingItem.WorkItem.Open();
         }
@@ -458,7 +458,7 @@ namespace Rowan.TfsWorkingOn.WinForm
             }
 
             _workingItem.Connection = Connection.GetConnection();
-            _workingItem.UserActivityMonitor.MonitorTriggeredEvent += new EventHandler<MonitorEventArgs>(_userActivity_MonitorTriggeredEvent);
+            _workingItem.UserActivityMonitor.MonitorTriggeredEvent += _userActivity_MonitorTriggeredEvent;
 
             selectedToolStripMenuItem.Text = string.Format(CultureInfo.CurrentCulture, Resources.Selected, _workingItem.WorkItem.Id);
             selectedToolStripMenuItem.ToolTipText = _workingItem.WorkItem.Title;
@@ -550,7 +550,7 @@ namespace Rowan.TfsWorkingOn.WinForm
                     break;
                 case Connection.SelectedProjectNamePropertyName:
                     _currentSettings.LastProjectCollectionWorkedOn.SetProjectLastWorkedOn(Connection.GetConnection().SelectedProjectName);
-                    _currentSettings.LastProjectCollectionWorkedOn.LastProjectWorkedOn.PropertyChanged += new PropertyChangedEventHandler(ProjectWorkedOn_PropertyChanged);
+                    _currentSettings.LastProjectCollectionWorkedOn.LastProjectWorkedOn.PropertyChanged += ProjectWorkedOn_PropertyChanged;
                     break;
             }
 
@@ -681,15 +681,13 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void cancelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_workingItem.Started)
-            {
-                _nag.Start();
-                startToolStripMenuItem.Text = Resources.Start;
-                notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.CancelledWorkingOn,
-                    _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture), GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
-                notifyIcon.Icon = Resources.Stopwatch_Red;
-                _workingItem.Cancel();
-            }
+            if (!_workingItem.Started) return;
+            _nag.Start();
+            startToolStripMenuItem.Text = Resources.Start;
+            notifyIcon.BalloonTipText = string.Format(CultureInfo.CurrentCulture, Resources.CancelledWorkingOn,
+                _workingItem.WorkItem.Id.ToString(CultureInfo.CurrentCulture), GetStringWithEllipsis(_workingItem.WorkItem.Title, 50));
+            notifyIcon.Icon = Resources.Stopwatch_Red;
+            _workingItem.Cancel();
         }
         #endregion
     }

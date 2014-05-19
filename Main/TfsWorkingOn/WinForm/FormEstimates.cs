@@ -5,7 +5,7 @@ namespace Rowan.TfsWorkingOn.WinForm
 {
     public partial class FormEstimates : Form
     {
-        private WorkingItem _workingItem = null;
+        private WorkingItem _workingItem;
 
         public FormEstimates(WorkingItem workingItem)
         {
@@ -18,7 +18,7 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void buttonViewWorkItem_Click(object sender, EventArgs e)
         {
-            FormWorkItem formWorkItem = new FormWorkItem(_workingItem.WorkItem);
+            var formWorkItem = new FormWorkItem(_workingItem.WorkItem);
             formWorkItem.Show();
         }
 

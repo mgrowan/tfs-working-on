@@ -36,9 +36,12 @@ namespace Rowan.TfsWorkingOn.WinForm
             // Can't use QueryPickerControl Methods or Properties with dynamic, since they are from an "internal" type. Only the "public" base type is exposed.
             // http://www.heartysoft.com/post/2010/05/26/anonymous-types-c-sharp-4-dynamic.aspx
             _queryPickerControlType = ((object)_queryPickerControl).GetType();
-            //_queryPickerControl.Initialize(Connection.GetConnection().SelectedProject, null, 0);            
-            _queryPickerControlType.GetMethod("Initialize", new Type[] { typeof(Project), typeof(QueryItem), Type.GetType("Microsoft.TeamFoundation.WorkItemTracking.Controls.QueryPickerType, Microsoft.TeamFoundation.WorkItemTracking.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a") })
-                .Invoke(_queryPickerControl, new object[] { Connection.GetConnection().SelectedProject, null, 0 });
+            //_queryPickerControl.Initialize(Connection.GetConnection().SelectedProject, null, 0);
+            var wiType =
+                Type.GetType(
+                    "Microsoft.TeamFoundation.WorkItemTracking.Controls.QueryPickerType, Microsoft.TeamFoundation.WorkItemTracking.Controls, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
+            var method = _queryPickerControlType.GetMethod("Initialize", new[] { typeof(Project), typeof(QueryItem), wiType });
+            if (method != null) method.Invoke(_queryPickerControl, new object[] { Connection.GetConnection().SelectedProject, null, 0 });
             //_queryPickerControl.SelectedItemId = Settings.Default.SelectedQuery;
             try
             {
@@ -50,16 +53,24 @@ namespace Rowan.TfsWorkingOn.WinForm
             }
 
             //_queryPickerControl.SelectedQueryItemChanged += new EventHandler(QueryPickerControl_OnSelectedQueryItemChanged);
-            Type eventHandlerType = Type.GetType("Microsoft.TeamFoundation.Controls.SelectedQueryItemChangedEventHandler, Microsoft.TeamFoundation.Common.Library, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
-            EventInfo eventInfo = _queryPickerControlType.GetEvent("SelectedQueryItemChanged", BindingFlags.Instance | BindingFlags.Public);
-            eventInfo.AddEventHandler(_queryPickerControl, Create(eventInfo, QueryPickerControl_OnSelectedQueryItemChanged));
+            //Type eventHandlerType = Type.GetType("Microsoft.TeamFoundation.Controls.SelectedQueryItemChangedEventHandler, Microsoft.TeamFoundation.Common.Library, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
+            var eventInfo = _queryPickerControlType.GetEvent("SelectedQueryItemChanged", BindingFlags.Instance | BindingFlags.Public);
+            if (eventInfo != null)
+            {
+                eventInfo.AddEventHandler(_queryPickerControl, Create(eventInfo, QueryPickerControl_OnSelectedQueryItemChanged));
+            }
 
             toolTipHelp.SetToolTip(pictureBoxHelpUserActivity, Resources.HelpActivityMonitor);
             toolTipHelp.SetToolTip(pictureBoxHelpPromptOnResume, Resources.HelpPromptOnResume);
             toolTipHelp.SetToolTip(pictureBoxHelpNag, Resources.HelpNag);
             toolTipHelp.SetToolTip(pictureBoxHelpMenuQuery, Resources.HelpMenuQuery);
 
-            labelVersion.Text = Assembly.GetExecutingAssembly().GetCustomAttributes(true).OfType<AssemblyInformationalVersionAttribute>().FirstOrDefault().InformationalVersion;
+            var assemblyInformationalVersionAttribute = Assembly.GetExecutingAssembly().GetCustomAttributes(true).OfType<AssemblyInformationalVersionAttribute>().FirstOrDefault();
+            if (
+                assemblyInformationalVersionAttribute != null)
+            {
+                labelVersion.Text = assemblyInformationalVersionAttribute.InformationalVersion;
+            }
         }
 
         // http://stackoverflow.com/questions/45779/c-dynamic-event-subscription
@@ -78,7 +89,7 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         protected void QueryPickerControl_OnSelectedQueryItemChanged()
         {
-            Settings.Default.LastProjectCollectionWorkedOn.LastProjectWorkedOn.LastQueryWorkedOn = this._queryPickerControlType.GetProperty("SelectedItemId").GetValue(_queryPickerControl, null);
+            Settings.Default.LastProjectCollectionWorkedOn.LastProjectWorkedOn.LastQueryWorkedOn = _queryPickerControlType.GetProperty("SelectedItemId").GetValue(_queryPickerControl, null);
         }
 
         private void buttonOK_Click(object sender, EventArgs e)

@@ -21,27 +21,24 @@ namespace Rowan.TfsWorkingOn.WinForm
         public FormWorkItem(WorkItem workItem)
             : this()
         {
-            if (workItem != null)
+            if (workItem == null) return;
+            // The work item must be open before it can be sync'd
+            if (workItem.IsOpen)
             {
-                
-                    // The work item must be open before it can be sync'd
-                    if (workItem.IsOpen)
-                    {
-                        try
-                        {
-                            workItem.SyncToLatest();
-                        }
-                        catch (UnexpectedErrorException ex2)
-                        {
-                            // This occurs when TFS connection has been lost.
-                            // The message returned from the exception is informative, so using it.
-                            MessageBox.Show(ex2.Message, @"Problem Saving", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                
-                Text = string.Format(CultureInfo.CurrentCulture, Resources.WorkItemTitle, workItem.Id, workItem.Title);
-                witControl.Item = workItem;
+                try
+                {
+                    workItem.SyncToLatest();
+                }
+                catch (UnexpectedErrorException ex2)
+                {
+                    // This occurs when TFS connection has been lost.
+                    // The message returned from the exception is informative, so using it.
+                    MessageBox.Show(ex2.Message, @"Problem Saving", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+                
+            Text = string.Format(CultureInfo.CurrentCulture, Resources.WorkItemTitle, workItem.Id, workItem.Title);
+            witControl.Item = workItem;
         }
 
         private bool Save()
@@ -64,27 +61,25 @@ namespace Rowan.TfsWorkingOn.WinForm
                 }
                 return false;
             }
-            if (witControl.Item.IsDirty)
+            if (!witControl.Item.IsDirty) return true;
+            try
             {
-                try
+                witControl.Item.Save();
+            }
+            catch (ItemAlreadyUpdatedOnServerException ex)
+            {
+                if (MessageBox.Show(string.Format(CultureInfo.CurrentCulture, "{0}\n\n{1}", ex.Message, Resources.RefreshWorkItem), Resources.ItemAlreadyUpdated, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
                 {
-                    witControl.Item.Save();
-                }
-                catch (ItemAlreadyUpdatedOnServerException ex)
-                {
-                    if (MessageBox.Show(string.Format(CultureInfo.CurrentCulture, "{0}\n\n{1}", ex.Message, Resources.RefreshWorkItem), Resources.ItemAlreadyUpdated, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1) == DialogResult.Yes)
-                    {
-                        witControl.Item.SyncToLatest();
-                        return false;
-                    }
-                }
-                catch (UnexpectedErrorException ex2)
-                {
-                    // This occurs when TFS connection has been lost.
-                    // The message returned from the exception is informative, so using it.
-                    MessageBox.Show(ex2.Message, @"Problem Saving", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    witControl.Item.SyncToLatest();
                     return false;
                 }
+            }
+            catch (UnexpectedErrorException ex2)
+            {
+                // This occurs when TFS connection has been lost.
+                // The message returned from the exception is informative, so using it.
+                MessageBox.Show(ex2.Message, @"Problem Saving", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
             }
             return true;
         }
@@ -107,26 +102,24 @@ namespace Rowan.TfsWorkingOn.WinForm
 
         private void FormWorkItem_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (witControl.Item.IsDirty && !_isCanceled)
+            if (!witControl.Item.IsDirty || _isCanceled) return;
+            switch (MessageBox.Show(Resources.OutstandingChanges, Resources.SaveChanges, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
             {
-                switch (MessageBox.Show(Resources.OutstandingChanges, Resources.SaveChanges, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
-                {
-                    case DialogResult.Yes:
-                        e.Cancel = !Save();
-                        break;
-                    case DialogResult.No:
-                        if (!witControl.Item.IsValid())
-                        {
-                            witControl.Item.Reset();
-                        }
-                        break;
-                    case DialogResult.Cancel:
-                        e.Cancel = true;
-                        break;
-                    default:
-                        Debug.Assert(false);
-                        break;
-                }
+                case DialogResult.Yes:
+                    e.Cancel = !Save();
+                    break;
+                case DialogResult.No:
+                    if (!witControl.Item.IsValid())
+                    {
+                        witControl.Item.Reset();
+                    }
+                    break;
+                case DialogResult.Cancel:
+                    e.Cancel = true;
+                    break;
+                default:
+                    Debug.Assert(false);
+                    break;
             }
         }
     }
