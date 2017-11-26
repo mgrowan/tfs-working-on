@@ -1,0 +1,110 @@
+<div class="wikidoc">
+<h3>TFS Working On – Version 1.3</h3>
+<h5>Hierarchical Menu Query list</h5>
+<p>You can now select hierarchical queries for the menu query. The resulting list is shown using indentation in the context menu.</p>
+<p><img title="Hierarchical Menu Query" border="0" alt="Hierarchical Menu Query" src="http://mgrowan.files.wordpress.com/2011/08/image1.png?w=476&h=264" width="476" height="264"></p>
+<h5>Refresh Menu Query</h5>
+<p>If the query results are now out of date, click the Refresh option at the top of the Menu Query list. This will close the list, but when you open it again it will query TFS for the latest results.</p>
+<h5>View work items from Search Results</h5>
+<p>In the <em>Select Work Item…</em> search results, right-click the work item and select
+<em>View</em> to open, or <em>Select</em> to start working on.</p>
+<p><img title="Search results context menu" border="0" alt="Search results context menu" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=271884" width="155" height="71" style="border-bottom:0px; border-left:0px; padding-left:0px; padding-right:0px; display:inline; border-top:0px; border-right:0px; padding-top:0px"></p>
+<h5>Prompt for estimates</h5>
+<p>If you start working on a work item that does not have any estimates you will be prompted:</p>
+<p><img title="Add Estimates dialog" border="0" alt="Add Estimates dialog" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=271885" width="339" height="175" style="border-bottom:0px; border-left:0px; padding-left:0px; padding-right:0px; display:inline; border-top:0px; border-right:0px; padding-top:0px"></p>
+<p>Selecting yes, will display the estimates form allow you to estimate your work before you start.</p>
+<h5>Work Item Mappings in source control</h5>
+<p>Instead of having to find a shared network path, the work item mappings can now be stored in source control. Simply enter a TFS Source Control path in the Mapping Path. Ensure it begins with a $.</p>
+<p><img title="Source control mappings path" border="0" alt="Source control mappings path" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=271886" width="446" height="63" style="border-bottom:0px; border-left:0px; padding-left:0px; padding-right:0px; display:inline; border-top:0px; border-right:0px; padding-top:0px"></p>
+<p>When the Mappings are updated, if the user has access, the changes are committed to source control on Apply or Save with the check-in comment
+<em>“Updated </em><em>TFS Working On</em><em> settings file”</em>.</p>
+<p><img title="Source control mappings file" border="0" alt="Source control mappings file" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=271887" width="1015" height="173" style="border-bottom:0px; border-left:0px; padding-left:0px; padding-right:0px; display:inline; border-top:0px; border-right:0px; padding-top:0px"></p>
+<h3>TFS Working On - Version 1.2</h3>
+<h5>Menu Query list</h5>
+<p>You can select an existing TFS query from the configuration pages to use a quick start list accessible from the TFS Working On menu. This removes the need to search for work items, and you can just pick them off your list.
+</p>
+<p>Note: TFS 2010 Hierarchical Queries are not yet supported.</p>
+<h5><img title="clip_image002" border="0" alt="clip_image002" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217654" width="464" height="293" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></h5>
+<p><img title="clip_image004" border="0" alt="clip_image004" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217655" width="613" height="482" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<h5>Prompt on resume</h5>
+<p>When you are away from your computer and TFS Working On automatically pauses monitoring, you can enable the option to be prompted on resume. You are given the option to Record the time away, for the instances when you were working on the work item, just
+ not on the computer, like in a meeting or discussion with a colleague. Resume working, time away is not recorded, like going out for lunch, and coming back to continue. Or Stop, time away is not recorded and you do not resume working on the selected work item.</p>
+<p><img title="clip_image006" border="0" alt="clip_image006" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217656" width="465" height="291" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p><img title="clip_image008" border="0" alt="clip_image008" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217657" width="494" height="248" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<h5>Cancel Currently Working On</h5>
+<p>You can now cancel your current working on, preventing any time being recorded against the work item.</p>
+<p><img title="clip_image010" border="0" alt="clip_image010" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217658" width="338" height="202" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<h5>Work Item Title Tooltip and Notification</h5>
+<p>The title of your current work item is now displayed in the balloon notification and the TFS Working On notification tray icon tooltip.</p>
+<p><img title="clip_image012" border="0" alt="clip_image012" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217659" width="298" height="115" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px">
+<img title="clip_image014" border="0" alt="clip_image014" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217660" width="249" height="73" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<h5>Data Warehouse Processing (TFS 2008 only)</h5>
+<p>TFS Working On allows updating of the Data Warehouse and TFS Analysis Service cube on from the Configuration pages. This forces an update without the need to remote onto the TFS Server or wait for the scheduled time. Useful when you need to ensure you Warehouse
+ data accurately reflects the current Work Item data when generating a report to distribute.</p>
+<p><img title="clip_image016" border="0" alt="clip_image016" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217661" width="465" height="294" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<h5>Existing Raised Bugs Fixed</h5>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="102">
+<p><b>ID</b></p>
+</td>
+<td valign="top" width="514">
+<p><b>Title</b></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="102">
+<p><b><a href="http://tfsworkingon.codeplex.com/workitem/6707">6707</a></b><b></b></p>
+</td>
+<td valign="top" width="514">
+<p>ItemUpdatedOnServer error selected work item from search results</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="102">
+<p><b><a href="http://tfsworkingon.codeplex.com/workitem/7006">7006</a></b><b></b></p>
+</td>
+<td valign="top" width="514">
+<p>Time not logged if you shut computer down</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="102">
+<p><b><a href="http://tfsworkingon.codeplex.com/workitem/7357">7357</a></b><b></b></p>
+</td>
+<td valign="top" width="514">
+<p>WorkingOn - Configuration File Save – crash</p>
+</td>
+</tr>
+</tbody>
+</table>
+<h3>TFS Working On - Version 1.1</h3>
+<p>TFS Working On is a simple system tray utility that makes it easier to record your time spent on TFS Work Items.</p>
+<p><img title="clip_image018" border="0" alt="clip_image018" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217662" width="276" height="100" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p>Simply specify your server and project, then search for your Work Item and you are tracking your time.</p>
+<p><img title="clip_image020" border="0" alt="clip_image020" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217663" width="404" height="115" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p><img title="clip_image022" border="0" alt="clip_image022" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217664" width="624" height="473" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p>The icon turns <b>green</b> to notify you that you are tracking your time.</p>
+<p><img title="clip_image024" border="0" alt="clip_image024" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217665" width="201" height="97" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p>This will record your time in the history of the work item whenever you stop working on the item. To stop working on, double click the icon or select stop from the menu, and the work item is updated and the icon turns
+<b>red</b>.</p>
+<p><img title="clip_image026" border="0" alt="clip_image026" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217666" width="220" height="184" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p><img title="clip_image028" border="0" alt="clip_image028" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217667" width="201" height="96" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p><img title="clip_image030" border="0" alt="clip_image030" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217668" width="333" height="196" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p><img title="clip_image032" border="0" alt="clip_image032" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217669" width="383" height="92" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p>You can also specify your estimates against a work item so that you can record how you are going.</p>
+<p><img title="clip_image034" border="0" alt="clip_image034" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217670" width="308" height="182" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p><img title="clip_image036" border="0" alt="clip_image036" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217671" width="291" height="153" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p>Access to the work item is available.</p>
+<p><img title="clip_image038" border="0" alt="clip_image038" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217672" width="491" height="388" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p>With some very simple configuration the estimates can be mapped to the TFS Work Item fields, per work item type, per project. This can be performed by one member of the team, most likely the one responsible for setting up the project, and then stored on
+ the network share for all team members to reference. </p>
+<p><img title="clip_image040" border="0" alt="clip_image040" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217673" width="464" height="87" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p><img title="clip_image042" border="0" alt="clip_image042" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217674" width="464" height="290" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p>Features can be configured here also. Hovering over the help icon will give you details of the settings.</p>
+<p><img title="clip_image044" border="0" alt="clip_image044" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217675" width="698" height="348" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+<p>Auto Time Out will automatically stop working on when the computer is idle for the set time, and resume when activity begins again.</p>
+<p>Nag will remind you when you are not working on anything.</p>
+<p><img title="clip_image046" border="0" alt="clip_image046" src="http://download.codeplex.com/download?ProjectName=tfsworkingon&DownloadId=217676" width="279" height="104" style="border-right-width:0px; padding-left:0px; padding-right:0px; display:inline; border-top-width:0px; border-bottom-width:0px; border-left-width:0px; padding-top:0px"></p>
+</div><div class="ClearBoth"></div>
